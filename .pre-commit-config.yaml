@@ -1,0 +1,46 @@
+repos:
+  # Pre-commit basic hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      # Adds a new line at the end of files
+      - id: end-of-file-fixer
+      # Removes extra spaces at the end of lines
+      - id: trailing-whitespace
+
+  # Black - code formatter
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      # Formats Python code automatically
+      - id: black
+
+  # isort - organizes imports
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.13.2
+    hooks:
+      # Sorts and organizes imports in Python files
+      - id: isort
+
+  # Ruff - linter and formatter
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.9.3
+    hooks:
+      # Checks for coding issues
+      - id: ruff
+        args: ["--fix"]  # Automatically fixes issues when possible
+      # Formats code with Ruff
+      - id: ruff-format
+      # Fixes import issues only
+      - id: ruff
+        args: ["--select", "I", "--fix"]  # Ensures imports are sorted correctly
+
+  # UV-specific hooks
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.5.24
+    hooks:
+      # Updates uv.lock if pyproject.toml changes
+      - id: uv-lock
+      # Exports requirements.txt with hashes
+      - id: uv-export
+        args: ["--output-file", "requirements.txt"]
