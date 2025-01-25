@@ -1,7 +1,7 @@
 [project]
-name = "django-template"
+name = "wpa-cz-sk"
 version = "0.1.0"
-description = "A Django project template"
+description = "Wpa CZ-SK"
 readme = "README.md"
 requires-python = ">=3.13"
 authors = [

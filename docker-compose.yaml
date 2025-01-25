@@ -3,7 +3,7 @@ version: "3.9"
 services:
   db:
     image: postgres:15-alpine
-    container_name: django_postgres             # Optional: Name the container
+    container_name: wpa-cz-sk_postgres             # Optional: Name the container
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

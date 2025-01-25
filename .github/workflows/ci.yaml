@@ -1,4 +1,4 @@
-name: CI/CD for Django Template
+name: CI/CD for WPA CZ-SK
 
 # Trigger workflow on push and pull requests to main branch
 on:
