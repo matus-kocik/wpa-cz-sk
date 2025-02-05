@@ -31,6 +31,7 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: v.split(","))
 # Application definition
 
 INSTALLED_APPS = [
+    "apps.users",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -48,6 +49,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+# Custom User Model
+AUTH_USER_MODEL = "users.CustomUser"
 
 ROOT_URLCONF = "config.urls"
 
