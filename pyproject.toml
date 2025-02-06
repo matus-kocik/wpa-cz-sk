@@ -9,10 +9,10 @@ authors = [
 ]
 license = "MIT"
 dependencies = [
-    "django>=5.1.5,<6.0.0",
     "python-decouple>=3.8",
     "psycopg[binary]>=2.9.10",
     "django-extensions>=3.2.3",
+    "django>=5.1.6",
 ]
 
 [dependency-groups]
