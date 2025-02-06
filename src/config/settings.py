@@ -31,14 +31,15 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: v.split(","))
 # Application definition
 
 INSTALLED_APPS = [
-    "apps.users",
-    "apps.core",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
+    "apps.users",
+    "apps.core",
 ]
 
 MIDDLEWARE = [

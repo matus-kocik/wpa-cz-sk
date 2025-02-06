@@ -1,3 +1,4 @@
+import json
 from urllib.parse import urljoin
 
 from django.conf import settings
@@ -19,7 +20,9 @@ class SoftDeleteManager(models.Manager):
     """
 
     def get_queryset(self):
-        return super().get_queryset().filter(deleted_at__isnull=True)
+        return (
+            super().get_queryset().filter(deleted_at__isnull=True) or []
+        )  # or [] to prevent errors
 
 
 class TimeStampedModel(models.Model):
@@ -77,9 +80,11 @@ class SeoModel(models.Model):
     Abstract model that provides SEO-related fields and methods.
 
     - SEO metadata (title, description, keywords)
-    - Open Graph (Facebook & social media preview metadata)
-    - Twitter metadata (Twitter card preview fields)
-    - Automatic SEO title & description generation from existing fields
+    - Open Graph (Facebook, LinkedIn, etc.)
+    - Twitter metadata (Twitter cards)
+    - JSON-LD structured data for search engines
+    - Canonical URL for avoiding duplicate content
+    - Meta Robots for controlling indexing
     """
 
     # Basic SEO fields
@@ -144,6 +149,32 @@ class SeoModel(models.Model):
         blank=True,
         verbose_name="Twitter Image",
         help_text="Image for Twitter preview cards.",
+    )
+
+    # Additional SEO fields
+    canonical_url = models.URLField(
+        blank=True,
+        verbose_name="Canonical URL",
+        help_text="Canonical URL to prevent duplicate content.",
+    )
+    meta_robots = models.CharField(
+        max_length=64,
+        blank=True,
+        choices=[
+            # Default option, index and follow links, useful for most pages on the site
+            ("index, follow", "Index, Follow (Default)"),
+            # No index, but follow links (useful for pages with links to other pages)
+            ("noindex, follow", "No Index, Follow"),
+            # Index, but don't follow links (useful for pages with no links to other
+            # pages or external sites, like landing pages or standalone pages with
+            # no navigation links)
+            ("index, nofollow", "Index, No Follow"),
+            # No index and no follow links (useful for private pages or pages that,
+            ("noindex, nofollow", "No Index, No Follow"),
+        ],
+        default="index, follow",
+        verbose_name="Meta Robots",
+        help_text="Meta robots tag for controlling indexing.",
     )
 
     class Meta:
@@ -235,6 +266,49 @@ class SeoModel(models.Model):
         return getattr(
             settings, "DEFAULT_TWITTER_IMAGE", "/static/images/default_twitter.jpg"
         )  # Default image URL from Django settings
+
+    def get_canonical_url(self):
+        """
+        Returns the canonical URL.
+
+        - If set manually, returns that value.
+        - Otherwise, generates a default URL based on `get_absolute_url()`.
+        - If no absolute URL exists, falls back to `settings.SITE_URL`.
+        """
+        if self.canonical_url:
+            return self.canonical_url
+        try:
+            return self.get_absolute_url()
+        except AttributeError:
+            return getattr(settings, "SITE_URL", "/")  # Default homepage URL
+
+    def get_structured_data(self):
+        """
+        Generates JSON-LD structured data for SEO.
+
+        - Uses canonical URL, title, and description.
+        - Includes optional metadata (datePublished, dateModified, language).
+        """
+        structured_data = {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "url": self.get_canonical_url(),
+            "name": self.get_seo_title(),
+            "description": self.get_seo_description(),
+            "datePublished": (
+                self.created_at.isoformat() if hasattr(self, "created_at") else None
+            ),
+            "dateModified": (
+                self.updated_at.isoformat() if hasattr(self, "updated_at") else None
+            ),
+            "inLanguage": "sk, cz, en",
+        }
+
+        structured_data = {
+            key: value for key, value in structured_data.items() if value
+        }
+
+        return json.dumps(structured_data, ensure_ascii=False)
 
     def save(self, *args, **kwargs):
         """
