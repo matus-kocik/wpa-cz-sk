@@ -11,7 +11,6 @@ license = "MIT"
 dependencies = [
     "python-decouple>=3.8",
     "psycopg[binary]>=2.9.10",
-    "django-extensions>=3.2.3",
     "django>=5.1.6",
 ]
 
@@ -23,7 +22,8 @@ dev = [
     "pre-commit>=4.1.0",
     "pytest>=8.3.4",
     "pytest-django>=4.9.0",
-    "ruff>=0.9.4"
+    "ruff>=0.9.4",
+    "django-extensions>=3.2.3",
 ]
 
 [tool.black]
