@@ -49,7 +49,7 @@ class CustomUserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
 
         if password:
-            # Securely hash the password
+            # Securely set hash the user's password
             user.set_password(password)
         else:
             # Set an unusable password (e.g., for OAuth users...)
@@ -60,7 +60,9 @@ class CustomUserManager(BaseUserManager):
 
     def create_superuser(self, email, password=None, **extra_fields):
         """
-        Creates and returns a superuser with the given email and password.
+        Creates and saves a new superuser with the given email and password.
+        Extra fields are added to indicate that the user is staff, active,
+        and indeed a superuser.
 
         Superusers have full permissions (`is_staff=True` and `is_superuser=True`).
         If these flags are not explicitly set, the method will raise an error.
@@ -71,7 +73,7 @@ class CustomUserManager(BaseUserManager):
             **extra_fields: Additional fields for the superuser model.
 
         Returns:
-            CustomUser: The created superuser instance.
+            CustomUser: Created superuser instance with admin privileges
 
         Raises:
             ValueError: If `is_staff` or `is_superuser` is not set to True.
@@ -104,7 +106,7 @@ class CustomUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError("Natural key (email) must be provided")
-        # Case-insensitive lookup (nezáleží na veľkosti písmen)
+        # Case-insensitive lookup
         return self.get(email__iexact=email)
 
 
@@ -112,9 +114,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     """
     Custom user model that replaces Django's default User model.
 
-    This model uses email as the unique identifier instead of a username.
-    It also includes additional fields such as first name, last name,
-    and a dynamically generated full name.
+    This model extends Django's AbstractBaseUser and PermissionsMixin to create
+    a fully featured user model with admin-compliant permissions.
 
     Fields:
         - email (EmailField): The user's unique email address.
