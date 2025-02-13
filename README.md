@@ -1,25 +1,26 @@
 # WPA CZ-SK
 
-## World Pheasant Association Czech Republic and Slovakia
+## World Pheasant Association Czech Republic & Slovakia
 
-### Current Website
+### 🌿 About the Project
 
-- [WPA CZ-SK](http://wpacz-sk.com/)
+Welcome to the **WPA CZ-SK** project repository! This project focuses on enhancing the website of the **World Pheasant Association Czech Republic and Slovakia**, improving user experience with a modern design and new features.
 
-Welcome to the WPA CZ-SK project repository!
-This project focuses on enhancing the website of the World Pheasant Association Czech Republic and Slovakia to provide a better user experience with new features and an improved design.
+🔗 **Current Website:** [WPA CZ-SK](http://wpacz-sk.com/)
 
-### About WPA CZ-SK
+### 🦚 About WPA CZ-SK
 
-The World Pheasant Association (WPA) is an organization dedicated to the conservation of Galliformes (game birds) and their habitats worldwide.
-WPA CZ-SK focuses on conservation activities and educational efforts to raise awareness about the importance of protecting these species and their environments.
+The **World Pheasant Association (WPA)** is a global organization dedicated to the conservation of **pheasants, partridges, and other Galliformes**, as well as their natural habitats. WPA CZ-SK specifically focuses on protecting these species in the Czech Republic and Slovakia through **educational activities, awareness campaigns, and conservation efforts**.
 
-### Education and Skill Improvement
+### 🚀 Project Goals
 
-This project is my personal hobby, which I work on in my spare time. I am committed to continuous learning and enhancing my programming skills.
+- 💡 **Website Redesign** – A fresh, modern, and fully responsive design.
+- 📸 **Enhanced Gallery** – Improved photo quality and better categorization.
+- 📖 **Simplified Content Management** – Easy article, news, and event updates.
+- 🧭 **Better Navigation** – A more intuitive menu and faster information retrieval.
 
-### Features and more
+### 🎓 Personal Development
 
-- **Redesign:** Modern and responsive design.
-- **New Features:** Enhanced galleries, improved navigation, and more.
-- **Content Management:** Simple updates to articles and events.
+This project is **my passion**, and I work on it in my free time. It’s a great opportunity for me to **enhance my programming skills** and learn new technologies.
+
+Feedback is always welcome – every suggestion helps me grow! 🚀
