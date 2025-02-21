@@ -16,7 +16,6 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pip-tools>=6.12.3",
     "black>=25.1.0",
     "isort>=6.0.0",
     "pre-commit>=4.1.0",
