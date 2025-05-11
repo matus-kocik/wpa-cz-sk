@@ -34,6 +34,7 @@ CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=lambda v: v.split(","
 # Application definition
 
 INSTALLED_APPS = [
+    "jazzmin",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -157,3 +158,18 @@ MEDIA_ROOT = BASE_DIR / "media"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# jazzmin settings
+# https://django-jazzmin.readthedocs.io/en/latest/
+JAZZMIN_SETTINGS = {
+    "site_title": "WPA CZ-SK Admin",
+    "site_header": "WPA CZ-SK Admin",
+    "site_brand": "WPA CZ-SK",
+    "welcome_sign": "Vitajte v administrácii WPA CZ-SK",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "yourapp.ModelName": "fas fa-dove",
+    },
+}
