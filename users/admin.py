@@ -19,9 +19,34 @@ class CustomUserAdmin(admin.ModelAdmin):
         ("Personal info", {"fields": ("first_name", "last_name")}),
         (
             "Permissions",
-            {"fields": ("is_active", "is_staff", "groups", "user_permissions")},
+            {
+                "fields": (
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                )
+            },
         ),
         ("Important dates", {"fields": ("date_joined", "last_login")}),
+    )
+    add_fieldsets = (
+        (
+            None,
+            {
+                "classes": ("wide",),
+                "fields": (
+                    "email",
+                    "first_name",
+                    "last_name",
+                    "password1",
+                    "password2",
+                    "is_active",
+                    "is_staff",
+                ),
+            },
+        ),
     )
     ordering = ["-date_joined"]
     filter_horizontal = ["groups", "user_permissions"]
