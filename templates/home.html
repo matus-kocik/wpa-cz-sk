@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div style="height: 500px; background: linear-gradient(to left, rgba(0,0,0,0.4), rgba(0,0,0,0)), url('{% static "images/cr5.jpg" %}') center/cover; background-position: center 30%;">
+                <div class="container h-100">
+                    <div class="row h-100 align-items-center justify-content-end">
+                        <div class="col-lg-6 text-end hero-content">
+                            <h1 class="display-2 text-light fw-bold mb-4">WPA CZ-SK</h1>
+                            <div class="mt-4">
+                                <a href="#" class="btn btn-color rounded-pill btn-lg">
+                                    Přihláška pro nové členy
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="py-5 section-light max-vh-50">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Logo -->
+            <div class="col-lg-6 text-center d-flex align-items-center justify-content-center">
+                <img src="{% static 'images/wpa_logo_50.svg' %}" alt="WPA Logo" class="img-fluid" style="max-width: 400px;">
+            </div>
+            <!-- Text -->
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-4 text-success">World Pheasant Association CZ-SK</h2>
+                <p class="text-muted mb-4">Nezisková organizace zastřešující chov a ochranu ptáků z řádu hrabavých (Galliformes). WPA působí na mezinárodním poli v záchraně ohrožených druhů a jejich návratu do přírody.</p>
+                <p class="text-muted mb-4">Mezi pilotní projekty patří reintrodukce bažanta vietnamského (Lophura hatinhensis) zpět do původního místa výskytu ve Vietnamu, kde je již pravděpodobně vyhynulý.</p>
+                <a href="#" class="btn btn-color rounded-pill">Více o nás</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Cards Section -->
+<section class="py-5 section-dark">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Card 1 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm card-animate">
+                        <div class="ratio ratio-16x9">
+                            <img src="{% static 'images/card_p.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                        </div>
+                    <div class="card-body text-center p-4">
+                        <h4 class="text-dark">Projekty</h4>
+                        <p class="text-muted">Aktuální projekty a výzkum v oblasti ochrany bažantů a jejich přirozeného prostředí.</p>
+                        <a href="#" class="btn btn-color rounded-pill">Přejít na Projekty</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm card-animate">
+                        <div class="ratio ratio-16x9">
+                            <img src="{% static 'images/card_a.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                        </div>
+                    <div class="card-body text-center p-4">
+                        <h4 class="text-dark">Články</h4>
+                        <p class="text-muted">Nejnovější články a publikace o bažantech, jejich chovu a ochraně.</p>
+                        <a href="#" class="btn btn-color rounded-pill">Přejít na Články</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm card-animate">
+                        <div class="ratio ratio-16x9">
+                            <img src="{% static 'images/card_i.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                        </div>
+                    <div class="card-body text-center p-4">
+                        <h4 class="text-dark">Inzerce</h4>
+                        <p class="text-muted">Inzerce spojená s chovem a prodejem bažantů a jiných ptáků.</p>
+                        <a href="#" class="btn btn-color rounded-pill">Přejít na inzerci</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Support Section -->
+<section class="py-5 section-light">
+    <div class="container text-center">
+        <h2 class="fw-bold text-success">Podpořte Nás</h2>
+        <p class="text-muted">Pomozte nám chránit ohrožené druhy ptáků a jejich prostředí.</p>
+        <a href="#" class="btn btn-color btn-lg rounded-pill">Darovat</a>
+    </div>
+</section>
+
+<!-- Articles section -->
+<section class="py-5 section-dark">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-success">Nejnovější články</h2>
+            <p class="text-muted">Aktuální informace ze světa bažantů</p>
+        </div>
+        <div class="row g-4 article-cards">
+            <!-- Article 1 -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="ratio ratio-21x9">
+                        <img src="{% static 'images/cr1.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                    </div>
+                    <div class="card-body">
+                        <small class="text-muted">12. Leden 2024</small>
+                        <h5 class="card-title mt-2 text-dark">Nový druh bažanta objeven</h5>
+                        <p class="card-text text-muted">Vědci objevili nový druh bažanta v horských oblastech Asie...</p>
+                        <a href="#" class="btn btn-color rounded-pill">Číst více →</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Article 2 -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="ratio ratio-21x9">
+                        <img src="{% static 'images/cr2.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                    </div>
+                    <div class="card-body">
+                        <small class="text-muted">10. Leden 2024</small>
+                        <h5 class="card-title mt-2 text-dark">Ochrana přirozeného prostředí</h5>
+                        <p class="card-text text-muted">Nový projekt na ochranu přirozeného prostředí bažantů...</p>
+                        <a href="#" class="btn btn-color rounded-pill">Číst více →</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Article 3 -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="ratio ratio-21x9">
+                        <img src="{% static 'images/cr3.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                    </div>
+                    <div class="card-body">
+                        <small class="text-muted">8. Leden 2024</small>
+                        <h5 class="card-title mt-2 text-dark">Výroční členská schůze</h5>
+                        <p class="card-text text-muted">Pozvánka na výroční členskou schůzi WPA CZ-SK...</p>
+                        <a href="#" class="btn btn-color rounded-pill">Číst více →</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Article 4 -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="ratio ratio-21x9">
+                        <img src="{% static 'images/cr4.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                    </div>
+                    <div class="card-body">
+                        <small class="text-muted">6. Leden 2024</small>
+                        <h5 class="card-title mt-2 text-dark">Nové přidružené centrum</h5>
+                        <p class="card-text text-muted">Otevření nového přidruženého centra pro chov bažantů...</p>
+                        <a href="#" class="btn btn-color rounded-pill">Číst více →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Events Section -->
+<section class="py-5 section-light">
+    <div class="container text-center">
+        <h2 class="fw-bold text-success mb-4">Připravované Události</h2>
+        <p class="text-muted">Zapojte se do nadcházejících aktivit WPA CZ-SK.</p>
+        <div class="row g-4">
+            <!-- Event 1 -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="text-dark">Výroční Schůze</h5>
+                        <p class="text-muted">Datum: 20. Leden 2024</p>
+                        <p class="text-muted">Místo: Bratislava, Slovensko</p>
+                        <a href="#" class="btn btn-color rounded-pill">Více informací →</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Event 2 -->
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="text-dark">Workshop Chovu Bažantů</h5>
+                        <p class="text-muted">Datum: 15. Únor 2024</p>
+                        <p class="text-muted">Místo: Praha, Česká republika</p>
+                        <a href="#" class="btn btn-color rounded-pill">Více informací →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Partners Section -->
+<section class="py-5 section-dark">
+    <div class="container text-center">
+        <h2 class="fw-bold text-success">Naši Partneři</h2>
+        <p class="text-muted mb-5">Spolupracujeme s nejlepšími organizacemi na ochranu přírody.</p>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <img src="{% static 'images/partner1.png' %}" alt="Partner" class="img-fluid">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'images/partner2.png' %}" alt="Partner" class="img-fluid">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'images/partner3.png' %}" alt="Partner" class="img-fluid">
+            </div>
+            <div class="col-md-3">
+                <img src="{% static 'images/partner4.png' %}" alt="Partner" class="img-fluid">
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Statistic Section -->
+    <section class="py-5 section-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-success">Statistiky</h2>
+                <p class="text-muted">Přehled našich výsledků v číslech</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <!-- Chart members -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <canvas id="membersChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <!-- Chart breeding -->
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <canvas id="breedingChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
