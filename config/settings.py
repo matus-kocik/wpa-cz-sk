@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     # Local apps
+    "users",
 ]
 
 if DEBUG:
@@ -58,7 +59,7 @@ MIDDLEWARE = [
 ]
 
 # Custom User Model
-# AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = "users.CustomUser"
 
 ROOT_URLCONF = "config.urls"
 

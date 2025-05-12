@@ -50,42 +50,48 @@
         <div class="row g-4">
             <!-- Card 1 -->
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm card-animate">
-                        <div class="ratio ratio-16x9">
-                            <img src="{% static 'images/card_p.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                <div class="card h-100 border-0 shadow-sm card-animate d-flex flex-column">
+                    <div class="ratio ratio-16x9">
+                        <img src="{% static 'images/card_p.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                    </div>
+                    <div class="card-body text-center p-4 d-flex flex-column justify-content-between flex-grow-1">
+                        <div>
+                            <h4 class="text-dark">Projekty</h4>
+                            <p class="text-muted">Projekty a výzkum v oblasti ochrany bažantů...</p>
                         </div>
-                    <div class="card-body text-center p-4">
-                        <h4 class="text-dark">Projekty</h4>
-                        <p class="text-muted">Aktuální projekty a výzkum v oblasti ochrany bažantů a jejich přirozeného prostředí.</p>
-                        <a href="#" class="btn btn-color rounded-pill">Přejít na Projekty</a>
+                        <a href="#" class="btn btn-color rounded-pill mt-3">Projekty</a>
                     </div>
                 </div>
             </div>
 
             <!-- Card 2 -->
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm card-animate">
-                        <div class="ratio ratio-16x9">
-                            <img src="{% static 'images/card_a.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                <div class="card h-100 border-0 shadow-sm card-animate d-flex flex-column">
+                    <div class="ratio ratio-16x9">
+                        <img src="{% static 'images/card_a.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                    </div>
+                    <div class="card-body text-center p-4 d-flex flex-column justify-content-between flex-grow-1">
+                        <div>
+                            <h4 class="text-dark">Články</h4>
+                            <p class="text-muted">Nejnovější články a publikace o bažantech...</p>
                         </div>
-                    <div class="card-body text-center p-4">
-                        <h4 class="text-dark">Články</h4>
-                        <p class="text-muted">Nejnovější články a publikace o bažantech, jejich chovu a ochraně.</p>
-                        <a href="#" class="btn btn-color rounded-pill">Přejít na Články</a>
+                        <a href="#" class="btn btn-color rounded-pill mt-3">Články</a>
                     </div>
                 </div>
             </div>
 
             <!-- Card 3 -->
             <div class="col-md-4">
-                <div class="card h-100 border-0 shadow-sm card-animate">
-                        <div class="ratio ratio-16x9">
-                            <img src="{% static 'images/card_i.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                <div class="card h-100 border-0 shadow-sm card-animate d-flex flex-column">
+                    <div class="ratio ratio-16x9">
+                        <img src="{% static 'images/card_i.jpg' %}" class="card-img-top object-fit-cover" alt="News">
+                    </div>
+                    <div class="card-body text-center p-4 d-flex flex-column justify-content-between flex-grow-1">
+                        <div>
+                            <h4 class="text-dark">Inzerce</h4>
+                            <p class="text-muted">Inzerce spojená s chovem a prodejem bažantů...</p>
                         </div>
-                    <div class="card-body text-center p-4">
-                        <h4 class="text-dark">Inzerce</h4>
-                        <p class="text-muted">Inzerce spojená s chovem a prodejem bažantů a jiných ptáků.</p>
-                        <a href="#" class="btn btn-color rounded-pill">Přejít na inzerci</a>
+                        <a href="#" class="btn btn-color rounded-pill mt-3">Inzerci</a>
                     </div>
                 </div>
             </div>
@@ -94,11 +100,22 @@
 </section>
 
 <!-- Support Section -->
-<section class="py-5 section-light">
-    <div class="container text-center">
-        <h2 class="fw-bold text-success">Podpořte Nás</h2>
-        <p class="text-muted">Pomozte nám chránit ohrožené druhy ptáků a jejich prostředí.</p>
-        <a href="#" class="btn btn-color btn-lg rounded-pill">Darovat</a>
+<section style="position: relative; min-height: 500px; background-image: url('{% static "images/cros.jpg" %}'); background-size: cover; background-position: 100% 20%; display: flex; align-items: center;">
+    <!-- Overlay -->
+    <div style="position: absolute; inset: 0; background: rgba(0, 0, 0, 0.4); z-index: 1;"></div>
+
+    <div class="container" style="position: relative; z-index: 2;">
+        <div class="row w-100">
+            <div class="col-lg-5">
+                <h1 class="display-2 text-light fw-bold mb-4">
+                    Podpořte Nás
+                </h1>
+                <p class="text-light mb-4">
+                    Podporte ochranu hrabavých vtákov. Staňte sa členom alebo prispejte!
+                </p>
+                <a href="#" class="btn btn-color rounded-pill btn-lg">Darovat</a>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -170,6 +187,7 @@
     </div>
 </section>
 
+{% comment %}
 <!-- Events Section -->
 <section class="py-5 section-light">
     <div class="container text-center">
@@ -201,55 +219,55 @@
         </div>
     </div>
 </section>
+{% endcomment %}
 
 <!-- Partners Section -->
 <section class="py-5 section-dark">
     <div class="container text-center">
         <h2 class="fw-bold text-success">Naši Partneři</h2>
-        <p class="text-muted mb-5">Spolupracujeme s nejlepšími organizacemi na ochranu přírody.</p>
+        <p class="text-muted mb-5"></p>
         <div class="row g-4">
-            <div class="col-md-3">
-                <img src="{% static 'images/partner1.png' %}" alt="Partner" class="img-fluid">
+            <div class="col-md-4">
+                <img src="{% static 'images/zoo_brno.png' %}" alt="Partner" class="img-fluid">
             </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/partner2.png' %}" alt="Partner" class="img-fluid">
+            <div class="col-md-4">
+                <img src="{% static 'images/zoo_kosice.png' %}" alt="Partner" class="img-fluid">
             </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/partner3.png' %}" alt="Partner" class="img-fluid">
-            </div>
-            <div class="col-md-3">
-                <img src="{% static 'images/partner4.png' %}" alt="Partner" class="img-fluid">
+            <div class="col-md-4">
+                <img src="{% static 'images/zoo_zlin.png' %}" alt="Partner" class="img-fluid">
             </div>
         </div>
     </div>
 </section>
 
-    <!-- Statistic Section -->
-    <section class="py-5 section-light">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="fw-bold text-success">Statistiky</h2>
-                <p class="text-muted">Přehled našich výsledků v číslech</p>
-            </div>
-            <div class="row">
-                <div class="col-md-6 mb-4">
-                    <!-- Chart members -->
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body">
-                            <canvas id="membersChart"></canvas>
-                        </div>
+{% comment %}
+<!-- Statistic Section -->
+<section class="py-5 section-light">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold text-success">Statistiky</h2>
+            <p class="text-muted">Přehled našich výsledků v číslech</p>
+        </div>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <!-- Chart members -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <canvas id="membersChart"></canvas>
                     </div>
                 </div>
-                <div class="col-md-6 mb-4">
-                    <!-- Chart breeding -->
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body">
-                            <canvas id="breedingChart"></canvas>
-                        </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <!-- Chart breeding -->
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <canvas id="breedingChart"></canvas>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+{% endcomment %}
 
 {% endblock %}
