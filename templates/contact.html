@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Kontakt | WPA CZ-SK{% endblock %}
+
+{% block content %}
+
+<section class="py-16 bg-white">
+  <div class="max-w-7xl mx-auto px-4">
+
+    <div class="mb-12 text-center">
+      <h2 class="text-3xl font-bold text-green-700">Kontaktní údaje</h2>
+      <p class="text-gray-700 mt-2 leading-relaxed">
+        World Pheasant Association Czech Republic and Slovakia z. s.<br>
+        Registrace: Ministerstvo spravedlnosti České republiky<br>
+        IČ: 22750223<br>
+        <strong>Čeladná 752, 739 12 Čeladná, Česká Republika</strong>
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-10">
+
+      <div class="grid gap-6">
+        <div class="bg-green-100 rounded-lg shadow-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-800">Předseda</h3>
+          <p class="text-gray-700">Jakub Janosch</p>
+          <p>Email: <a href="mailto:j.janoschbf@gmail.com" class="text-green-700 hover:underline">j.janoschbf@gmail.com</a></p>
+          <p>Telefon: <a href="tel:+420602419057" class="text-green-700 hover:underline">+420 602 419 057</a></p>
+        </div>
+
+        <div class="bg-green-100 rounded-lg shadow-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-800">Místopředseda</h3>
+          <p class="text-gray-700">Anton Stankovič</p>
+          <p>Email: <a href="mailto:stankovictony@gmail.com" class="text-green-700 hover:underline">stankovictony@gmail.com</a></p>
+          <p>Telefon: <a href="tel:+421905714237" class="text-green-700 hover:underline">+421 905 714 237</a></p>
+        </div>
+
+        <div class="bg-green-100 rounded-lg shadow-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-800">Jednatel</h3>
+          <p class="text-gray-700">Jakub Jorda</p>
+          <p>Email: <a href="mailto:jordajakub@seznam.cz" class="text-green-700 hover:underline">jordajakub@seznam.cz</a></p>
+          <p>Telefon: <a href="tel:+420604908011" class="text-green-700 hover:underline">+420 604 908 011</a></p>
+        </div>
+
+        <div class="bg-green-100 rounded-lg shadow-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-800">Registrátor</h3>
+          <p class="text-gray-700">Robert Prokipčák</p>
+          <p>Email: <a href="mailto:r.prokipcak@swietelsky.cz" class="text-green-700 hover:underline">r.prokipcak@swietelsky.cz</a></p>
+          <p>Telefon: <a href="tel:+420602445150" class="text-green-700 hover:underline">+420 602 445 150</a></p>
+        </div>
+
+        <div class="bg-green-100 rounded-lg shadow-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-800">Pokladník</h3>
+          <p class="text-gray-700">Roman Kocourek</p>
+          <p>Email: <a href="mailto:romankocourek@seznam.cz" class="text-green-700 hover:underline">romankocourek@seznam.cz</a></p>
+          <p>Telefon: <a href="tel:+420602743829" class="text-green-700 hover:underline">+420 602 743 829</a></p>
+        </div>
+
+        <div class="bg-green-100 rounded-lg shadow-lg p-6">
+          <h3 class="text-xl font-semibold text-gray-800">Správce webu</h3>
+          <p class="text-gray-700">Zdenko Figura</p>
+          <p>Email: <a href="mailto:z.figura@wpacz-sk.com" class="text-green-700 hover:underline">z.figura@wpacz-sk.com</a></p>
+          <p>Telefon: <a href="tel:+421902114134" class="text-green-700 hover:underline">+421 902 114 134</a></p>
+        </div>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold text-green-700 mb-6 text-center">Napište nám</h2>
+
+        <form method="post" action="">
+          {% csrf_token %}
+          {{ form.non_field_errors }}
+
+          <div class="space-y-4">
+            <div>
+              {{ form.name.label_tag }}
+              {{ form.name }}
+              {{ form.name.errors }}
+            </div>
+            <div>
+              {{ form.email.label_tag }}
+              {{ form.email }}
+              {{ form.email.errors }}
+            </div>
+            <div>
+              {{ form.subject.label_tag }}
+              {{ form.subject }}
+              {{ form.subject.errors }}
+            </div>
+            <div>
+              {{ form.message.label_tag }}
+              {{ form.message }}
+              {{ form.message.errors }}
+            </div>
+          </div>
+
+          <div class="mt-6 text-center">
+            <button type="submit"
+              class="bg-green-600 text-white font-semibold px-6 py-2 rounded-full shadow transition">
+              Odeslat
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,138 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="cz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}WPA CZ-SK{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="{% static 'images/wpa-logo-favicon.ico' %}">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  </head>
+  <body class="bg-white text-gray-900 font-sans">
+
+    <!-- Top Bar -->
+    <section class="py-2 bg-green-100">
+      <div
+        class="max-w-7xl mx-auto px-4 flex justify-between items-center flex-wrap"
+      >
+        <div class="flex items-center space-x-4">
+          <small class="flex flex-col sm:flex-row sm:space-x-6 text-sm">
+            <a href="tel:+420602419057" class="flex items-center space-x-1 text-green-900 hover:text-green-700">
+              <i data-lucide="phone"></i><span>+420 602 419 057</span>
+            </a>
+            <a href="mailto:j.janoschbf@gmail.com" class="flex items-center space-x-1 text-green-900 hover:text-green-700">
+              <i data-lucide="mail"></i><span>j.janoschbf@gmail.com</span>
+            </a>
+          </small>
+        </div>
+        <div class="flex items-center space-x-4 mt-2 sm:mt-0">
+          <!-- Facebook -->
+          <a href="https://www.facebook.com/wpacz"
+            class="group bg-transparent hover:bg-[#1877F2] rounded-full p-2 transition-colors duration-200"
+            target="_blank">
+            <i data-lucide="facebook" class=" stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+          </a>
+
+          <!-- YouTube -->
+          <a href="https://www.youtube.com/@wpacz-sk7012"
+            class="group bg-transparent hover:bg-[#FF0000] rounded-full p-2 transition-colors duration-200"
+            target="_blank">
+            <i data-lucide="youtube" class=" stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Navigation -->
+    <section>
+      <nav class="bg-green-200 shadow sticky top-0 z-50">
+        <div
+          class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16"
+        >
+        <a href="{% url 'home' %}" class="flex items-center space-x-2">
+          <img src="{% static 'images/wpa-logo-square.png' %}" alt="WPA Logo" style="height: 60px;" class="w-auto object-contain">
+          <span class="text-lg font-bold text-green-900 leading-tight">
+            WPA CZ-SK
+          </span>
+        </a>
+
+          <div class="hidden md:flex space-x-6">
+            <a href="{% url 'home' %}" class="text-green-800 hover:text-green-900">Domov</a>
+            {% comment %}
+            <a href="#" class="text-green-800 hover:text-green-900">Služby</a>
+            <a href="#" class="text-green-800 hover:text-green-900">Projekty</a>
+            {% endcomment %}
+            <a href="{% url 'contact' %}" class="text-green-800 hover:text-green-900">Kontakt</a>
+          </div>
+          <div class="md:hidden">
+            <button
+              id="mobileMenuButton"
+              class="text-green-800 focus:outline-none"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden px-4 pb-4">
+          {% comment %}
+          <a href="#" class="block py-2 text-green-800 hover:text-green-900"
+            >Domov</a
+          >
+          <a href="#" class="block py-2 text-green-800 hover:text-green-900"
+            >O nás</a
+          >
+          <a href="#" class="block py-2 text-green-800 hover:text-green-900"
+            >Služby</a
+          >
+          <a href="#" class="block py-2 text-green-800 hover:text-green-900"
+            >Projekty</a
+          >
+          {% endcomment %}
+          <a href="{% url 'contact' %}" class="block py-2 text-green-800 hover:text-green-900">Kontakt</a>
+        </div>
+      </nav>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="relative">
+      <img src="{% static 'images/pav-1.webp' %}" class="w-full h-[500px] object-cover">
+
+      <div class="absolute inset-0 flex items-center justify-end pr-10">
+        <div class="px-6 py-4 rounded-lg shadow-lg max-w-xl text-right text-green-900"
+            style="background-color: rgba(220, 252, 231, 0.8);">
+          <h1 class="text-5xl font-bold mb-0">WPA CZ-SK</h1>
+          {% comment %}
+          <a href="#" class="inline-block mt-4 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full text-lg">
+            Přihláška pro nové členy
+          </a>
+          {% endcomment %}
+        </div>
+      </div>
+    </section>
+
+    {% block content %}{% endblock %}
+
+    <!-- "Footer Image" Section -->
+    <section class="relative h-[500px] bg-cover" style="background-image: url('{% static "images/cros.webp" %}'); background-position: center 20%;">
+    </section>
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

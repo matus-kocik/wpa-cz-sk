@@ -9,6 +9,7 @@ tools
 **/*.jpeg
 **/*.png
 home_test.html
+!static/images/wpa-logo-square.png
 
 ### Django ###
 *.log

@@ -17,4 +17,5 @@ dependencies = [
 [dependency-groups]
 dev = [
     "django-extensions>=4.1",
+    "pillow>=11.3.0",
 ]
