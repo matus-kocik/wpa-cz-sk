@@ -12,9 +12,7 @@
 
     <!-- Top Bar -->
     <section class="py-2 bg-green-100">
-      <div
-        class="max-w-7xl mx-auto px-4 flex justify-between items-center flex-wrap"
-      >
+      <div class="container mx-auto px-4 flex justify-between items-center flex-wrap">
         <div class="flex items-center space-x-4">
           <small class="flex flex-col sm:flex-row sm:space-x-6 text-sm">
             <a href="tel:+420602419057" class="flex items-center space-x-1 text-green-900 hover:text-green-700">
@@ -46,9 +44,7 @@
     <!-- Main Navigation -->
     <section>
       <nav class="bg-green-200 shadow sticky top-0 z-50">
-        <div
-          class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16"
-        >
+        <div class="container mx-auto px-4 flex items-center justify-between h-16">
         <a href="{% url 'home' %}" class="flex items-center space-x-2">
           <img src="{% static 'images/wpa-logo-square.png' %}" alt="WPA Logo" style="height: 60px;" class="w-auto object-contain">
           <span class="text-lg font-bold text-green-900 leading-tight">
@@ -106,22 +102,23 @@
       </nav>
     </section>
 
-    <!-- Hero Section -->
-    <section class="relative">
-      <img src="{% static 'images/pav-1.webp' %}" class="w-full h-[500px] object-cover">
+<!-- Hero Section -->
+<section class="relative">
+  <img src="{% static 'images/pav-1.webp' %}" class="w-full h-[500px] object-cover">
 
-      <div class="absolute inset-0 flex items-center justify-end pr-10">
-        <div class="px-6 py-4 rounded-lg shadow-lg max-w-xl text-right text-green-900"
-            style="background-color: rgba(220, 252, 231, 0.8);">
-          <h1 class="text-5xl font-bold mb-0">WPA CZ-SK</h1>
-          {% comment %}
-          <a href="#" class="inline-block mt-4 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full text-lg">
-            Přihláška pro nové členy
-          </a>
-          {% endcomment %}
-        </div>
+  <div class="absolute inset-0 flex items-center">
+    <div class="container mx-auto px-4">
+      <div class="inline-block px-6 py-4 rounded-lg shadow-lg text-left text-green-900" style="background-color: rgba(220, 252, 231, 0.8);">
+        <h1 class="text-5xl font-bold mb-0">WPA CZ-SK</h1>
+      {% comment %}
+      <a href="#" class="inline-block mt-4 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full text-lg">
+        Přihláška pro nové členy
+      </a>
+      {% endcomment %}
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     {% block content %}{% endblock %}
 
