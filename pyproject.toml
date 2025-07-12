@@ -10,6 +10,11 @@ authors = [
 license = "MIT"
 dependencies = [
     "django>=5.2.4",
+    "django-countries>=7.6.1",
+    "django-ratelimit>=4.1.0",
+    "django-recaptcha>=4.1.0",
+    "dnspython>=2.7.0",
+    "phonenumbers>=9.0.9",
     "psycopg-binary>=3.2.9",
     "python-decouple>=3.8",
 ]
@@ -18,4 +23,5 @@ dependencies = [
 dev = [
     "django-extensions>=4.1",
     "pillow>=11.3.0",
+    "requests>=2.32.4",
 ]

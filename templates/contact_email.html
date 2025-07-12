@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>Nová zpráva z kontaktního formuláře</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #f0fdf4;
+      color: #1f2937;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+    .container {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+      max-width: 700px;
+      margin: auto;
+    }
+    h2 {
+      color: #166534;
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    .section {
+      background-color: #dcfce7;
+      padding: 1.25rem;
+      border-radius: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+    h3 {
+      font-size: 1.25rem;
+      color: #15803d;
+      margin-bottom: 1rem;
+    }
+    p {
+      margin-bottom: 0.5rem;
+      font-size: 1rem;
+    }
+    strong {
+      color: #065f46;
+    }
+    .footer {
+      margin-top: 2rem;
+      font-size: 0.875rem;
+      color: #6b7280;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📩 Nová zpráva z kontaktního formuláře</h2>
+
+    <div class="section">
+      <h3>👤 Odesílatel</h3>
+      <p><strong>Jméno:</strong> {{ first_name }}</p>
+      <p><strong>Příjmení:</strong> {{ last_name }}</p>
+      <p><strong>Email:</strong> {{ email }}</p>
+    </div>
+
+    <div class="section">
+      <h3>📝 Detaily zprávy</h3>
+      <p><strong>Předmět:</strong> {{ subject }}</p>
+      <p><strong>Zpráva:</strong></p>
+      <p>{{ message_body }}</p>
+    </div>
+
+    <div class="footer">
+      Tato zpráva byla odeslána z kontaktního formuláře na webu <strong>WPA CZ-SK</strong>.
+    </div>
+  </div>
+</body>
+</html>
