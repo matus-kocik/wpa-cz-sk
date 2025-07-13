@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="cs">
-<head>
-  <meta charset="UTF-8">
-  <title>Nová zpráva z kontaktního formuláře</title>
-  <style>
+    <head>
+        <meta charset="UTF-8">
+        <title>Nová zpráva z kontaktního formuláře</title>
+        <style>
     body {
       font-family: sans-serif;
       background-color: #f0fdf4;
@@ -49,29 +49,36 @@
       border-top: 1px solid #e5e7eb;
       padding-top: 1rem;
     }
-  </style>
-</head>
-<body>
-  <div class="container">
-    <h2>📩 Nová zpráva z kontaktního formuláře</h2>
-
-    <div class="section">
-      <h3>👤 Odesílatel</h3>
-      <p><strong>Jméno:</strong> {{ first_name }}</p>
-      <p><strong>Příjmení:</strong> {{ last_name }}</p>
-      <p><strong>Email:</strong> {{ email }}</p>
-    </div>
-
-    <div class="section">
-      <h3>📝 Detaily zprávy</h3>
-      <p><strong>Předmět:</strong> {{ subject }}</p>
-      <p><strong>Zpráva:</strong></p>
-      <p>{{ message_body }}</p>
-    </div>
-
-    <div class="footer">
-      Tato zpráva byla odeslána z kontaktního formuláře na webu <strong>WPA CZ-SK</strong>.
-    </div>
-  </div>
-</body>
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>📩 Nová zpráva z kontaktního formuláře</h2>
+            <div class="section">
+                <h3>👤 Odesílatel</h3>
+                <p>
+                    <strong>Jméno:</strong> {{ first_name }}
+                </p>
+                <p>
+                    <strong>Příjmení:</strong> {{ last_name }}
+                </p>
+                <p>
+                    <strong>Email:</strong> {{ email }}
+                </p>
+            </div>
+            <div class="section">
+                <h3>📝 Detaily zprávy</h3>
+                <p>
+                    <strong>Předmět:</strong> {{ subject }}
+                </p>
+                <p>
+                    <strong>Zpráva:</strong>
+                </p>
+                <p>{{ message_body }}</p>
+            </div>
+            <div class="footer">
+                Tato zpráva byla odeslána z kontaktního formuláře na webu <strong>WPA CZ-SK</strong>.
+            </div>
+        </div>
+    </body>
 </html>

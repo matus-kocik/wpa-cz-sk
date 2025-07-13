@@ -1,53 +1,52 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block content %}
-<section class="py-16 bg-white">
-  <div class="max-w-4xl mx-auto px-4">
-
-    <h1 class="text-3xl font-bold text-green-700 mb-6">Podmínky přihlášky a členství</h1>
-
-    <p class="text-gray-700 leading-relaxed mb-4">
-      Žadatel tímto žádá o získání členství ve <strong>World Pheasant Association Czech Republic and Slovakia z. s.</strong>.
-      Souhlasí se stanovami spolku a hodlá se dle svých možností podílet na jeho činnosti a cílech.
-    </p>
-
-    <p class="text-gray-700 leading-relaxed mb-4">
-      V případě řádného členství se zavazuje hradit členské poplatky ve výši schválené členskou schůzí:
-      <strong>500&nbsp;Kč / 21&nbsp;€</strong> za rok.
-    </p>
-
-    <h2 class="text-2xl font-semibold text-green-600 mt-8 mb-4">Způsob úhrady členského příspěvku</h2>
-    <ul class="list-disc pl-6 mt-2 mb-4 text-gray-700">
-      <li>v CZK (v rámci ČR) převodem na účet Fio banky č. <strong>2800315149/2010</strong>  
-        (IBAN: CZ57 2010 0000 0028 0031 5149, BIC: FIOBCZPPXXX)</li>
-      <li>v EUR (ze zahraničí včetně SR) na účet Fio banky č. <strong>2202864009/2010</strong>  
-        (IBAN: CZ36 2010 0000 0022 0286 4009, BIC: FIOBCZPPXXX)</li>
-      <li>nebo v hotovosti pokladníkovi sdružení</li>
-    </ul>
-
-    <p class="text-gray-700 leading-relaxed mb-4">
-      Účty jsou transparentní a transakce lze sledovat na stránkách Fio banky:<br>
-      <a href="https://ib.fio.cz/ib/transparent?a=2800315149" class="text-green-700 underline hover:text-green-900" target="_blank">CZK účet</a> | 
-      <a href="https://ib.fio.cz/ib/transparent?a=2202864009" class="text-green-700 underline hover:text-green-900" target="_blank">EUR účet</a>
-    </p>
-
-    <h2 class="text-2xl font-semibold text-green-600 mt-8 mb-4">Zpracování osobních údajů</h2>
-    <p class="text-gray-700 leading-relaxed mb-4">
-      Žadatel svým podpisem souhlasí se správou, zpracováním a uchováváním svých osobních údajů pro vnitřní
-      administrativní účely spolku, a to v souladu se zákonem č. 101/2000 Sb. o ochraně osobních údajů.
-      Tento souhlas je poskytnut na dobu žádosti a členství.
-    </p>
-
-    <p class="text-gray-700 leading-relaxed mb-4">
-      Žadatel má právo na přístup, opravu, výmaz a další práva dle § 21 uvedeného zákona. Podrobnosti najdete v dokumentu
-      <a href="{% url 'gdpr' %}" target="_blank" class="underline text-green-700 hover:text-green-900">Zásady zpracování osobních údajů (GDPR)</a>.
-    </p>
-
-    <p class="text-gray-700 leading-relaxed mt-8">
-      Žadatel potvrzuje, že všechny uvedené údaje jsou pravdivé a přesné.
-    </p>
-
-  </div>
-</section>
+    <section class="py-16 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <h1 class="text-3xl font-bold text-green-700 mb-6">Podmínky přihlášky a členství</h1>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Žadatel tímto žádá o získání členství ve <strong>World Pheasant Association Czech Republic and Slovakia z. s.</strong>.
+                Souhlasí se stanovami spolku a hodlá se dle svých možností podílet na jeho činnosti a cílech.
+            </p>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                V případě řádného členství se zavazuje hradit členské poplatky ve výši schválené členskou schůzí:
+                <strong>500&nbsp;Kč / 21&nbsp;€</strong> za rok.
+            </p>
+            <h2 class="text-2xl font-semibold text-green-600 mt-8 mb-4">Způsob úhrady členského příspěvku</h2>
+            <ul class="list-disc pl-6 mt-2 mb-4 text-gray-700">
+                <li>
+                    v CZK (v rámci ČR) převodem na účet Fio banky č. <strong>2800315149/2010</strong>
+                    (IBAN: CZ57 2010 0000 0028 0031 5149, BIC: FIOBCZPPXXX)
+                </li>
+                <li>
+                    v EUR (ze zahraničí včetně SR) na účet Fio banky č. <strong>2202864009/2010</strong>
+                    (IBAN: CZ36 2010 0000 0022 0286 4009, BIC: FIOBCZPPXXX)
+                </li>
+                <li>nebo v hotovosti pokladníkovi sdružení</li>
+            </ul>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Účty jsou transparentní a transakce lze sledovat na stránkách Fio banky:
+                <br>
+                <a href="https://ib.fio.cz/ib/transparent?a=2800315149"
+                   class="text-green-700 underline hover:text-green-900"
+                   target="_blank">CZK účet</a> |
+                <a href="https://ib.fio.cz/ib/transparent?a=2202864009"
+                   class="text-green-700 underline hover:text-green-900"
+                   target="_blank">EUR účet</a>
+            </p>
+            <h2 class="text-2xl font-semibold text-green-600 mt-8 mb-4">Zpracování osobních údajů</h2>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Žadatel svým podpisem souhlasí se správou, zpracováním a uchováváním svých osobních údajů pro vnitřní
+                administrativní účely spolku, a to v souladu se zákonem č. 101/2000 Sb. o ochraně osobních údajů.
+                Tento souhlas je poskytnut na dobu žádosti a členství.
+            </p>
+            <p class="text-gray-700 leading-relaxed mb-4">
+                Žadatel má právo na přístup, opravu, výmaz a další práva dle § 21 uvedeného zákona. Podrobnosti najdete v dokumentu
+                <a href="{% url 'gdpr' %}"
+                   target="_blank"
+                   class="underline text-green-700 hover:text-green-900">Zásady zpracování osobních údajů (GDPR)</a>.
+            </p>
+            <p class="text-gray-700 leading-relaxed mt-8">Žadatel potvrzuje, že všechny uvedené údaje jsou pravdivé a přesné.</p>
+        </div>
+    </section>
 {% endblock %}

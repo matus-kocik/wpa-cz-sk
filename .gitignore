@@ -4,12 +4,13 @@
 Makefile
 .pre-commit-config.yaml
 tools
+.djlintrc
 # Ignore images format jpg, png, jpeg
-**/*.jpg
-**/*.jpeg
-**/*.png
-home_test.html
-!static/images/wpa-logo-square.png
+*.png
+*.jpg
+*.jpeg
+!static/images/wpa-logo-black-192.png
+!static/images/wpa-logo-black-512.png
 
 ### Django ###
 *.log

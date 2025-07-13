@@ -1,25 +1,14 @@
-"""
-URL configuration for config project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 from django.views.generic import TemplateView
+
+from core.sitemaps import CoreViewSitemap
 from core.views import ContactView, MembershipApplicationView
 
+sitemaps = {
+    "core": CoreViewSitemap,
+}
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -30,10 +19,20 @@ urlpatterns = [
         MembershipApplicationView.as_view(),
         name="membership_application",
     ),
+    path(
+        "wpa-ve-svete/",
+        TemplateView.as_view(template_name="wpa_world.html"),
+        name="wpa_world",
+    ),
     path("gdpr/", TemplateView.as_view(template_name="gdpr.html"), name="gdpr"),
     path(
         "podminky-prihlasky/",
         TemplateView.as_view(template_name="membership_terms.html"),
         name="membership_terms",
+    ),
+    path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
+    path(
+        "robots.txt",
+        TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
 ]

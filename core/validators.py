@@ -1,9 +1,10 @@
-import re
 import os
-import dns.resolver
-from phonenumbers import parse, is_valid_number, NumberParseException
-from django.core.exceptions import ValidationError
+import re
 from datetime import date
+
+import dns.resolver
+from django.core.exceptions import ValidationError
+from phonenumbers import NumberParseException, is_valid_number, parse
 
 
 def validate_human_name(value):
@@ -73,6 +74,7 @@ def validate_message_body(value):
     if not any(c.isalpha() for c in value):
         raise ValidationError("Zpráva musí obsahovat text.")
 
+
 def validate_academic_title(value):
     if not re.match(r"^[A-Za-zČŠŽŤĎĚŇŘÁÉÍÓÚÝÄÖÜĽŔŮĚ\. ]*$", value):
         raise ValidationError("Titul může obsahovat pouze písmena, tečky a mezery.")
@@ -138,6 +140,7 @@ def validate_postal_code(value):
         raise ValidationError(
             "Zadejte platné PSČ – povolena čísla, písmena, mezery a pomlčky."
         )
+
 
 def validate_notes(value):
     if len(value) > 256:

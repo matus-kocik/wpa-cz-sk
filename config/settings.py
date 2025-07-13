@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.sitemaps",
     # Local apps
     "users",
     "core",
@@ -174,3 +175,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_SITE_KEY")
 RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_SECRET_KEY")
+
+# Security headers
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True

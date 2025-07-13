@@ -1,36 +1,34 @@
 {% extends "base.html" %}
 {% load static %}
-
 {% block content %}
-
-<!-- About Section -->
-<section class="py-16 bg-white">
-    <div class="container mx-auto px-4 grid lg:grid-cols-2 gap-10 items-center">
-        <div class="flex justify-center">
-            <img src="{% static 'images/wpa_logo_50.svg' %}" alt="WPA Logo" class="max-w-xs">
-        </div>
-        <div>
-            <h2 class="text-3xl font-bold text-green-600 mb-6">World Pheasant Association CZ-SK</h2>
-            <p class="text-gray-700 mb-4">
-                Nezisková organizace zastřešující chov a ochranu ptáků z řádu hrabavých (<em>Galliformes</em>). WPA působí na mezinárodním poli záchraně ohrožených druhů a jejich návratu do přírody.
-            </p>
-            <p class="text-gray-700 mb-4">
-                Mezi pilotní projekty patří reintrodukce bažanta vietnamského (<em>Lophura hatinhensis</em>) zpět do původního místa výskytu ve Vietnamu, kde je již pravděpodobně vyhuben. Osud tohoto druhu je v rukou WPA a našich partnerů z řad ZOO a jiných institucí.
-            </p>
-            <p class="text-gray-700 mb-4">
-                WPACZ-SK se rovněž podílí na záchraně našich hrabavých v tuzemsku, tím je reintrodukce koroptve polní (<em>Perdix perdix</em>) v rámci projektu Čiřikání.
-            </p>
-            <p class="text-gray-700 mb-4">
-                Veškeré naše finanční zdroje jsou závislé na podpoře našich dárců.
-            </p>
-            {% comment %}
+    <!-- About Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 grid lg:grid-cols-2 gap-10 items-center">
+            <div class="flex justify-center">
+                <img src="{% static 'images/wpa-logo-black.webp' %}"
+                     alt="World Pheasant Association CZ-SK logo"
+                     loading="lazy"
+                     class="max-w-xs">
+            </div>
+            <div>
+                <h2 class="text-3xl font-bold text-green-600 mb-6">World Pheasant Association CZ-SK</h2>
+                <p class="text-gray-700 mb-4">
+                    Nezisková organizace zastřešující chov a ochranu ptáků z řádu hrabavých (<em>Galliformes</em>). WPA působí na mezinárodním poli záchraně ohrožených druhů a jejich návratu do přírody.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    Mezi pilotní projekty patří reintrodukce bažanta vietnamského (<em>Lophura hatinhensis</em>) zpět do původního místa výskytu ve Vietnamu, kde je již pravděpodobně vyhuben. Osud tohoto druhu je v rukou WPA a našich partnerů z řad ZOO a jiných institucí.
+                </p>
+                <p class="text-gray-700 mb-4">
+                    WPACZ-SK se rovněž podílí na záchraně našich hrabavých v tuzemsku, tím je reintrodukce koroptve polní (<em>Perdix perdix</em>) v rámci projektu Čiřikání.
+                </p>
+                <p class="text-gray-700 mb-4">Veškeré naše finanční zdroje jsou závislé na podpoře našich dárců.</p>
+                {% comment %}
             <a href="#" class="inline-block mt-4 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full">Více o nás</a>
-            {% endcomment %}
+                {% endcomment %}
+            </div>
         </div>
-    </div>
-</section>
-
-{% comment %}
+    </section>
+    {% comment %}
 <!-- Cards Section -->
 <section class="py-16">
     <div class="container mx-auto px-4 grid md:grid-cols-3 gap-8">
@@ -62,117 +60,128 @@
       </div>
     </div>
   </section>
-{% endcomment %}
-
-<!-- Support Section -->
-<section class="relative h-[500px] bg-cover" style="background-image: url('{% static "images/arb-1.webp" %}'); background-position: center 20%;">
-  <div class="absolute inset-0 flex items-center">
-    <div class="container mx-auto px-4">
-      <div class="px-6 py-4 rounded-lg shadow-lg max-w-lg text-green-900"
-          style="background-color: rgba(220, 252, 231, 0.8);">
-        <h2 class="text-4xl font-bold mb-4">Podpořte Nás</h2>
-        <p class="mb-4">Podporte ochranu hrabavých vtákov. Staňte sa členom alebo prispejte!</p>
-        {% comment %}
+    {% endcomment %}
+    <!-- Support Section -->
+    <section class="relative h-[500px] bg-cover"
+             style="background-image: url('{% static "images/arb-1.webp" %}');
+                    background-position: center 20%">
+        <div class="absolute inset-0 flex items-center">
+            <div class="container mx-auto px-4">
+                <div class="px-6 py-4 rounded-lg shadow-lg max-w-lg text-green-900"
+                     style="background-color: rgba(220, 252, 231, 0.8)">
+                    <h2 class="text-4xl font-bold mb-4">Podpořte Nás</h2>
+                    <p class="mb-4">Podporte ochranu hrabavých vtákov. Staňte sa členom alebo prispejte!</p>
+                    {% comment %}
         <a href="#" class="inline-block px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full">Darovat</a>
-        {% endcomment %}
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Articles Section -->
-<section class="py-16">
-    <div class="container mx-auto px-4">
-      <div class="text-center mb-10">
-        <h2 class="text-3xl font-bold text-green-700">Nejnovější články</h2>
-        <p class="text-gray-600">Aktuální informace ze světa bažantů</p>
-      </div>
-  
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 place-items-center">
-        <!-- Article 1 -->
-        <div class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
-          <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
-            <img src="{% static 'images/schodza-zlin-2025.webp' %}" alt="Nový druh bažanta objeven"
-              class="w-full h-full object-cover object-center">
-          </div>
-          <div class="p-6 flex flex-col justify-between min-h-[200px]">
-            <div>
-              <small class="text-gray-500">8. června 2025</small>
-              <h3 class="text-2xl font-semibold text-gray-800 mt-2">Výročná členská schôdza 2025</h3>
-              <p class="text-gray-600 mt-2">Stretnutie WPA CZ-SK v ZOO Zlín - Lešná</p>
+                    {% endcomment %}
+                </div>
             </div>
-            <div class="mt-4">
-              <a href="{% static 'docs/Vyrocna-clenska-schodza-WPA-CZ_SK-2025.pdf' %}" target="_blank" class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
-                Číst více →
-              </a>
-            </div>
-          </div>
         </div>
-  
-        <!-- Article 2 -->
-        <div class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
-          <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
-            <img src="{% static 'images/chov-doporucenie-2025.webp' %}" alt="Ochrana přirozeného prostředí"
-              class="w-full h-full object-cover object-center">
-          </div>
-          <div class="p-6 flex flex-col justify-between min-h-[200px]">
-            <div>
-              <small class="text-gray-500">2. dubna 2025</small>
-              <h3 class="text-2xl font-semibold text-gray-800 mt-2">Chovatelské doporučení 2025</h3>
-              <p class="text-gray-600 mt-2">Doporučení pro soukromé chovatele studbookových pltáku</p>
+    </section>
+    <!-- Articles Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-bold text-green-700">Nejnovější články</h2>
+                <p class="text-gray-600">Aktuální informace ze světa bažantů</p>
             </div>
-            <div class="mt-4">
-              <a href="{% static 'docs/Doporuceni-chovu-2025-pro-bazanty-vietnamske-non-EAZA.pdf' %}" target="_blank" class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
-                Číst více →
-              </a>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 place-items-center">
+                <!-- Article 1 -->
+                <div class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
+                    <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
+                        <img src="{% static 'images/schodza-zlin-2025.webp' %}"
+                             alt="Výročná členská schôdza WPA CZ-SK 2025 v ZOO Zlín"
+                             loading="lazy"
+                             class="w-full h-full object-cover object-center">
+                    </div>
+                    <div class="p-6 flex flex-col justify-between min-h-[200px]">
+                        <div>
+                            <small class="text-gray-500">8. června 2025</small>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-2">Výročná členská schôdza 2025</h3>
+                            <p class="text-gray-600 mt-2">Stretnutie WPA CZ-SK v ZOO Zlín - Lešná</p>
+                        </div>
+                        <div class="mt-4">
+                            <a href="{% static 'docs/Vyrocna-clenska-schodza-WPA-CZ_SK-2025.pdf' %}"
+                               target="_blank"
+                               class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
+                                Číst více →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Article 2 -->
+                <div class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
+                    <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
+                        <img src="{% static 'images/chov-doporucenie-2025.webp' %}"
+                             alt="Chovatelské doporučení 2025 pro bažanty vietnamské"
+                             loading="lazy"
+                             class="w-full h-full object-cover object-center">
+                    </div>
+                    <div class="p-6 flex flex-col justify-between min-h-[200px]">
+                        <div>
+                            <small class="text-gray-500">2. dubna 2025</small>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-2">Chovatelské doporučení 2025</h3>
+                            <p class="text-gray-600 mt-2">Doporučení pro soukromé chovatele studbookových pltáku</p>
+                        </div>
+                        <div class="mt-4">
+                            <a href="{% static 'docs/Doporuceni-chovu-2025-pro-bazanty-vietnamske-non-EAZA.pdf' %}"
+                               target="_blank"
+                               class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
+                                Číst více →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Article 3 -->
+                <div class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
+                    <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
+                        <img src="{% static 'images/orebice.webp' %}"
+                             alt="Článek o orebici uverejnený v Exote"
+                             loading="lazy"
+                             class="w-full h-full object-cover object-center">
+                    </div>
+                    <div class="p-6 flex flex-col justify-between min-h-[200px]">
+                        <div>
+                            <small class="text-gray-500">15. Prosinec 2024</small>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-2">Orebice</h3>
+                            <p class="text-gray-600 mt-2">Článok Orebice uverejnený v Exote</p>
+                        </div>
+                        <div class="mt-4">
+                            <a href="{% static 'docs/Orebice_Bednar_Exota_7-8_2016.pdf' %}"
+                               target="_blank"
+                               class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
+                                Číst více →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Article 4 -->
+                <div class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
+                    <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
+                        <img src="{% static 'images/schodza-nehvizdy-2024.webp' %}"
+                             alt="Výročná členská schôdza WPA CZ-SK 2024 v Zooparku Nehvizdy"
+                             loading="lazy"
+                             class="w-full h-full object-cover object-center">
+                    </div>
+                    <div class="p-6 flex flex-col justify-between min-h-[200px]">
+                        <div>
+                            <small class="text-gray-500">6. Březen 2024</small>
+                            <h3 class="text-2xl font-semibold text-gray-800 mt-2">Výročná členská schôdza 2024</h3>
+                            <p class="text-gray-600 mt-2">Stretnutie WPA CZ-SK v Zooparku Nehvizdy</p>
+                        </div>
+                        <div class="mt-4">
+                            <a href="{% static 'docs/vyrocna_schodza_2024_nehvizdy.pdf' %}"
+                               target="_blank"
+                               class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
+                                Číst více →
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
-  
-        <!-- Article 3 -->
-        <div class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
-          <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
-            <img src="{% static 'images/orebice.webp' %}" alt="Výroční členská schůze"
-              class="w-full h-full object-cover object-center">
-          </div>
-          <div class="p-6 flex flex-col justify-between min-h-[200px]">
-            <div>
-              <small class="text-gray-500">15. Prosinec 2024</small>
-              <h3 class="text-2xl font-semibold text-gray-800 mt-2">Orebice</h3>
-              <p class="text-gray-600 mt-2">Článok Orebice uverejnený v Exote </p>
-            </div>
-            <div class="mt-4">
-              <a href="{% static 'docs/Orebice_Bednar_Exota_7-8_2016.pdf' %}" target="_blank" class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
-                Číst více →
-              </a>
-            </div>
-          </div>
-        </div>
-  
-        <!-- Article 4 -->
-        <div class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
-          <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
-            <img src="{% static 'images/schodza-nehvizdy-2024.webp' %}" alt="Nové přidružené centrum"
-              class="w-full h-full object-cover object-center">
-          </div>
-          <div class="p-6 flex flex-col justify-between min-h-[200px]">
-            <div>
-              <small class="text-gray-500">6. Březen 2024</small>
-              <h3 class="text-2xl font-semibold text-gray-800 mt-2">Výročná členská schôdza 2024</h3>
-              <p class="text-gray-600 mt-2">Stretnutie WPA CZ-SK v Zooparku Nehvizdy</p>
-            </div>
-            <div class="mt-4">
-              <a href="{% static 'docs/vyrocna_schodza_2024_nehvizdy.pdf' %}" target="_blank" class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
-                Číst více →
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  {% comment %}
+    </section>
+    {% comment %}
   <!-- Partners Section -->
   <section class="py-16 bg-white">
       <div class="container mx-auto px-4 text-center">
@@ -184,6 +193,5 @@
           </div>
       </div>
   </section>
-  {% endcomment %}
-
+    {% endcomment %}
 {% endblock %}

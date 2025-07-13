@@ -1,24 +1,26 @@
 from datetime import date
+
 from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from .validators import (
-    validate_human_name,
-    validate_email_domain,
-    validate_subject,
-    validate_message_body,
-    validate_academic_title,
-    validate_birth_date,
-    validate_phone_number,
-    validate_street,
-    validate_house_number,
-    validate_location_name,
-    validate_postal_code,
-    validate_notes,
-    validate_plain_text,
-)
 from django_recaptcha.fields import ReCaptchaField
 from django_recaptcha.widgets import ReCaptchaV2Checkbox
+
+from .validators import (
+    validate_academic_title,
+    validate_birth_date,
+    validate_email_domain,
+    validate_house_number,
+    validate_human_name,
+    validate_location_name,
+    validate_message_body,
+    validate_notes,
+    validate_phone_number,
+    validate_plain_text,
+    validate_postal_code,
+    validate_street,
+    validate_subject,
+)
 
 
 class ContactForm(forms.Form):
@@ -116,14 +118,9 @@ class ContactForm(forms.Form):
         ),
     )
 
-    honeypot = forms.CharField(
-        required=False,
-        widget=forms.HiddenInput,
-        label=""
-    )
+    honeypot = forms.CharField(required=False, widget=forms.HiddenInput, label="")
 
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
-
 
     def clean_honeypot(self):
         value = self.cleaned_data.get("honeypot")
@@ -348,10 +345,12 @@ class MembershipApplicationForm(forms.Form):
     declaration_date = forms.CharField(
         label="Dne",
         initial=date.today().strftime("%d.%m.%Y"),
-        widget=forms.TextInput(attrs={
-            **input_style,
-            "readonly": "readonly",
-        }),
+        widget=forms.TextInput(
+            attrs={
+                **input_style,
+                "readonly": "readonly",
+            }
+        ),
     )
 
     declaration_signature = forms.CharField(

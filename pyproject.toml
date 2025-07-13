@@ -21,7 +21,26 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "black>=25.1.0",
     "django-extensions>=4.1",
+    "djlint>=1.36.4",
+    "isort>=6.0.1",
     "pillow>=11.3.0",
     "requests>=2.32.4",
+    "ruff>=0.12.3",
 ]
+
+[tool.black]
+line-length = 88
+
+[tool.isort]
+profile = "black"
+
+[tool.ruff]
+line-length = 88
+exclude = ["migrations", "static", "media"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+fixable = ["I"]
+ignore = ["D", "ANN", "E501"]

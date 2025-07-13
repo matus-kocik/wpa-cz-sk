@@ -1,13 +1,14 @@
-from django.views.generic.edit import FormView
-from django.urls import reverse_lazy
 from django.conf import settings
 from django.contrib import messages
-from .forms import ContactForm, MembershipApplicationForm
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from django_countries.fields import Country
+from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.views.generic.edit import FormView
+from django_countries.fields import Country
 from django_ratelimit.decorators import ratelimit
+
+from .forms import ContactForm, MembershipApplicationForm
 
 
 @method_decorator(
@@ -22,7 +23,6 @@ class ContactView(FormView):
     template_name = "contact.html"
     form_class = ContactForm
     success_url = reverse_lazy("contact")
-
 
     def form_valid(self, form):
         data = form.cleaned_data
@@ -48,7 +48,7 @@ class ContactView(FormView):
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send()
-        
+
         user_subject = "Potvrzení – zpráva z kontaktního formuláře"
         user_text = render_to_string("contact_user_email.txt", data)
         user_html = render_to_string("contact_user_email.html", data)
@@ -67,7 +67,8 @@ class ContactView(FormView):
 
     def form_invalid(self, form):
         messages.error(
-            self.request, "Formulář obsahuje chyby. Prosím opravte je a zkuste to znovu."
+            self.request,
+            "Formulář obsahuje chyby. Prosím opravte je a zkuste to znovu.",
         )
         return super().form_invalid(form)
 
@@ -120,7 +121,7 @@ class MembershipApplicationView(FormView):
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send()
-        
+
         user_subject = "Potvrzení odeslání přihlášky – WPA CZ-SK"
         user_text = render_to_string("membership_user_email.txt", data)
         user_html = render_to_string("membership_user_email.html", data)
