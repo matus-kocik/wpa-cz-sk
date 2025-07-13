@@ -1,0 +1,11 @@
+Dobrý den {{ first_name }},
+
+děkujeme za vyplnění přihlášky ke členství ve WPA CZ-SK.
+
+Vaše přihláška byla úspěšně doručena. V nejbližších dnech Vás budeme kontaktovat s dalšími informacemi.
+
+--------------------------------------------------
+Tato zpráva slouží jako potvrzení o odeslání přihlášky.
+
+S přáním hezkého dne,  
+Tým WPA CZ-SK

@@ -1,0 +1,19 @@
+Dobrý den {{ first_name }},
+
+děkujeme, že jste nás kontaktoval(a) prostřednictvím webového formuláře na stránkách WPA CZ-SK.
+
+Vaše zpráva byla úspěšně přijata a v nejbližší době se Vám ozveme.
+
+--------------------------------------------------
+📝 Shrnutí Vaší zprávy:
+
+Předmět: {{ subject }}
+
+Zpráva:
+{{ message_body }}
+--------------------------------------------------
+
+Tento e-mail slouží jako potvrzení, že jsme Vaši zprávu obdrželi.
+
+S přáním hezkého dne,  
+Tým WPA CZ-SK

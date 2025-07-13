@@ -48,6 +48,19 @@ class ContactView(FormView):
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send()
+        
+        user_subject = "Potvrzení – zpráva z kontaktního formuláře"
+        user_text = render_to_string("contact_user_email.txt", data)
+        user_html = render_to_string("contact_user_email.html", data)
+
+        user_msg = EmailMultiAlternatives(
+            subject=user_subject,
+            body=user_text,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[data["email"]],
+        )
+        user_msg.attach_alternative(user_html, "text/html")
+        user_msg.send()
 
         messages.success(self.request, "Zpráva byla úspěšně odeslána. Děkujeme!")
         return super().form_valid(form)
@@ -107,6 +120,19 @@ class MembershipApplicationView(FormView):
         )
         msg.attach_alternative(html_content, "text/html")
         msg.send()
+        
+        user_subject = "Potvrzení odeslání přihlášky – WPA CZ-SK"
+        user_text = render_to_string("membership_user_email.txt", data)
+        user_html = render_to_string("membership_user_email.html", data)
+
+        user_msg = EmailMultiAlternatives(
+            subject=user_subject,
+            body=user_text,
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            to=[data["email"]],
+        )
+        user_msg.attach_alternative(user_html, "text/html")
+        user_msg.send()
 
         messages.success(self.request, "Přihláška byla úspěšně odeslána. Děkujeme!")
         return super().form_valid(form)
