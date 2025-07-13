@@ -83,7 +83,7 @@
           </div>
         </div>
         <div id="mobileMenu" class="hidden md:hidden px-4 pb-4">
-          <a href="#" class="block py-2 text-green-800 hover:text-green-900"
+          <a href="{% url 'home' %}" class="block py-2 text-green-800 hover:text-green-900"
             >Domov</a
           >
           {% comment %}
@@ -108,9 +108,9 @@
 
       <div class="absolute inset-0 flex items-center">
         <div class="container mx-auto px-4">
-          <div class="inline-block px-6 py-4 rounded-lg shadow-lg text-left text-green-900" style="background-color: rgba(220, 252, 231, 0.8);">
+          <div class="inline-block px-6 py-4 rounded-lg shadow-lg text-center text-green-900" style="background-color: rgba(220, 252, 231, 0.8);">
             <h1 class="text-5xl font-bold mb-0">WPA CZ-SK</h1>
-            <a href="{% url 'membership_application' %}" class="inline-block mt-4 px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full text-lg">
+            <a href="{% url 'membership_application' %}" class="inline-block mt-4 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full text-xl font-bold">
               Přihláška pro nové členy
             </a>
           </div>
