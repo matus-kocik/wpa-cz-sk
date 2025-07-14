@@ -3,14 +3,15 @@
   "version": "1.0.0",
   "description": "## World Pheasant Association Czech Republic & Slovakia",
   "main": "tailwind.config.js",
-"scripts": {
-  "dev": "tailwindcss -i ./input.css -o ./static/css/styles.css --watch",
-  "build": "tailwindcss -i ./input.css -o ./static/css/styles.css --minify"
-},
+  "scripts": {
+    "dev": "tailwindcss -i ./input.css -o ./static/css/styles.css --watch",
+    "build": "tailwindcss -i ./input.css -o ./static/css/styles.css --minify"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "tailwindcss": "^4.1.11"
+    "tailwindcss": "^4.1.11",
+    "uglify-js": "^3.19.3"
   }
 }
