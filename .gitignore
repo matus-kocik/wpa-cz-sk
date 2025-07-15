@@ -11,7 +11,7 @@ tools
 *.jpeg
 !static/images/wpa-logo-black-192.png
 !static/images/wpa-logo-black-512.png
-static/js/*.min.js
+*.min.js
 
 ### Django ###
 *.log
