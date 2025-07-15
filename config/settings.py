@@ -128,8 +128,7 @@ CONTACT_RECEIVER_EMAIL = config("CONTACT_RECEIVER_EMAIL")
 AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": (
-            "django.contrib.auth.password_validation."
-            "UserAttributeSimilarityValidator"
+            "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"
         ),
     },
     {
