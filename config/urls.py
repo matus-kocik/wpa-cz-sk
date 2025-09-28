@@ -30,6 +30,7 @@ urlpatterns = [
         TemplateView.as_view(template_name="membership_terms.html"),
         name="membership_terms",
     ),
+    path("clenove/", TemplateView.as_view(template_name="members.html"), name="members"),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path(
         "robots.txt",
