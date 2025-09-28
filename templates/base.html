@@ -34,8 +34,7 @@
         <!-- Manifest -->
         <link rel="manifest" href="{% static 'site.webmanifest' %}">
         <!-- CSS -->
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}" />
-    </head>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ DEBUG|yesno:'dev,' }}">    </head>
     <body class="bg-white text-gray-900 font-sans">
         <!-- Top Bar -->
         <section class="py-2 bg-green-100">
@@ -83,6 +82,7 @@
                     </a>
                     <div class="hidden md:flex space-x-6">
                         <a href="{% url 'home' %}" class="text-green-800 hover:text-green-900">Domov</a>
+                        <a href="{% url 'members' %}" class="text-green-800 hover:text-green-900">Členové</a>
                         {% comment %}
             <a href="#" class="text-green-800 hover:text-green-900">Služby</a>
             <a href="#" class="text-green-800 hover:text-green-900">Projekty</a>
@@ -105,6 +105,7 @@
                 <div id="mobileMenu" class="hidden md:hidden px-4 pb-4">
                     <a href="{% url 'home' %}"
                        class="block py-2 text-green-800 hover:text-green-900">Domov</a>
+                    <a href="{% url 'members' %}" class="text-green-800 hover:text-green-900">Členové</a>
                     {% comment %}
           <a href="#" class="block py-2 text-green-800 hover:text-green-900">O nás</a>
           <a href="#" class="block py-2 text-green-800 hover:text-green-900">Služby</a>

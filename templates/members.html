@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <h1 class="text-3xl font-bold text-green-700 mb-6">Seznam členů</h1>
+    <p class="text-gray-700 mb-8">
+      Přehled registrovaných členů WPA CZ-SK, jejich funkcí a zapojení v projektech.
+    </p>
+
+    <div class="overflow-x-auto bg-white shadow ring-1 ring-gray-200 rounded-lg">
+      <table class="min-w-full divide-y divide-gray-200 text-sm text-gray-900">
+        <thead class="bg-green-700 sticky top-0 z-10 text-white">
+          <tr>
+            <th class="px-4 py-3 text-left font-semibold">#</th>
+            <th class="px-4 py-3 text-left font-semibold">ICCH</th>
+            <th class="px-4 py-3 text-left font-semibold">Jméno a příjmení</th>
+            <th class="px-4 py-3 text-left font-semibold">Funkce</th>
+            <th class="px-4 py-3 text-left font-semibold">Zapojen v projektu</th>
+            <th class="px-4 py-3 text-left font-semibold">Poznámka</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100 bg-white">
+          <tr><td class="px-4 py-3">1</td><td class="px-4 py-3 font-semibold">001</td><td class="px-4 py-3">Bc. Adam Bura</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">2</td><td class="px-4 py-3 font-semibold">002</td><td class="px-4 py-3">Bohumil Brůža</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">3</td><td class="px-4 py-3 font-semibold">004</td><td class="px-4 py-3">Bedřich Gavenda</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">4</td><td class="px-4 py-3 font-semibold">005</td><td class="px-4 py-3">Jiří Glatt</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">5</td><td class="px-4 py-3 font-semibold">006</td><td class="px-4 py-3">Jakub Janosch</td><td class="px-4 py-3">předseda</td><td class="px-4 py-3">bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">6</td><td class="px-4 py-3 font-semibold">008</td><td class="px-4 py-3">Ing. Jiří Mrnka</td><td class="px-4 py-3"></td><td class="px-4 py-3">koordinátor projektu OZK/koroptve polní; bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">7</td><td class="px-4 py-3 font-semibold">010</td><td class="px-4 py-3">Vojtěch Pekárek</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant vietnamský; bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">8</td><td class="px-4 py-3 font-semibold">011</td><td class="px-4 py-3">Vlastimil Staněk</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">9</td><td class="px-4 py-3 font-semibold">012</td><td class="px-4 py-3">Miloslav Stehlík</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant vietnamský</td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">10</td><td class="px-4 py-3 font-semibold">015</td><td class="px-4 py-3">Martin Veles</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">11</td><td class="px-4 py-3 font-semibold">019</td><td class="px-4 py-3">MVDr. Petr Vrána</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">12</td><td class="px-4 py-3 font-semibold">020</td><td class="px-4 py-3">ZOO Ostrava</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant zlatý série 5000</td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">13</td><td class="px-4 py-3 font-semibold">021</td><td class="px-4 py-3">ZOO Praha</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant vietnamský</td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">14</td><td class="px-4 py-3 font-semibold">022</td><td class="px-4 py-3">Ladislav Žoha</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">15</td><td class="px-4 py-3 font-semibold">023</td><td class="px-4 py-3">Ing. Ladislav Tkáč</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant vietnamský</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">16</td><td class="px-4 py-3 font-semibold">025</td><td class="px-4 py-3">Ing. Petr Bach</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">17</td><td class="px-4 py-3 font-semibold">026</td><td class="px-4 py-3">ZOO Dvůr Králové</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">18</td><td class="px-4 py-3 font-semibold">028</td><td class="px-4 py-3">ZOO Liberec</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant vietnamský; bažant zlatý série 5000</td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">19</td><td class="px-4 py-3 font-semibold">029</td><td class="px-4 py-3">Zdenko Figura</td><td class="px-4 py-3">správce webu</td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">20</td><td class="px-4 py-3 font-semibold">030</td><td class="px-4 py-3">Ing. René Janosch</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant vietnamský; bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">21</td><td class="px-4 py-3 font-semibold">032</td><td class="px-4 py-3">ZOO Brno</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">22</td><td class="px-4 py-3 font-semibold">037</td><td class="px-4 py-3">Jakub Jorda</td><td class="px-4 py-3">jednatel</td><td class="px-4 py-3">koordinátor projektu bažanta vietnamského; bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">23</td><td class="px-4 py-3 font-semibold">038</td><td class="px-4 py-3">ZOO Košice</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">24</td><td class="px-4 py-3 font-semibold">039</td><td class="px-4 py-3">Matúš Kočik</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">25</td><td class="px-4 py-3 font-semibold">040</td><td class="px-4 py-3">Robert Bojko</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">26</td><td class="px-4 py-3 font-semibold">041</td><td class="px-4 py-3">Robert Prokipčák</td><td class="px-4 py-3">registrátor</td><td class="px-4 py-3">koordinátor projektu bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">27</td><td class="px-4 py-3 font-semibold">042</td><td class="px-4 py-3">Ing. Pavel Matoušek</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">28</td><td class="px-4 py-3 font-semibold">044</td><td class="px-4 py-3">Ing. Miroslav Fess</td><td class="px-4 py-3"></td><td class="px-4 py-3">bažant zlatý série 5000</td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">29</td><td class="px-4 py-3 font-semibold">047</td><td class="px-4 py-3">Ondřej Širůček</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">30</td><td class="px-4 py-3 font-semibold">050</td><td class="px-4 py-3">David Vedral</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">31</td><td class="px-4 py-3 font-semibold">053</td><td class="px-4 py-3">Dušan Hladej</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">32</td><td class="px-4 py-3 font-semibold">054</td><td class="px-4 py-3">Anton Stankovič</td><td class="px-4 py-3">místopředseda</td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">33</td><td class="px-4 py-3 font-semibold">055</td><td class="px-4 py-3">Patrik Matúš</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">34</td><td class="px-4 py-3 font-semibold">056</td><td class="px-4 py-3">Jan Šnauer</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">35</td><td class="px-4 py-3 font-semibold">058</td><td class="px-4 py-3">Karel Vodný</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">36</td><td class="px-4 py-3 font-semibold">059</td><td class="px-4 py-3">Roman Kocourek</td><td class="px-4 py-3">pokladník</td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">37</td><td class="px-4 py-3 font-semibold">060</td><td class="px-4 py-3">Oldřich Šálek</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">38</td><td class="px-4 py-3 font-semibold">062</td><td class="px-4 py-3">Marek Repka</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">39</td><td class="px-4 py-3 font-semibold">063</td><td class="px-4 py-3">Mojmír Bryška</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">40</td><td class="px-4 py-3 font-semibold">064</td><td class="px-4 py-3">Rio Babiuch</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">41</td><td class="px-4 py-3 font-semibold">065</td><td class="px-4 py-3">Matiční gymnázium Ostrava</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">42</td><td class="px-4 py-3 font-semibold">066</td><td class="px-4 py-3">Jakub Třeščák</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">43</td><td class="px-4 py-3 font-semibold">067</td><td class="px-4 py-3">Ján Wiener</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">44</td><td class="px-4 py-3 font-semibold">068</td><td class="px-4 py-3">Leona Grygarová</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">45</td><td class="px-4 py-3 font-semibold">069</td><td class="px-4 py-3">Ing. Miroslav Chomjak</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">46</td><td class="px-4 py-3 font-semibold">070</td><td class="px-4 py-3">Veronika Zahradníčková</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">čestný člen</td></tr>
+          <tr><td class="px-4 py-3">47</td><td class="px-4 py-3 font-semibold">071</td><td class="px-4 py-3">Petr Vašek</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">48</td><td class="px-4 py-3 font-semibold">072</td><td class="px-4 py-3">František Baier</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">49</td><td class="px-4 py-3 font-semibold">073</td><td class="px-4 py-3">ZOO Na Hrádečku</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">50</td><td class="px-4 py-3 font-semibold">074</td><td class="px-4 py-3">Ing. Josef Vaňát</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">chovatel</td></tr>
+          <tr><td class="px-4 py-3">51</td><td class="px-4 py-3 font-semibold">075</td><td class="px-4 py-3">ZOO Olomouc</td><td class="px-4 py-3"></td><td class="px-4 py-3"></td><td class="px-4 py-3">čestný člen</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endblock %}

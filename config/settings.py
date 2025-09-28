@@ -172,6 +172,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# Recaptcha settings
 RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_SITE_KEY")
 RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_SECRET_KEY")
 
