@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+
+    <div class="mb-12 text-center">
+      <h2 class="text-3xl font-bold text-green-700">Projekty</h2>
+      <p class="text-gray-600 mt-2">Naše hlavné iniciatívy a aktivity v rámci WPA CZ-SK.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Projekt 1 -->
+      <div class="rounded-2xl border border-gray-200 shadow-sm bg-white overflow-hidden">
+        <img src="{% static 'images/project1.jpg' %}" alt="Projekt 1" class="h-48 w-full object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-gray-900">Projekt 1</h3>
+          <p class="mt-2 text-gray-600">Krátky popis projektu číslo jeden, jeho ciele a prínos pre členov.</p>
+          <a href="#" class="mt-4 inline-block text-green-700 font-medium hover:underline">Detail projektu →</a>
+        </div>
+      </div>
+
+      <!-- Projekt 2 -->
+      <div class="rounded-2xl border border-gray-200 shadow-sm bg-white overflow-hidden">
+        <img src="{% static 'images/project2.jpg' %}" alt="Projekt 2" class="h-48 w-full object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-gray-900">Projekt 2</h3>
+          <p class="mt-2 text-gray-600">Opis druhého projektu – na čo sa zameriava a kto sa môže zapojiť.</p>
+          <a href="#" class="mt-4 inline-block text-green-700 font-medium hover:underline">Detail projektu →</a>
+        </div>
+      </div>
+
+      <!-- Projekt 3 -->
+      <div class="rounded-2xl border border-gray-200 shadow-sm bg-white overflow-hidden">
+        <img src="{% static 'images/project3.jpg' %}" alt="Projekt 3" class="h-48 w-full object-cover">
+        <div class="p-6">
+          <h3 class="text-xl font-semibold text-gray-900">Projekt 3</h3>
+          <p class="mt-2 text-gray-600">Opis tretieho projektu, jeho stav a možnosti zapojenia.</p>
+          <a href="#" class="mt-4 inline-block text-green-700 font-medium hover:underline">Detail projektu →</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+{% endblock %}
