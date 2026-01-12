@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4">
+        <h1 class="text-3xl font-bold text-green-700 mb-6">
+            Dokumenty
+        </h1>
+
+        <p class="text-gray-700 leading-relaxed mb-8">
+            Přehled oficiálních dokumentů spolku World Pheasant Association CZ-SK.
+            Každý dokument je dostupný jako samostatná stránka na webu.
+        </p>
+
+        <ul class="space-y-6 text-gray-700">
+            <li>
+                <h2 class="text-xl font-semibold">
+                    <a href="{% url 'statutes' %}"
+                       class="text-green-600 hover:text-green-800 underline">
+                        Stanovy spolku
+                    </a>
+                </h2>
+                <p class="mb-2">
+                    Základní dokument upravující činnost, strukturu a cíle spolku,
+                    dostupný online s možností zobrazení PDF verze.
+                </p>
+            </li>
+            <li>
+                <h2 class="text-xl font-semibold">
+                    <a href="{% url 'membership_application' %}"
+                       class="text-green-600 hover:text-green-800 underline">
+                        Přihláška ke členství
+                    </a>
+                </h2>
+                <p class="mb-2">
+                    Online formulář pro podání žádosti o členství ve spolku
+                    včetně možnosti zobrazení a stažení PDF verze.
+                </p>
+            </li>
+
+            <li>
+                <h2 class="text-xl font-semibold">
+                    <a href="{% url 'membership_terms' %}"
+                       class="text-green-600 hover:text-green-800 underline">
+                        Podmínky přihlášky a členství
+                    </a>
+                </h2>
+                <p class="mb-2">
+                    Podmínky upravující vznik, průběh a zánik členství ve spolku.
+                </p>
+            </li>
+
+            <li>
+                <h2 class="text-xl font-semibold">
+                    <a href="{% url 'gdpr' %}"
+                       class="text-green-600 hover:text-green-800 underline">
+                        Zásady zpracování osobních údajů (GDPR)
+                    </a>
+                </h2>
+                <p class="mb-2">
+                    Informace o zpracování a ochraně osobních údajů členů a návštěvníků webu.
+                </p>
+            </li>
+        </ul>
+    </div>
+</section>
+{% endblock %}

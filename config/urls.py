@@ -24,13 +24,25 @@ urlpatterns = [
         TemplateView.as_view(template_name="wpa_world.html"),
         name="wpa_world",
     ),
+    path(
+        "dokumenty/",
+        TemplateView.as_view(template_name="documents.html"),
+        name="documents",
+    ),
     path("gdpr/", TemplateView.as_view(template_name="gdpr.html"), name="gdpr"),
     path(
         "podminky-prihlasky/",
         TemplateView.as_view(template_name="membership_terms.html"),
         name="membership_terms",
     ),
-    path("clenove/", TemplateView.as_view(template_name="members.html"), name="members"),
+    path(
+        "stanovy/",
+        TemplateView.as_view(template_name="statutes.html"),
+        name="statutes",
+    ),
+    path(
+        "clenove/", TemplateView.as_view(template_name="members.html"), name="members"
+    ),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path(
         "robots.txt",

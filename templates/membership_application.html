@@ -9,6 +9,14 @@
                     Vyplňte prosím následující formulář pro podání přihlášky do WPA CZ-SK.
                 </p>
             </div>
+            <div class="mb-10 text-center">
+                <a href="{% static 'docs/prihlaska.pdf' %}"
+                   target="_blank"
+                   rel="noopener"
+                   class="inline-block text-green-700 underline hover:text-green-900">
+                    Zobrazit přihlášku ve formátu PDF
+                </a>
+            </div>
             <form method="post" action="">
                 {% csrf_token %}
                 {{ form.non_field_errors }}
