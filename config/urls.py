@@ -24,6 +24,22 @@ urlpatterns = [
         TemplateView.as_view(template_name="wpa_world.html"),
         name="wpa_world",
     ),
+    path("projekty/", TemplateView.as_view(template_name="projects.html"), name="projekty"),
+    path(
+        "projekty/bazant-vietnamsky/",
+        TemplateView.as_view(template_name="bazant-vietnamsky.html"),
+        name="projekt-bazant-vietnamsky",
+    ),
+    path(
+        "projekty/bazant-zlaty/",
+        TemplateView.as_view(template_name="bazant-zlaty.html"),
+        name="projekt-bazant-zlaty",
+    ),
+    path(
+        "projekty/koroptve-polni/",
+        TemplateView.as_view(template_name="koroptve-polni.html"),
+        name="projekt-koroptve-polni",
+    ),
     path(
         "dokumenty/",
         TemplateView.as_view(template_name="documents.html"),
