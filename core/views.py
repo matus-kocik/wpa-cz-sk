@@ -116,7 +116,7 @@ class MembershipApplicationView(FormView):
             subject="Nová přihláška do WPA CZ-SK",
             body=text_content,
             from_email=settings.DEFAULT_FROM_EMAIL,
-            to=[settings.CONTACT_RECEIVER_EMAIL],
+            to=[settings.APPLICATION_RECEIVER_EMAIL],
             reply_to=[data["email"]],
         )
         msg.attach_alternative(html_content, "text/html")
