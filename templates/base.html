@@ -1,9 +1,10 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="cs">
+<html lang="cs-CZ">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="robots" content="index, follow">
         <meta name="theme-color" content="#15803d">
         <title>
             {% block title %}WPA CZ-SK{% endblock %}
@@ -11,13 +12,13 @@
         <!-- SEO -->
         <meta name="description"
               content="Oficiální web československé pobočky World Pheasant Association. Projekty, členství, ochrana přírody.">
-        <link rel="canonical" href="{{ request.build_absolute_uri }}" />
+        <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
         <!-- Open Graph -->
         <meta property="og:title" content="World Pheasant Association CZ-SK" />
         <meta property="og:description"
               content="Oficiální web československé pobočky WPA. Ochrana hrabavých ptáků, projekty a chov." />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+        <meta property="og:url" content="{{ request.scheme }}://{{ request.get_host }}{{ request.path }}" />
         <meta property="og:image"
               content="https://www.wpacz-sk.com/static/images/logo/wpa-logo-black.webp" />
         <!-- Twitter -->
@@ -28,13 +29,29 @@
         <meta name="twitter:image"
               content="https://www.wpacz-sk.com/static/images/logo/wpa-logo-black.webp" />
         <!-- Favicon -->
-        <link rel="icon"
-              type="image/x-icon"
-              href="{% static 'images//logo/wpa-logo-black.ico' %}" />
+        <link rel="icon" type="image/x-icon" href="{% static 'images/logo/wpa-logo-black.ico' %}" />
         <!-- Manifest -->
         <link rel="manifest" href="{% static 'site.webmanifest' %}">
         <!-- CSS -->
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ DEBUG|yesno:'dev,' }}">    </head>
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}?v={{ DEBUG|yesno:'dev,' }}">
+        <link rel="preload" as="image" href="{% static 'images/pav-desktop-1920-640.webp' %}" media="(min-width: 1025px)">
+        <link rel="preload" as="image" href="{% static 'images/pav-tablet-1280-427.webp' %}" media="(min-width: 641px) and (max-width: 1024px)">
+        <link rel="preload" as="image" href="{% static 'images/pav-mobil-960-320.webp' %}" media="(max-width: 640px)">
+
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          "name": "World Pheasant Association CZ-SK",
+          "url": "https://www.wpacz-sk.com/",
+          "logo": "https://www.wpacz-sk.com/static/images/logo/wpa-logo-black.webp",
+          "sameAs": [
+            "https://www.facebook.com/wpacz",
+            "https://www.youtube.com/@wpacz-sk7012"
+          ]
+        }
+        </script>
+    </head>
     <body class="bg-white text-gray-900 font-sans">
         <!-- Top Bar -->
         <section class="py-2 bg-green-100">
@@ -76,7 +93,6 @@
                     <a href="{% url 'home' %}" class="flex items-center space-x-2">
                         <img src="{% static 'images/logo/wpa-logo-black.webp' %}"
                              alt="World Pheasant Association CZ-SK logo"
-                             loading="lazy"
                              class="h-[60px] w-auto object-contain">
                         <span class="text-lg font-bold text-green-900 leading-tight">WPA CZ-SK</span>
                     </a>
@@ -124,41 +140,6 @@
             </div>
         </section>
         {% endcomment %}
-        <!-- Hero Section -->
-        <section class="relative overflow-hidden">
-        <picture>
-            <source srcset="{% static 'images/pav-mobil-960-320.webp' %}" media="(max-width: 640px)">
-            <source srcset="{% static 'images/pav-tablet-1280-427.webp' %}" media="(max-width: 1024px)">
-            <img src="{% static 'images/pav-desktop-1920-640.webp' %}"
-                alt="Páv na lúke"
-                loading="lazy"
-                class="w-full aspect-[3/1] object-cover object-center">
-        </picture>
-
-        <!-- BLOK mobil/tablet -->
-        <div class="block lg:hidden bg-[rgba(220,252,231,0.8)] text-green-900 px-4 py-6 text-center">
-            <h1 class="text-3xl font-bold mb-3">WPA CZ-SK</h1>
-            <a href="{% url 'membership_application' %}"
-            class="inline-block mt-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition">
-            Přihláška pro nové členy
-            </a>
-        </div>
-
-        <!-- BLOK desktop -->
-        <div class="hidden lg:flex absolute inset-0 items-center">
-            <div class="container mx-auto px-4">
-            <div class="bg-[rgba(220,252,231,0.8)] text-green-900 px-10 py-6 rounded-lg shadow-lg max-w-lg">
-                <div class="text-center">
-                <h1 class="text-5xl font-bold mb-4">WPA CZ-SK</h1>
-                <a href="{% url 'membership_application' %}"
-                    class="inline-block mt-4 px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full text-xl font-semibold transition">
-                    Přihláška pro nové členy
-                </a>
-                </div>
-            </div>
-            </div>
-        </div>
-        </section>
         {% if messages %}
             <div class="container mx-auto mt-4 px-4">
                 {% for message in messages %}
@@ -173,6 +154,7 @@
             </div>
         {% endif %}
         {% block content %}{% endblock %}
+        {% comment %}
         <!-- "Footer Image" Section -->
         <section class="relative overflow-hidden">
             <picture>
@@ -221,15 +203,14 @@
             </p>
           </div>
         </footer>
-        {% if debug %}
+        {% if DEBUG %}
             <script src="{% static 'js/scripts.js' %}"></script>
         {% else %}
             <script src="{% static 'js/scripts.min.js' %}"></script>
         {% endif %}
-        <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js"></script>
         <script src="https://unpkg.com/lucide@latest"></script>
         <script>lucide.createIcons();</script>
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+        <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js" defer></script>
         {% block extra_js %}
         {% endblock %}
     </body>

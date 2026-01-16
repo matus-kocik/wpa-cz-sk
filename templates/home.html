@@ -1,4 +1,39 @@
 {% extends "base.html" %} {% load static %} {% block content %}
+<!-- Hero Section -->
+  <section class="relative overflow-hidden">
+  <picture>
+      <source srcset="{% static 'images/pav-mobil-960-320.webp' %}" media="(max-width: 640px)">
+      <source srcset="{% static 'images/pav-tablet-1280-427.webp' %}" media="(max-width: 1024px)">
+      <img src="{% static 'images/pav-desktop-1920-640.webp' %}"
+          alt="Páv na lúke"
+          fetchpriority="high"
+          class="w-full aspect-[3/1] object-cover object-center">
+  </picture>
+
+  <!-- BLOK mobil/tablet -->
+  <div class="block lg:hidden bg-[rgba(220,252,231,0.8)] text-green-900 px-4 py-6 text-center">
+      <h1 class="text-3xl font-bold mb-3">WPA CZ-SK</h1>
+      <a href="{% url 'membership_application' %}"
+      class="inline-block mt-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition">
+      Přihláška pro nové členy
+      </a>
+  </div>
+
+  <!-- BLOK desktop -->
+  <div class="hidden lg:flex absolute inset-0 items-center">
+      <div class="container mx-auto px-4">
+      <div class="bg-[rgba(220,252,231,0.8)] text-green-900 px-10 py-6 rounded-lg shadow-lg max-w-lg">
+          <div class="text-center">
+          <h1 class="text-5xl font-bold mb-4">WPA CZ-SK</h1>
+          <a href="{% url 'membership_application' %}"
+              class="inline-block mt-4 px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full text-xl font-semibold transition">
+              Přihláška pro nové členy
+          </a>
+          </div>
+      </div>
+      </div>
+  </div>
+</section>
 <!-- About Section -->
 <section class="py-16 bg-white">
   <div class="container mx-auto px-4 grid lg:grid-cols-2 gap-10 items-center">

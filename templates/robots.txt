@@ -2,25 +2,14 @@
 # robots.txt for wpacz-sk.com
 # =============================
 
-# Global rules for all crawlers
 User-agent: *
+
+# Block sensitive / non-public areas
 Disallow: /admin/
-Disallow: /static/
 Disallow: /media/
+
+# Allow everything else
 Allow: /
 
-# Optional: limit crawling rate (uncomment if needed)
-# Crawl-delay: 5
-
-# Sitemap location
+# Sitemap
 Sitemap: https://www.wpacz-sk.com/sitemap.xml
-
-# Specific bots (just for clarity – can be omitted if same as global)
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-# Optional: Host (used by Yandex, Baidu – not needed for Google/Bing)
-# Host: www.wpacz-sk.com

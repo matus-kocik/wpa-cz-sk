@@ -2,8 +2,11 @@
     "name": "WPA CZ-SK",
     "short_name": "WPA",
     "description": "Oficiální web World Pheasant Association CZ-SK",
+    "lang": "cs",
     "start_url": "/",
+    "scope": "/",
     "display": "standalone",
+    "orientation": "portrait",
     "background_color": "#ffffff",
     "theme_color": "#15803d",
     "icons": [
@@ -16,6 +19,12 @@
             "src": "/static/images/wpa-logo-512.png",
             "sizes": "512x512",
             "type": "image/png"
+        },
+        {
+            "src": "/static/images/wpa-logo-512-maskable.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
         }
     ]
 }
