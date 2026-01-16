@@ -168,13 +168,21 @@
                 </div>
                 <hr class="my-6">
                 <div style="display:none;">{{ form.honeypot }}</div>
-                <!-- reCAPTCHA -->
+                <!-- Cloudflare Turnstile -->
+                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
                 <div class="mt-8 flex justify-center">
-                    <div class="text-center">
-                        {{ form.captcha }}
-                        {% if form.captcha.errors %}<p class="text-red-600 text-sm mt-1">{{ form.captcha.errors.0 }}</p>{% endif %}
-                    </div>
+                    <div class="cf-turnstile"
+                         data-sitekey="{{ TURNSTILE_SITE_KEY }}"
+                         data-callback="turnstileCallback"></div>
                 </div>
+
+                <input type="hidden" name="turnstile">
+                {% if form.turnstile.errors %}
+                  <p class="text-red-600 text-sm mt-2 text-center">
+                    {{ form.turnstile.errors.0 }}
+                  </p>
+                {% endif %}
                 <div class="mt-8 text-center">
                     <button type="submit"
                             class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-full shadow">
@@ -186,10 +194,10 @@
     </section>
 {% endblock %}
 {% block extra_js %}
+    <script src="{% static 'js/turnstile.min.js' %}"></script>
     {% if debug %}
     <script src="{% static 'js/form-validation-membership.js' %}"></script>
     {% else %}
     <script src="{% static 'js/form-validation-membership.min.js' %}"></script>
     {% endif %}
 {% endblock %}
-

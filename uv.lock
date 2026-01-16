@@ -145,18 +145,6 @@ wheels = [
 ]
 
 [[package]]
-name = "django-recaptcha"
-version = "4.1.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "django" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/bd/a2/480cd2df8031c30afe0d67b0a5e6299ced20f2e65135a3c160c4031d7052/django_recaptcha-4.1.0.tar.gz", hash = "sha256:73097b958733f65b729d4e4630c51fc2bf147aca6f026017d18898dfc25cb4c5", size = 28676 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/8b/e7/0765f98e4953e26573512284995648c439b0eb252877b655683d28c90be2/django_recaptcha-4.1.0-py3-none-any.whl", hash = "sha256:463aa65967e973de466b28ce8e8b6abb2faffb1ce0c7faa1bf0e5b041e0497cb", size = 39473 },
-]
-
-[[package]]
 name = "djlint"
 version = "1.36.4"
 source = { registry = "https://pypi.org/simple" }
@@ -510,7 +498,6 @@ dependencies = [
     { name = "django" },
     { name = "django-countries" },
     { name = "django-ratelimit" },
-    { name = "django-recaptcha" },
     { name = "dnspython" },
     { name = "phonenumbers" },
     { name = "psycopg-binary" },
@@ -533,7 +520,6 @@ requires-dist = [
     { name = "django", specifier = ">=5.2.4" },
     { name = "django-countries", specifier = ">=7.6.1" },
     { name = "django-ratelimit", specifier = ">=4.1.0" },
-    { name = "django-recaptcha", specifier = ">=4.1.0" },
     { name = "dnspython", specifier = ">=2.7.0" },
     { name = "phonenumbers", specifier = ">=9.0.9" },
     { name = "psycopg-binary", specifier = ">=3.2.9" },

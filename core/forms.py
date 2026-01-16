@@ -1,10 +1,10 @@
 from datetime import date
 
+import requests
 from django import forms
+from django.conf import settings
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
-from django_recaptcha.fields import ReCaptchaField
-from django_recaptcha.widgets import ReCaptchaV2Checkbox
 
 from .validators import (
     validate_academic_title,
@@ -21,6 +21,21 @@ from .validators import (
     validate_street,
     validate_subject,
 )
+
+
+class TurnstileField(forms.Field):
+    def validate(self, value):
+        super().validate(value)
+        response = requests.post(
+            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+            data={
+                "secret": settings.TURNSTILE_SECRET_KEY,
+                "response": value,
+            },
+            timeout=5,
+        ).json()
+        if not response.get("success"):
+            raise forms.ValidationError("Ověření proti spamu selhalo.")
 
 
 class ContactForm(forms.Form):
@@ -120,7 +135,7 @@ class ContactForm(forms.Form):
 
     honeypot = forms.CharField(required=False, widget=forms.HiddenInput, label="")
 
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+    turnstile = TurnstileField(required=True)
 
     def clean_honeypot(self):
         value = self.cleaned_data.get("honeypot")
@@ -394,7 +409,7 @@ class MembershipApplicationForm(forms.Form):
         widget=forms.HiddenInput,
         label="Nechejte prázdné",
     )
-    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+    turnstile = TurnstileField(required=True)
 
     def clean_honeypot(self):
         data = self.cleaned_data.get("honeypot")

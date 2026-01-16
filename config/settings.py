@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     "core",
     # Third-party apps
     "django_countries",
-    "django_recaptcha",
 ]
 
 if DEBUG:
@@ -78,6 +77,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.context_processors.turnstile_site_key",
             ],
         },
     },
@@ -121,6 +121,10 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 CONTACT_RECEIVER_EMAIL = config("CONTACT_RECEIVER_EMAIL")
+APPLICATION_RECEIVER_EMAIL = config(
+    "APPLICATION_RECEIVER_EMAIL",
+    default=CONTACT_RECEIVER_EMAIL,
+)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -172,9 +176,10 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# Recaptcha settings
-RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_SITE_KEY")
-RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_SECRET_KEY")
+
+# Cloudflare Turnstile
+TURNSTILE_SITE_KEY = config("TURNSTILE_SITE_KEY", default="")
+TURNSTILE_SECRET_KEY = config("TURNSTILE_SECRET_KEY", default="")
 
 # Security headers
 SESSION_COOKIE_SECURE = True
