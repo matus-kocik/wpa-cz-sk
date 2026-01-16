@@ -5,3 +5,4 @@ dnspython>=2.7.0
 phonenumbers>=9.0.9
 psycopg-binary>=3.2.9
 python-decouple>=3.8
+requests>=2.32.4
