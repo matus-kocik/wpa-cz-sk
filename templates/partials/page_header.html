@@ -1,7 +1,7 @@
 <section class="bg-green-50 border-b mt-4">
 
   {% if image %}
-    <div class="container mx-auto px-4 pt-6">
+    <div class="max-w-6xl mx-auto px-4 pt-6">
       <img
         src="{{ image }}"
         srcset="
@@ -11,7 +11,7 @@
         "
         sizes="(max-width: 1024px) 100vw, 1024px"
         alt=""
-        class="w-full max-w-4xl mx-auto h-[120px] md:h-[160px] object-cover object-center rounded-lg"
+        class="w-full h-[120px] md:h-[160px] object-cover object-center rounded-lg"
       />
     </div>
   {% endif %}
