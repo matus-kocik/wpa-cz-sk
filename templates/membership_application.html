@@ -1,197 +1,192 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    <section class="py-16 bg-white">
-        <div class="max-w-6xl mx-auto px-4">
-            <div class="mb-12 text-center">
-                <h2 class="text-3xl font-bold text-green-700">Přihláška ke členství</h2>
-                <p class="text-gray-700 mt-2 leading-relaxed">
-                    Vyplňte prosím následující formulář pro podání přihlášky do WPA CZ-SK.
-                </p>
+{% include "partials/page_header.html" with title="Přihláška ke členství" subtitle="Formulář pro podání přihlášky do WPA CZ-SK" image="/static/images/pol-bic-1920-640.webp" %}
+<section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+        <div class="mb-10 text-center">
+            <a href="{% static 'docs/prihlaska.pdf' %}"
+                target="_blank"
+                rel="noopener"
+                class="inline-block text-green-700 underline hover:text-green-900">
+                Zobrazit přihlášku ve formátu PDF
+            </a>
+        </div>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <!-- First name -->
+                    <div id="first-name-group">
+                        {{ form.first_name.label_tag }} {{ form.first_name }}
+                        <p id="first-name-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.first_name.errors %}<p class="text-red-600 text-sm mt-1">{{ form.first_name.errors.0 }}</p>{% endif %}
+                    </div>
+                    <!-- Academic title -->
+                    <div id="academic-title-group">
+                        {{ form.academic_title.label_tag }} {{ form.academic_title }}
+                        <p id="academic-title-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.academic_title.errors %}
+                            <p class="text-red-600 text-sm mt-1">{{ form.academic_title.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    <div id="phone-number-group">
+                        {{ form.phone_number.label_tag }} {{ form.phone_number }}
+                        <p id="phone-number-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.phone_number.errors %}<p class="text-red-600 text-sm mt-1">{{ form.phone_number.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <!-- Last name -->
+                    <div id="last-name-group">
+                        {{ form.last_name.label_tag }} {{ form.last_name }}
+                        <p id="last-name-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.last_name.errors %}<p class="text-red-600 text-sm mt-1">{{ form.last_name.errors.0 }}</p>{% endif %}
+                    </div>
+                    <!-- Birth date -->
+                    <div id="birth-date-group">
+                        {{ form.birth_date.label_tag }} {{ form.birth_date }}
+                        <p id="birth-date-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.birth_date.errors %}<p class="text-red-600 text-sm mt-1">{{ form.birth_date.errors.0 }}</p>{% endif %}
+                    </div>
+                    <!-- Email -->
+                    <div id="email-group">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        <p id="email-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.email.errors %}<p class="text-red-600 text-sm mt-1">{{ form.email.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
             </div>
-            <div class="mb-10 text-center">
-                <a href="{% static 'docs/prihlaska.pdf' %}"
-                   target="_blank"
-                   rel="noopener"
-                   class="inline-block text-green-700 underline hover:text-green-900">
-                    Zobrazit přihlášku ve formátu PDF
-                </a>
+            <hr class="my-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-4">
+                    <!-- Street -->
+                    <div id="street-group">
+                        {{ form.street.label_tag }} {{ form.street }}
+                        <p id="street-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.street.errors %}<p class="text-red-600 text-sm mt-1">{{ form.street.errors.0 }}</p>{% endif %}
+                    </div>
+                    <!-- Postal code -->
+                    <div id="postal-code-group">
+                        {{ form.postal_code.label_tag }} {{ form.postal_code }}
+                        <p id="postal-code-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.postal_code.errors %}<p class="text-red-600 text-sm mt-1">{{ form.postal_code.errors.0 }}</p>{% endif %}
+                    </div>
+                    <!-- District -->
+                    <div id="district-group">
+                        {{ form.district.label_tag }} {{ form.district }}
+                        <p id="district-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.district.errors %}<p class="text-red-600 text-sm mt-1">{{ form.district.errors.0 }}</p>{% endif %}
+                    </div>
+                </div>
+                <div class="space-y-4">
+                    <!-- House number -->
+                    <div id="house-number-group">
+                        {{ form.house_number.label_tag }} {{ form.house_number }}
+                        <p id="house-number-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.house_number.errors %}<p class="text-red-600 text-sm mt-1">{{ form.house_number.errors.0 }}</p>{% endif %}
+                    </div>
+                    <!-- City -->
+                    <div id="city-group">
+                        {{ form.city.label_tag }} {{ form.city }}
+                        <p id="city-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.city.errors %}<p class="text-red-600 text-sm mt-1">{{ form.city.errors.0 }}</p>{% endif %}
+                    </div>
+                    {{ form.country.label_tag }}{{ form.country }}{{ form.country.errors }}
+                </div>
             </div>
-            <form method="post" action="">
-                {% csrf_token %}
-                {{ form.non_field_errors }}
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <!-- First name -->
-                        <div id="first-name-group">
-                            {{ form.first_name.label_tag }} {{ form.first_name }}
-                            <p id="first-name-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.first_name.errors %}<p class="text-red-600 text-sm mt-1">{{ form.first_name.errors.0 }}</p>{% endif %}
-                        </div>
-                        <!-- Academic title -->
-                        <div id="academic-title-group">
-                            {{ form.academic_title.label_tag }} {{ form.academic_title }}
-                            <p id="academic-title-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.academic_title.errors %}
-                                <p class="text-red-600 text-sm mt-1">{{ form.academic_title.errors.0 }}</p>
-                            {% endif %}
-                        </div>
-                        <div id="phone-number-group">
-                            {{ form.phone_number.label_tag }} {{ form.phone_number }}
-                            <p id="phone-number-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.phone_number.errors %}<p class="text-red-600 text-sm mt-1">{{ form.phone_number.errors.0 }}</p>{% endif %}
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <!-- Last name -->
-                        <div id="last-name-group">
-                            {{ form.last_name.label_tag }} {{ form.last_name }}
-                            <p id="last-name-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.last_name.errors %}<p class="text-red-600 text-sm mt-1">{{ form.last_name.errors.0 }}</p>{% endif %}
-                        </div>
-                        <!-- Birth date -->
-                        <div id="birth-date-group">
-                            {{ form.birth_date.label_tag }} {{ form.birth_date }}
-                            <p id="birth-date-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.birth_date.errors %}<p class="text-red-600 text-sm mt-1">{{ form.birth_date.errors.0 }}</p>{% endif %}
-                        </div>
-                        <!-- Email -->
-                        <div id="email-group">
-                            {{ form.email.label_tag }}
-                            {{ form.email }}
-                            <p id="email-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.email.errors %}<p class="text-red-600 text-sm mt-1">{{ form.email.errors.0 }}</p>{% endif %}
-                        </div>
-                    </div>
+            <hr class="my-6">
+            <div class="mt-6">
+                <!-- Notes -->
+                <div id="notes-group">
+                    {{ form.notes.label_tag }} {{ form.notes }}
+                    <p id="notes-error" class="text-red-600 text-sm mt-1"></p>
+                    {% if form.notes.errors %}<p class="text-red-600 text-sm mt-1">{{ form.notes.errors.0 }}</p>{% endif %}
                 </div>
-                <hr class="my-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="space-y-4">
-                        <!-- Street -->
-                        <div id="street-group">
-                            {{ form.street.label_tag }} {{ form.street }}
-                            <p id="street-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.street.errors %}<p class="text-red-600 text-sm mt-1">{{ form.street.errors.0 }}</p>{% endif %}
-                        </div>
-                        <!-- Postal code -->
-                        <div id="postal-code-group">
-                            {{ form.postal_code.label_tag }} {{ form.postal_code }}
-                            <p id="postal-code-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.postal_code.errors %}<p class="text-red-600 text-sm mt-1">{{ form.postal_code.errors.0 }}</p>{% endif %}
-                        </div>
-                        <!-- District -->
-                        <div id="district-group">
-                            {{ form.district.label_tag }} {{ form.district }}
-                            <p id="district-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.district.errors %}<p class="text-red-600 text-sm mt-1">{{ form.district.errors.0 }}</p>{% endif %}
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <!-- House number -->
-                        <div id="house-number-group">
-                            {{ form.house_number.label_tag }} {{ form.house_number }}
-                            <p id="house-number-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.house_number.errors %}<p class="text-red-600 text-sm mt-1">{{ form.house_number.errors.0 }}</p>{% endif %}
-                        </div>
-                        <!-- City -->
-                        <div id="city-group">
-                            {{ form.city.label_tag }} {{ form.city }}
-                            <p id="city-error" class="text-red-600 text-sm mt-1"></p>
-                            {% if form.city.errors %}<p class="text-red-600 text-sm mt-1">{{ form.city.errors.0 }}</p>{% endif %}
-                        </div>
-                        {{ form.country.label_tag }}{{ form.country }}{{ form.country.errors }}
-                    </div>
-                </div>
-                <hr class="my-6">
-                <div class="mt-6">
-                    <!-- Notes -->
-                    <div id="notes-group">
-                        {{ form.notes.label_tag }} {{ form.notes }}
-                        <p id="notes-error" class="text-red-600 text-sm mt-1"></p>
-                        {% if form.notes.errors %}<p class="text-red-600 text-sm mt-1">{{ form.notes.errors.0 }}</p>{% endif %}
-                    </div>
-                </div>
-                <div class="mt-6">
-                    <label class="flex items-start space-x-2 text-sm text-gray-700">
-                        {{ form.agree_membership_terms }}
-                        <span>
-                            Souhlasím s
-                            <a href="{% url 'membership_terms' %}"
-                               target="_blank"
-                               class="underline text-green-700 hover:text-green-900">podmínkami přihlášky</a>
-                            a členství ve spolku WPA CZ-SK.
-                        </span>
-                    </label>
-                    {% if form.agree_membership_terms.errors %}
-                        <p class="text-red-600 text-sm mt-1">{{ form.agree_membership_terms.errors.0 }}</p>
+            </div>
+            <div class="mt-6">
+                <label class="flex items-start space-x-2 text-sm text-gray-700">
+                    {{ form.agree_membership_terms }}
+                    <span>
+                        Souhlasím s
+                        <a href="{% url 'membership_terms' %}"
+                            target="_blank"
+                            class="underline text-green-700 hover:text-green-900">podmínkami přihlášky</a>
+                        a členství ve spolku WPA CZ-SK.
+                    </span>
+                </label>
+                {% if form.agree_membership_terms.errors %}
+                    <p class="text-red-600 text-sm mt-1">{{ form.agree_membership_terms.errors.0 }}</p>
+                {% endif %}
+            </div>
+            <div class="mt-6">
+                <label class="flex items-start space-x-2 text-sm text-gray-700">
+                    {{ form.agree_gdpr }}
+                    <span>
+                        Souhlasím se
+                        <a href="{% url 'gdpr' %}"
+                            target="_blank"
+                            class="underline text-green-700 hover:text-green-900">zpracováním osobních údajů</a>
+                        dle zásad WPA CZ-SK.
+                    </span>
+                </label>
+                {% if form.agree_gdpr.errors %}<p class="text-red-600 text-sm mt-1">{{ form.agree_gdpr.errors.0 }}</p>{% endif %}
+            </div>
+            <hr class="my-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                <!-- V -->
+                <div id="declaration-place-group">
+                    {{ form.declaration_place.label_tag }} {{ form.declaration_place }}
+                    <p id="declaration-place-error" class="text-red-600 text-sm mt-1"></p>
+                    {% if form.declaration_place.errors %}
+                        <p class="text-red-600 text-sm mt-1">{{ form.declaration_place.errors.0 }}</p>
                     {% endif %}
                 </div>
-                <div class="mt-6">
-                    <label class="flex items-start space-x-2 text-sm text-gray-700">
-                        {{ form.agree_gdpr }}
-                        <span>
-                            Souhlasím se
-                            <a href="{% url 'gdpr' %}"
-                               target="_blank"
-                               class="underline text-green-700 hover:text-green-900">zpracováním osobních údajů</a>
-                            dle zásad WPA CZ-SK.
-                        </span>
-                    </label>
-                    {% if form.agree_gdpr.errors %}<p class="text-red-600 text-sm mt-1">{{ form.agree_gdpr.errors.0 }}</p>{% endif %}
+                <!-- Dne -->
+                <div id="declaration-date-group">
+                    {{ form.declaration_date.label_tag }} {{ form.declaration_date }}
+                    <p id="declaration-date-error" class="text-red-600 text-sm mt-1"></p>
+                    {% if form.declaration_date.errors %}
+                        <p class="text-red-600 text-sm mt-1">{{ form.declaration_date.errors.0 }}</p>
+                    {% endif %}
                 </div>
-                <hr class="my-6">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                    <!-- V -->
-                    <div id="declaration-place-group">
-                        {{ form.declaration_place.label_tag }} {{ form.declaration_place }}
-                        <p id="declaration-place-error" class="text-red-600 text-sm mt-1"></p>
-                        {% if form.declaration_place.errors %}
-                            <p class="text-red-600 text-sm mt-1">{{ form.declaration_place.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-                    <!-- Dne -->
-                    <div id="declaration-date-group">
-                        {{ form.declaration_date.label_tag }} {{ form.declaration_date }}
-                        <p id="declaration-date-error" class="text-red-600 text-sm mt-1"></p>
-                        {% if form.declaration_date.errors %}
-                            <p class="text-red-600 text-sm mt-1">{{ form.declaration_date.errors.0 }}</p>
-                        {% endif %}
-                    </div>
-                    <!-- Podpis -->
-                    <div id="declaration-signature-group">
-                        {{ form.declaration_signature.label_tag }} {{ form.declaration_signature }}
-                        <p id="declaration-signature-error" class="text-red-600 text-sm mt-1"></p>
-                        {% if form.declaration_signature.errors %}
-                            <p class="text-red-600 text-sm mt-1">{{ form.declaration_signature.errors.0 }}</p>
-                        {% endif %}
-                    </div>
+                <!-- Podpis -->
+                <div id="declaration-signature-group">
+                    {{ form.declaration_signature.label_tag }} {{ form.declaration_signature }}
+                    <p id="declaration-signature-error" class="text-red-600 text-sm mt-1"></p>
+                    {% if form.declaration_signature.errors %}
+                        <p class="text-red-600 text-sm mt-1">{{ form.declaration_signature.errors.0 }}</p>
+                    {% endif %}
                 </div>
-                <hr class="my-6">
-                <div style="display:none;">{{ form.honeypot }}</div>
-                <!-- Cloudflare Turnstile -->
-                <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+            </div>
+            <hr class="my-6">
+            <div style="display:none;">{{ form.honeypot }}</div>
+            <!-- Cloudflare Turnstile -->
+            <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
-                <div class="mt-8 flex justify-center">
-                    <div class="cf-turnstile"
-                         data-sitekey="{{ TURNSTILE_SITE_KEY }}"
-                         data-callback="turnstileCallback"></div>
-                </div>
+            <div class="mt-8 flex justify-center">
+                <div class="cf-turnstile"
+                        data-sitekey="{{ TURNSTILE_SITE_KEY }}"
+                        data-callback="turnstileCallback"></div>
+            </div>
 
-                <input type="hidden" name="turnstile">
-                {% if form.turnstile.errors %}
-                  <p class="text-red-600 text-sm mt-2 text-center">
-                    {{ form.turnstile.errors.0 }}
-                  </p>
-                {% endif %}
-                <div class="mt-8 text-center">
-                    <button type="submit"
-                            class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-full shadow">
-                        Odeslat přihlášku
-                    </button>
-                </div>
-            </form>
-        </div>
-    </section>
+            <input type="hidden" name="turnstile">
+            {% if form.turnstile.errors %}
+                <p class="text-red-600 text-sm mt-2 text-center">
+                {{ form.turnstile.errors.0 }}
+                </p>
+            {% endif %}
+            <div class="mt-8 text-center">
+                <button type="submit"
+                        class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-full shadow">
+                    Odeslat přihlášku
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'js/turnstile.min.js' %}"></script>

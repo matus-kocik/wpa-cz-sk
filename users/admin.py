@@ -1,19 +1,20 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from .models import CustomUser
 
 
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     model = CustomUser
+
     list_display = ["email", "full_name", "is_active", "is_staff", "date_joined"]
     list_display_links = ["email"]
-    list_editable = [
-        "is_active",
-        "is_staff",
-    ]
+    list_editable = ["is_active", "is_staff"]
     search_fields = ["email", "first_name", "last_name"]
     list_filter = ["is_active", "is_staff", "date_joined"]
+    ordering = ["-date_joined"]
     readonly_fields = ["date_joined", "last_login"]
+
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         ("Personal info", {"fields": ("first_name", "last_name")}),
@@ -29,8 +30,9 @@ class CustomUserAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        ("Important dates", {"fields": ("date_joined", "last_login")}),
+        ("Important dates", {"fields": ("last_login", "date_joined")}),
     )
+
     add_fieldsets = (
         (
             None,
@@ -48,8 +50,6 @@ class CustomUserAdmin(admin.ModelAdmin):
             },
         ),
     )
-    ordering = ["-date_joined"]
-    filter_horizontal = ["groups", "user_permissions"]
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

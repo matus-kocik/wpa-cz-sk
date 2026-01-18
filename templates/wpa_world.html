@@ -1,11 +1,8 @@
 {% extends "base.html" %} {% load static %} {% block title %}WPA ve světě | WPA
 CZ-SK{% endblock %} {% block content %}
+{% include "partials/page_header.html" with title="WPA ve světě" subtitle="Sekce WPA a jejich předsedové" image="/static/images/trag-cab-1-1920-640.webp" %}
 <section class="py-16 bg-white">
   <div class="max-w-6xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <h1 class="text-3xl font-bold text-green-700">WPA ve světě</h1>
-      <p class="text-gray-600 mt-2">Sekce WPA a jejich předsedové</p>
-    </div>
     <div class="grid sm:grid-cols-1 md:grid-cols-2 gap-6">
       <div
         class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between"

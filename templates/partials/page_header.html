@@ -1,31 +1,28 @@
-<section class="bg-green-50 border-b mt-4">
+<section class="bg-green-50 border-b border-green-300">
 
   {% if image %}
-    <div class="max-w-6xl mx-auto px-4 pt-6">
+    <div class="container mx-auto px-4 max-w-6xl py-4">
       <img
         src="{{ image }}"
-        srcset="
-          {{ image|cut:'desktop-1920-640.webp' }}mobile-768-320.webp 768w,
-          {{ image|cut:'desktop-1920-640.webp' }}tablet-1280-480.webp 1280w,
-          {{ image }} 1920w
-        "
-        sizes="(max-width: 1024px) 100vw, 1024px"
         alt=""
-        class="w-full h-[120px] md:h-[160px] object-cover object-center rounded-lg"
+        class="w-full h-[300px] md:h-[420px] object-cover object-center rounded-lg"
+        loading="lazy"
       />
     </div>
   {% endif %}
 
-  <div class="container mx-auto px-4 py-10 text-center">
-    <h1 class="text-3xl font-bold text-green-700">
-      {{ title }}
-    </h1>
+  {% if title %}
+    <div class="container mx-auto px-2 pb-4 text-center">
+      <h1 class="text-3xl font-bold text-green-700">
+        {{ title }}
+      </h1>
 
-    {% if subtitle %}
-      <p class="mt-2 text-gray-600">
-        {{ subtitle }}
-      </p>
-    {% endif %}
-  </div>
+      {% if subtitle %}
+        <p class="mt-2 text-gray-600">
+          {{ subtitle }}
+        </p>
+      {% endif %}
+    </div>
+  {% endif %}
 
 </section>

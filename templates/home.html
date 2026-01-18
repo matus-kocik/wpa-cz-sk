@@ -13,8 +13,8 @@
   <!-- BLOK mobil/tablet -->
   <div class="block lg:hidden bg-[rgba(220,252,231,0.8)] text-green-900 px-4 py-6 text-center">
       <h1 class="text-3xl font-bold mb-3">WPA CZ-SK</h1>
-      <a href="{% url 'membership_application' %}"
-      class="inline-block mt-2 px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full font-semibold transition">
+      <a href="{% url 'membership_application' %}" target="_blank" rel="noopener noreferrer"
+      class="inline-block mt-2 px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full text-lg font-semibold transition shadow-lg">
       Přihláška pro nové členy
       </a>
   </div>
@@ -25,8 +25,8 @@
       <div class="bg-[rgba(220,252,231,0.8)] text-green-900 px-10 py-6 rounded-lg shadow-lg max-w-lg">
           <div class="text-center">
           <h1 class="text-5xl font-bold mb-4">WPA CZ-SK</h1>
-          <a href="{% url 'membership_application' %}"
-              class="inline-block mt-4 px-8 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full text-xl font-semibold transition">
+          <a href="{% url 'membership_application' %}" target="_blank" rel="noopener noreferrer"
+              class="inline-block mt-4 px-10 py-4 bg-green-600 hover:bg-green-700 text-white rounded-full text-xl font-semibold transition shadow-lg">
               Přihláška pro nové členy
           </a>
           </div>
@@ -34,9 +34,11 @@
       </div>
   </div>
 </section>
+
+
 <!-- About Section -->
 <section class="py-16 bg-white">
-  <div class="container mx-auto px-4 grid lg:grid-cols-2 gap-10 items-center">
+  <div class="container mx-auto px-4 max-w-7xl grid lg:grid-cols-2 gap-10 items-center">
     <div class="flex justify-center">
       <img
         src="{% static 'images/logo/wpa-logo-black.webp' %}"
@@ -76,10 +78,10 @@
         >Více o nás</a
       >
       {% endcomment %}
-      <div class="mt-4">
+      <div class="mt-4 text-center lg:text-left">
         <a
           href={% url "wpa_world" %}
-          class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
+          class="px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
         >
           WPA ve světě
         </a>
@@ -87,75 +89,106 @@
     </div>
   </div>
 </section>
-{% comment %}
+
+
+<!-- Image Section 1-->
+<section class="bg-green-50">
+  <div class="container mx-auto px-4 max-w-7xl py-6">
+    <img
+      src="{% static 'images/trag-cab-2-1920-640.webp' %}"
+      class="w-full h-[320px] md:h-[440px] object-cover object-center rounded-lg"
+      alt=""
+      loading="lazy"
+    />
+  </div>
+</section>
+
+
 <!-- Cards Section -->
 <section class="py-16">
-  <div class="container mx-auto px-4 grid md:grid-cols-3 gap-8">
+  <div class="container mx-auto px-4 max-w-7xl flex justify-center gap-8 flex-wrap">
+    <!-- Card Projects-->
     <div
-      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer basis-1/3"
     >
       <img
         src="{% static 'images/card_p.jpg' %}"
-        class="w-full h-48 object-cover rounded"
+        class="w-full aspect-[4/3] object-cover rounded"
       />
-      <div class="mt-4">
+      <div class="mt-4 text-center">
         <h4 class="text-xl font-semibold text-gray-800">Projekty</h4>
         <p class="text-gray-600">
           Projekty a výzkum v oblasti ochrany bažantů...
         </p>
         <a
-          href="#"
-          class="inline-block mt-3 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full"
+          href="{% url 'projects' %}"
+          class="inline-block mt-3 px-8 py-3 text-lg bg-green-600 hover:bg-green-700 text-white rounded-full"
           >Projekty</a
         >
       </div>
     </div>
 
+    <!-- Card Articles-->
     <div
-      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer basis-1/3"
     >
       <img
         src="{% static 'images/card_a.jpg' %}"
-        class="w-full h-48 object-cover rounded"
+        class="w-full aspect-[4/3] object-cover rounded"
       />
-      <div class="mt-4">
+      <div class="mt-4 text-center">
         <h4 class="text-xl font-semibold text-gray-800">Články</h4>
         <p class="text-gray-600">
           Nejnovější články a publikace o bažantech...
         </p>
         <a
-          href="#"
-          class="inline-block mt-3 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full"
+          href="#articles"
+          class="inline-block mt-3 px-8 py-3 text-lg bg-green-600 hover:bg-green-700 text-white rounded-full"
           >Články</a
         >
       </div>
     </div>
-
+    {% comment %}
+    <!-- Card Inzerce-->
     <div
-      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer"
+      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-sm w-full"
     >
       <img
         src="{% static 'images/card_i.jpg' %}"
         class="w-full h-48 object-cover rounded"
       />
-      <div class="mt-4">
+      <div class="mt-4 text-center">
         <h4 class="text-xl font-semibold text-gray-800">Inzerce</h4>
         <p class="text-gray-600">
           Inzerce spojená s chovem a prodejem bažantů...
         </p>
         <a
           href="#"
-          class="inline-block mt-3 px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-full"
+          class="inline-block mt-3 px-6 py-3 text-base bg-green-500 hover:bg-green-600 text-white rounded-full"
           >Inzerci</a
         >
       </div>
     </div>
+    {% endcomment %}
   </div>
 </section>
-{% endcomment %}
+
+
+<!-- Image Section 2-->
+<section class="bg-green-50">
+  <div class="container mx-auto px-4 max-w-7xl py-6">
+    <img
+      src="{% static 'images/pheasant-desktop-1920-640.webp' %}"
+      class="w-full h-[320px] md:h-[440px] object-cover object-center rounded-lg"
+      alt=""
+      loading="lazy"
+    />
+  </div>
+</section>
+
 
 <!-- Articles Section -->
-<section class="py-16">
+<section id="articles" class="py-16">
   <div class="container mx-auto px-4">
     <div class="text-center mb-10">
       <h2 class="text-3xl font-bold text-green-700">Nejnovější články</h2>
@@ -188,7 +221,7 @@
             <a
               href="{% static 'docs/wpaczsk_na_exote_olomouc_2025.pdf' %}"
               target="_blank"
-              class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
+              class="px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
             >
               Číst více →
             </a>
@@ -221,7 +254,7 @@
             <a
               href="{% static 'docs/Vyrocna-clenska-schodza-WPA-CZ_SK-2025.pdf' %}"
               target="_blank"
-              class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
+              class="px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
             >
               Číst více →
             </a>
@@ -254,7 +287,7 @@
             <a
               href="{% static 'docs/Doporuceni-chovu-2025-pro-bazanty-vietnamske-non-EAZA.pdf' %}"
               target="_blank"
-              class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
+              class="px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
             >
               Číst více →
             </a>
@@ -283,7 +316,7 @@
             <a
               href="{% static 'docs/Orebice_Bednar_Exota_7-8_2016.pdf' %}"
               target="_blank"
-              class="px-6 py-2 text-base bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
+              class="px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
             >
               Číst více →
             </a>
@@ -294,33 +327,32 @@
   </div>
 </section>
 
+
+<!-- Image Section 3-->
+<section class="bg-green-50">
+  <div class="container mx-auto px-4 max-w-7xl py-6">
+    <img
+      src="{% static 'images/pauxi-1920-640.webp' %}"
+      class="w-full h-[320px] md:h-[440px] object-cover object-center rounded-lg"
+      alt=""
+      loading="lazy"
+    />
+  </div>
+</section>
+
+
 <!-- Support Section -->
 <section class="relative overflow-hidden">
   <picture>
-    <source srcset="{% static 'images/arb-mobil-960-320.webp' %}" media="(max-width: 640px)" />
-    <source srcset="{% static 'images/arb-tablet-1280-427.webp' %}" media="(max-width: 1024px)" />
+    <source srcset="{% static 'images/trag-sat-960-320.webp' %}" media="(max-width: 640px)" />
+    <source srcset="{% static 'images/trag-sat-1280-427.webp' %}" media="(max-width: 1024px)" />
     <img
-      src="{% static 'images/arb-desktop-1920-640.webp' %}"
+      src="{% static 'images/trag-sat-1920-640.webp' %}"
       alt="Podpořte nás"
       loading="lazy"
       class="w-full aspect-[3/1] object-cover object-center"
     />
   </picture>
-
-  <!-- Mobil/tablet verzia -->
-  <div class="block lg:hidden bg-[rgba(220,252,231,0.8)] text-green-900 px-4 py-6">
-    <div class="max-w-xl mx-auto">
-      <h2 class="text-3xl font-bold mb-4">Podpořte Nás</h2>
-      <p class="mb-4">
-        Podpořte ochranu hrabavých ptáků. Staňte se členem nebo přispějte!
-      </p>
-      {% comment %}
-      <a href="#" class="inline-block px-6 py-3 bg-green-500 hover:bg-green-600 text-white rounded-full">
-        Darovat
-      </a>
-      {% endcomment %}
-    </div>
-  </div>
 
   <!-- Desktop verzia -->
   <div class="hidden lg:flex absolute inset-0 items-center">
@@ -329,20 +361,43 @@
         class="px-6 py-4 rounded-lg shadow-lg max-w-lg text-green-900"
         style="background-color: rgba(220, 252, 231, 0.8)"
       >
-        <h2 class="text-4xl font-bold mb-4">Podpořte Nás</h2>
+        <h2 class="text-4xl font-bold mb-4">Podpořte nás</h2>
         <p class="mb-4">
           Podpořte ochranu hrabavých ptáků. Staňte se členem nebo přispějte!
         </p>
-        <a
-          href="#"
-          class="inline-block px-6 py-3 bg-green-600 hover:bg-green-700 text-white rounded-full"
-        >
-          Darovat
-        </a>
+      <a href="{% url 'support' %}" class="px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
+        Podpořit
+      </a>
       </div>
     </div>
   </div>
+  <!-- Mobil/tablet verzia -->
+  <div class="block lg:hidden bg-[rgba(220,252,231,0.8)] text-green-900 px-4 py-6">
+    <div class="max-w-xl mx-auto">
+      <h2 class="text-3xl font-bold mb-4">Podpořte nás</h2>
+      <p class="mb-4">
+        Podpořte ochranu hrabavých ptáků. Staňte se členem nebo přispějte!
+      </p>
+      <a href="{% url 'support' %}" class="px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">
+        Podpořit
+      </a>
+    </div>
+  </div>
 </section>
+
+
+<!-- Image Section 4-->
+<section class="bg-green-50">
+  <div class="container mx-auto px-4 max-w-7xl py-6">
+    <img
+      src="{% static 'images/lop-sal-1-1920-640.webp' %}"
+      class="w-full h-[320px] md:h-[440px] object-cover object-center rounded-lg"
+      alt=""
+      loading="lazy"
+    />
+  </div>
+</section>
+
 
 {% comment %}
 <!-- Partners Section -->

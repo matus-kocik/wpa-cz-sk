@@ -24,7 +24,11 @@ urlpatterns = [
         TemplateView.as_view(template_name="wpa_world.html"),
         name="wpa_world",
     ),
-    path("projekty/", TemplateView.as_view(template_name="projects.html"), name="projekty"),
+    path(
+        "projekty/",
+        TemplateView.as_view(template_name="projects.html"),
+        name="projects",
+    ),
     path(
         "projekty/bazant-vietnamsky/",
         TemplateView.as_view(template_name="bazant-vietnamsky.html"),
@@ -58,6 +62,11 @@ urlpatterns = [
     ),
     path(
         "clenove/", TemplateView.as_view(template_name="members.html"), name="members"
+    ),
+    path(
+        "podpora/",
+        TemplateView.as_view(template_name="support.html"),
+        name="support",
     ),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path(
