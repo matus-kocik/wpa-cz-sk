@@ -1,12 +1,11 @@
 {% extends "base.html" %}
 
+{% load static %}
+
 {% block content %}
+{% include "partials/page_header.html" with title="Obnova zemědělské krajiny a podpora koroptve polní" subtitle="Projekt zaměřený na obnovu krajiny a podporu zbytkových populací koroptve polní (Perdix perdix)" image="/static/images/projects/koroptve/koroptve-1920-640.webp" %}
 <section class="py-16 bg-white">
   <div class="max-w-6xl mx-auto px-4">
-
-<h1 class="text-3xl font-bold text-green-700 mb-6">
-  Obnova zemědělské krajiny a podpora zbytkových populací koroptve polní
-</h1>
 
 <h2 class="text-2xl font-semibold text-green-600 mt-8 mb-4">
   Popis projektu
@@ -80,6 +79,74 @@
   Koordinátor projektu v České republice a na Slovensku je Ing. Jiří Mrnka.
 </p>
 
-  </div>
+  <h2 class="text-2xl font-semibold text-green-600 mt-12 mb-6">
+    Fotogalerie projektu
+  </h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <a href="{% static 'images/projects/koroptve/chov-baby.webp' %}" target="_blank" rel="noopener">
+        <img
+          src="{% static 'images/projects/koroptve/chov-baby.webp' %}"
+          alt="Projekt Koroptve polní"
+          loading="lazy"
+          class="w-full aspect-[4/3] object-cover rounded-lg shadow-sm hover:scale-[1.02] transition cursor-zoom-in"
+        >
+      </a>
+
+      <a href="{% static 'images/projects/koroptve/chov-hniezdo.webp' %}" target="_blank" rel="noopener">
+        <img
+          src="{% static 'images/projects/koroptve/chov-hniezdo.webp' %}"
+          alt="Projekt Koroptve polní"
+          loading="lazy"
+          class="w-full aspect-[4/3] object-cover rounded-lg shadow-sm hover:scale-[1.02] transition cursor-zoom-in"
+        >
+      </a>
+
+      <a href="{% static 'images/projects/koroptve/chov-par-young.webp' %}" target="_blank" rel="noopener">
+        <img
+          src="{% static 'images/projects/koroptve/chov-par-young.webp' %}"
+          alt="Projekt Koroptve polní"
+          loading="lazy"
+          class="w-full aspect-[4/3] object-cover rounded-lg shadow-sm hover:scale-[1.02] transition cursor-zoom-in"
+        >
+      </a>
+
+      <a href="{% static 'images/projects/koroptve/chov-par.webp' %}" target="_blank" rel="noopener">
+        <img
+          src="{% static 'images/projects/koroptve/chov-par.webp' %}"
+          alt="Projekt Koroptve polní"
+          loading="lazy"
+          class="w-full aspect-[4/3] object-cover rounded-lg shadow-sm hover:scale-[1.02] transition cursor-zoom-in"
+        >
+      </a>
+
+      <a href="{% static 'images/projects/koroptve/chov-vajcia.webp' %}" target="_blank" rel="noopener">
+        <img
+          src="{% static 'images/projects/koroptve/chov-vajcia.webp' %}"
+          alt="Projekt Koroptve polní"
+          loading="lazy"
+          class="w-full aspect-[4/3] object-cover rounded-lg shadow-sm hover:scale-[1.02] transition cursor-zoom-in"
+        >
+      </a>
+
+      <a href="{% static 'images/projects/koroptve/chov-vol.webp' %}" target="_blank" rel="noopener">
+        <img
+          src="{% static 'images/projects/koroptve/chov-vol.webp' %}"
+          alt="Projekt Koroptve polní"
+          loading="lazy"
+          class="w-full aspect-[4/3] object-cover rounded-lg shadow-sm hover:scale-[1.02] transition cursor-zoom-in"
+        >
+      </a>
+
+      <a href="{% static 'images/projects/koroptve/chov-young.webp' %}" target="_blank" rel="noopener">
+        <img
+          src="{% static 'images/projects/koroptve/chov-young.webp' %}"
+          alt="Projekt Koroptve polní"
+          loading="lazy"
+          class="w-full aspect-[4/3] object-cover rounded-lg shadow-sm hover:scale-[1.02] transition cursor-zoom-in"
+        >
+      </a>
+    </div>
+</div>
 </section>
 {% endblock %}
