@@ -80,7 +80,7 @@
       {% endcomment %}
       <div class="mt-4 text-center lg:text-left">
         <a
-          href={% url "wpa_world" %}
+          href="{% url 'wpa_world' %}"
           class="px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm"
         >
           WPA ve světě
@@ -130,7 +130,7 @@
 
     <!-- Card Articles-->
     <div
-      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duraale tion-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer w-full"
+      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer w-full"
     >
       <img
         src="{% static 'images/card_a.webp' %}"
