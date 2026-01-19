@@ -96,7 +96,7 @@
   <div class="container mx-auto px-4 max-w-7xl py-6">
     <img
       src="{% static 'images/trag-cab-2-1920-640.webp' %}"
-      class="w-full h-[320px] md:h-[440px] object-cover object-center rounded-lg"
+      class="w-full aspect-[3/2] md:aspect-[3/1] object-cover object-center rounded-lg"
       alt=""
       loading="lazy"
     />
@@ -106,14 +106,14 @@
 
 <!-- Cards Section -->
 <section class="py-16">
-  <div class="container mx-auto px-4 max-w-7xl flex justify-center gap-8 flex-wrap">
+  <div class="container mx-auto px-4 max-w-7xl grid grid-cols-1 gap-8 md:grid-cols-2">
     <!-- Card Projects-->
     <div
-      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer basis-1/3"
+      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer w-full"
     >
       <img
         src="{% static 'images/card_p.webp' %}"
-        class="w-full aspect-[4/3] object-cover rounded"
+        class="w-full aspect-[3/2] object-cover rounded"
       />
       <div class="mt-4 text-center">
         <h4 class="text-xl font-semibold text-gray-800">Projekty</h4>
@@ -130,11 +130,11 @@
 
     <!-- Card Articles-->
     <div
-      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer basis-1/3"
+      class="bg-green-100 rounded-lg shadow p-6 flex flex-col justify-between transform transition duraale tion-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer w-full"
     >
       <img
         src="{% static 'images/card_a.webp' %}"
-        class="w-full aspect-[4/3] object-cover rounded"
+        class="w-full aspect-[3/2] object-cover rounded"
       />
       <div class="mt-4 text-center">
         <h4 class="text-xl font-semibold text-gray-800">Články</h4>
@@ -179,7 +179,7 @@
   <div class="container mx-auto px-4 max-w-7xl py-6">
     <img
       src="{% static 'images/pheasant-desktop-1920-640.webp' %}"
-      class="w-full h-[320px] md:h-[440px] object-cover object-center rounded-lg"
+      class="w-full aspect-[3/2] md:aspect-[3/1] object-cover object-center rounded-lg"
       alt=""
       loading="lazy"
     />
@@ -333,7 +333,7 @@
   <div class="container mx-auto px-4 max-w-7xl py-6">
     <img
       src="{% static 'images/pauxi-1920-640.webp' %}"
-      class="w-full h-[320px] md:h-[440px] object-cover object-center rounded-lg"
+      class="w-full aspect-[3/2] md:aspect-[3/1] object-cover object-center rounded-lg"
       alt=""
       loading="lazy"
     />
@@ -385,18 +385,19 @@
   </div>
 </section>
 
-
+{% comment %}
 <!-- Image Section 4-->
 <section class="bg-green-50">
   <div class="container mx-auto px-4 max-w-7xl py-6">
     <img
       src="{% static 'images/lop-sal-1-1920-640.webp' %}"
-      class="w-full h-[320px] md:h-[440px] object-cover object-center rounded-lg"
+      class="w-full aspect-[3/2] md:aspect-[3/1] object-cover object-center rounded-lg"
       alt=""
       loading="lazy"
     />
   </div>
 </section>
+{% endcomment %}
 
 
 {% comment %}
