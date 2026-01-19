@@ -7,44 +7,73 @@
   <div class="max-w-6xl mx-auto px-4">
 
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
       <!-- Projekt 1 -->
-      <div class="rounded-2xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-        {# <img src="{% static 'images/project2.jpg' %}" alt="Projekt 2" class="h-48 w-full object-cover"> #}
-        <div class="p-6">
-          <h3 class="text-xl font-semibold text-gray-900">Bažant vietnamský Lophura hatinhensis "hatinhensis" a "edwardsi"</h3>
-          <p class="mt-2 text-gray-600">Projekt bažanta vietnamského je jedním z našich pilotních projektů. Zabývá se studiem, chovem a záchranou bažanta vietnamského (Lophura hatinhensis „edwardsi“) a bažanta vietnamského (Lophura hatinhensis „hatinhensis“).</p>
-          <a href="{% url 'projekt-bazant-vietnamsky' %}" class="mt-4 inline-block text-green-700 font-medium hover:underline">
-            Detail projektu →
-          </a>
+      <div class="bg-green-100 rounded-lg shadow p-6 flex flex-col transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer w-full">
+        {% comment %}
+        <img
+          src="{% static 'images/projects/project-1.webp' %}"
+          alt="Projekt – náhled"
+          class="w-full aspect-[3/2] object-cover rounded mb-4"
+        />
+        {% endcomment %}
+        <div class="mt-4 text-center flex flex-col justify-between h-full">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Bažant vietnamský</h3>
+            <p class="text-gray-600">Projekt bažanta vietnamského</p>
+          </div>
+          <div class="mt-6 flex justify-center">
+            <a href="{% url 'projekt-bazant-vietnamsky' %}" class="px-8 py-3 text-lg bg-green-600 hover:bg-green-700 text-white rounded-full transition shadow-sm">
+              Detail projektu
+            </a>
+          </div>
         </div>
       </div>
 
       <!-- Projekt 2 -->
-      <div class="rounded-2xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-        {# <img src="{% static 'images/project1.jpg' %}" alt="Projekt 1" class="h-48 w-full object-cover"> #}
-        <div class="p-6">
-          <h3 class="text-xl font-semibold text-gray-900">Bažant zlatý (Chrysolophus pictus) série 5000</h3>
-          <p class="mt-2 text-gray-600">Mezinárodní projekt bažanta zlatého série 5000 se zabývá chovem tohoto druhu ex situ v čistokrevné formě.</p>
-          <a href="{% url 'projekt-bazant-zlaty' %}" class="mt-4 inline-block text-green-700 font-medium hover:underline">
-            Detail projektu →
-          </a>
+      <div class="bg-green-100 rounded-lg shadow p-6 flex flex-col transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer w-full">
+        {% comment %}
+        <img
+          src="{% static 'images/projects/project-2.webp' %}"
+          alt="Projekt – náhled"
+          class="w-full aspect-[3/2] object-cover rounded mb-4"
+        />
+        {% endcomment %}
+        <div class="mt-4 text-center flex flex-col justify-between h-full">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Bažant zlatý série 5000</h3>
+            <p class="text-gray-600">Projekt bažanta zlatého série 5000</p>
+          </div>
+          <div class="mt-6 flex justify-center">
+            <a href="{% url 'projekt-bazant-zlaty' %}" class="px-8 py-3 text-lg bg-green-600 hover:bg-green-700 text-white rounded-full transition shadow-sm">
+              Detail projektu
+            </a>
+          </div>
         </div>
       </div>
 
       <!-- Projekt 3 -->
-      <div class="rounded-2xl border border-gray-200 shadow-sm bg-white overflow-hidden">
-        {# <img src="{% static 'images/project3.jpg' %}" alt="Projekt 3" class="h-48 w-full object-cover"> #}
-        <div class="p-6">
-          <h3 class="text-xl font-semibold text-gray-900">Obnova zemědělské krajiny a podpora zbytkových populací koroptve polní</h3>
-          <p class="mt-2 text-gray-600">Tento projekt je v současnosti jediným projektem WPA CZ-SK, který se zabývá naším původním druhem hrabavého ptáka. Zároveň zahrnuje i péči o krajinu a podporu vhodných biotopů.</p>
-          <a href="{% url 'projekt-koroptve-polni' %}" class="mt-4 inline-block text-green-700 font-medium hover:underline">
-            Detail projektu →
-          </a>
+      <div class="bg-green-100 rounded-lg shadow p-6 flex flex-col transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer w-full">
+        {% comment %}
+        <img
+          src="{% static 'images/projects/project-3.webp' %}"
+          alt="Projekt – náhled"
+          class="w-full aspect-[3/2] object-cover rounded mb-4"
+        />
+        {% endcomment %}
+        <div class="mt-4 text-center flex flex-col justify-between h-full">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Koroptve polní</h3>
+            <p class="text-gray-600">Koroptve polní</p>
+          </div>
+          <div class="mt-6 flex justify-center">
+            <a href="{% url 'projekt-koroptve-polni' %}" class="px-8 py-3 text-lg bg-green-600 hover:bg-green-700 text-white rounded-full transition shadow-sm">
+              Detail projektu
+            </a>
+          </div>
         </div>
       </div>
-
     </div>
 
   </div>
