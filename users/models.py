@@ -42,8 +42,8 @@ class CustomUserManager(BaseUserManager):
         if not email:
             raise ValueError("The Email field is required and must be set")
 
-        # Normalize email to lowercase
-        email = self.normalize_email(email)
+        # Normalize email to lowercase and strip whitespace
+        email = self.normalize_email(email).lower().strip()
         # Ensure users are active by default
         extra_fields.setdefault("is_active", True)
         user = self.model(email=email, **extra_fields)
@@ -178,11 +178,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         """
-        Returns a string representation of the user.
-
-        This method formats the user's full name and email in a readable way.
+        Returns a readable string representation of the user.
         """
-        return f"{self.full_name} ({self.email})"
+        return self.full_name.strip() or self.email
 
     class Meta:
         """
@@ -195,7 +193,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             (newest first).
         """
 
-        db_table = "users"
+        db_table = "accounts_user"
         verbose_name = "User"
         verbose_name_plural = "Users"
         ordering = ["-date_joined"]
@@ -229,3 +227,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
         if CustomUser.objects.exclude(pk=self.pk).filter(email=self.email).exists():
             raise ValidationError({"email": "A user with this email already exists."})
+
+    def save(self, *args, **kwargs):
+        """
+        Ensures full model validation before saving unless explicitly disabled.
+        """
+        validate = kwargs.pop("validate", True)
+        if validate:
+            self.full_clean()
+        super().save(*args, **kwargs)
