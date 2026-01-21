@@ -359,7 +359,6 @@ class MembershipApplicationForm(forms.Form):
 
     declaration_date = forms.CharField(
         label="Dne",
-        initial=date.today().strftime("%d.%m.%Y"),
         widget=forms.TextInput(
             attrs={
                 **input_style,
@@ -367,6 +366,10 @@ class MembershipApplicationForm(forms.Form):
             }
         ),
     )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["declaration_date"].initial = date.today().strftime("%d.%m.%Y")
 
     declaration_signature = forms.CharField(
         label="Podpis",
