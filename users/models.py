@@ -5,7 +5,6 @@ from django.contrib.auth.models import (
 )
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models.functions import Concat
 
 
 class CustomUserManager(BaseUserManager):
@@ -144,16 +143,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(
         max_length=64, verbose_name="Last Name", help_text="User's last name."
     )
-    full_name = models.GeneratedField(
-        expression=Concat(
-            models.F("first_name"), models.Value(" "), models.F("last_name")
-        ),
-        output_field=models.CharField(max_length=128),
-        # Ensures that the full name is stored in the database for optimized queries
-        db_persist=True,
-        verbose_name="Full Name",
-        help_text="User's full name (first + last name).",
-    )
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}".strip()
     is_active = models.BooleanField(
         default=True,
         verbose_name="Active User",
@@ -180,7 +172,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """
         Returns a readable string representation of the user.
         """
-        return self.full_name.strip() or self.email
+        return self.full_name or self.email
 
     class Meta:
         """
