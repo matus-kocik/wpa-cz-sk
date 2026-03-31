@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% include "partials/page_header.html" with title="Chovatelské rady" subtitle="Praktické informace a doporučení pro chovatele hrabavých ptáků" image="/static/images/cros-desktop-1920-640.webp" %}
+<section class="py-16 bg-white">
+    <div class="max-w-6xl mx-auto px-4">
+
+        <p class="text-gray-700 leading-relaxed mb-8">
+            Přehled základních chovatelských doporučení a postupů pro úspěšný chov hrabavých ptáků. 
+            Jednotlivé sekce obsahují praktické rady a zkušenosti z praxe.
+        </p>
+
+        <ul class="space-y-6 text-gray-700">
+
+            <li>
+                <h2 class="text-xl font-semibold">
+                    <a href="{% url 'liahnutie' %}"
+                       class="text-green-600 hover:text-green-800 underline">
+                        Líhnutí a odchov kuřat
+                    </a>
+                </h2>
+                <p class="mb-2">
+                    Základní postupy při líhnutí vajec a následném odchovu kuřat, včetně doporučených podmínek,
+                    teplot, vlhkosti a správné péče v prvních týdnech života.
+                </p>
+            </li>
+
+            <li>
+                <h2 class="text-xl font-semibold">
+                    <a href="{% url 'voliery' %}"
+                       class="text-green-600 hover:text-green-800 underline">
+                        Voliéry a chovatelské zařízení
+                    </a>
+                </h2>
+                <p class="mb-2">
+                    Doporučení pro stavbu a vybavení voliér, velikost prostor, ochranu před predátory
+                    a zajištění vhodného prostředí pro jednotlivé druhy.
+                </p>
+            </li>
+
+            <li>
+                <h2 class="text-xl font-semibold">
+                    <a href="{% url 'krmivo' %}"
+                       class="text-green-600 hover:text-green-800 underline">
+                        Krmivo a výživa
+                    </a>
+                </h2>
+                <p class="mb-2">
+                    Přehled vhodných krmných směsí, doplňků a zásad správné výživy pro kuřata i dospělé jedince,
+                    včetně sezónních úprav krmení.
+                </p>
+            </li>
+
+        </ul>
+    </div>
+</section>
+{% endblock %}

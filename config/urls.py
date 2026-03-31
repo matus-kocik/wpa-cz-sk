@@ -49,6 +49,26 @@ urlpatterns = [
         TemplateView.as_view(template_name="documents.html"),
         name="documents",
     ),
+    path(
+        "chovatelske-rady/",
+        TemplateView.as_view(template_name="chovatelske_rady.html"),
+        name="chovatelske_rady",
+    ),
+    path(
+        "liahnutie/",
+        TemplateView.as_view(template_name="liahnutie.html"),
+        name="liahnutie",
+    ),
+    path(
+        "voliery/",
+        TemplateView.as_view(template_name="voliery.html"),
+        name="voliery",
+    ),
+    path(
+        "krmivo/",
+        TemplateView.as_view(template_name="krmivo.html"),
+        name="krmivo",
+    ),
     path("gdpr/", TemplateView.as_view(template_name="gdpr.html"), name="gdpr"),
     path(
         "podminky-prihlasky/",
