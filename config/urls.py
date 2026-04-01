@@ -69,6 +69,11 @@ urlpatterns = [
         TemplateView.as_view(template_name="krmivo.html"),
         name="krmivo",
     ),
+    path(
+        "krouzky/",
+        TemplateView.as_view(template_name="velikosti-krouzku.html"),
+        name="krouzky",
+    ),
     path("gdpr/", TemplateView.as_view(template_name="gdpr.html"), name="gdpr"),
     path(
         "podminky-prihlasky/",
