@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MemberProfile
+from .models import MemberProfile, MembershipApplication
 
 
 @admin.register(MemberProfile)
@@ -94,3 +94,112 @@ class MemberProfileAdmin(admin.ModelAdmin):
     @admin.display(boolean=True, description="Valid")
     def is_valid_display(self, obj):
         return obj.is_valid
+
+
+@admin.register(MembershipApplication)
+class MembershipApplicationAdmin(admin.ModelAdmin):
+    list_display = (
+        "first_name",
+        "last_name",
+        "email",
+        "user",
+        "status",
+        "payment_status",
+        "created_at",
+    )
+
+    list_display_links = ("first_name", "last_name")
+
+    list_editable = ("status", "payment_status")
+
+    list_filter = (
+        "status",
+        "payment_status",
+        "created_at",
+    )
+
+    search_fields = (
+        "first_name__icontains",
+        "last_name__icontains",
+        "email__icontains",
+    )
+
+    ordering = ("-created_at",)
+
+    date_hierarchy = "created_at"
+    list_per_page = 50
+
+    empty_value_display = "-"
+
+    readonly_fields = ("created_at", "updated_at")
+
+    fieldsets = (
+        (
+            "Basic Info",
+            {
+                "fields": (
+                    "first_name",
+                    "last_name",
+                    "academic_title",
+                    "birth_date",
+                )
+            },
+        ),
+        (
+            "Contact",
+            {
+                "fields": (
+                    "email",
+                    "phone_number",
+                )
+            },
+        ),
+        (
+            "Address",
+            {
+                "fields": (
+                    "city",
+                    "street",
+                    "house_number",
+                    "postal_code",
+                    "district",
+                    "country",
+                )
+            },
+        ),
+        (
+            "Declaration",
+            {
+                "fields": (
+                    "declaration_place",
+                    "declaration_date",
+                    "declaration_signature",
+                )
+            },
+        ),
+        (
+            "Status",
+            {
+                "fields": (
+                    "user",
+                    "status",
+                    "payment_status",
+                )
+            },
+        ),
+        (
+            "Notes",
+            {
+                "fields": ("notes",)
+            },
+        ),
+        (
+            "Metadata",
+            {
+                "fields": (
+                    "created_at",
+                    "updated_at",
+                )
+            },
+        ),
+    )

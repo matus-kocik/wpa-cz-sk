@@ -4,7 +4,8 @@ from django.urls import path
 from django.views.generic import TemplateView
 
 from core.sitemaps import CoreViewSitemap
-from core.views import ContactView, MembershipApplicationView
+from core.views import ContactView
+from members.views import MembershipApplicationView
 
 sitemaps = {
     "core": CoreViewSitemap,
