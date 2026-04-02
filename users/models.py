@@ -5,6 +5,7 @@ from django.contrib.auth.models import (
 )
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models.functions import Lower
 
 
 class CustomUserManager(BaseUserManager):
@@ -42,7 +43,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError("The Email field is required and must be set")
 
         # Normalize email to lowercase and strip whitespace
-        email = self.normalize_email(email).lower().strip()
+        email = self.normalize_email(email).strip().lower()
         # Ensure users are active by default
         extra_fields.setdefault("is_active", True)
         user = self.model(email=email, **extra_fields)
@@ -143,11 +144,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(
         max_length=64, verbose_name="Last Name", help_text="User's last name."
     )
-    @property
-    def full_name(self):
-        return f"{self.first_name} {self.last_name}".strip()
+    email_verified = models.BooleanField(
+        default=False,
+        verbose_name="Email Verified",
+        help_text="Indicates whether the user's email has been verified.",
+    )
     is_active = models.BooleanField(
         default=True,
+        db_index=True,
         verbose_name="Active User",
         help_text="Indicates whether the user account is active.",
     )
@@ -158,6 +162,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
     date_joined = models.DateTimeField(
         auto_now_add=True,
+        db_index=True,
         verbose_name="Date Joined",
         help_text="Timestamp when the user registered.",
     )
@@ -167,6 +172,16 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     # Django authentication settings
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}".strip()
+
+    def get_full_name(self):
+        return self.full_name
+
+    def get_short_name(self):
+        return self.first_name
 
     def __str__(self):
         """
@@ -189,6 +204,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name = "User"
         verbose_name_plural = "Users"
         ordering = ["-date_joined"]
+        indexes = [
+            models.Index(Lower("email"), name="user_email_lower_idx"),
+        ]
 
     def clean(self):
         """
@@ -217,7 +235,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         # Ensure email uniqueness (Django already enforces unique=True,
         # but this prevents case-sensitive issues)
 
-        if CustomUser.objects.exclude(pk=self.pk).filter(email=self.email).exists():
+        if self.__class__.objects.exclude(pk=self.pk).filter(email=self.email).exists():
             raise ValidationError({"email": "A user with this email already exists."})
 
     def save(self, *args, **kwargs):

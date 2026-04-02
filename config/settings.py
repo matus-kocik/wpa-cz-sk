@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # Local apps
     "users",
     "core",
+    "members",
     # Third-party apps
     "django_countries",
 ]
