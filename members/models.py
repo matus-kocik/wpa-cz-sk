@@ -17,6 +17,7 @@ class MemberProfile(models.Model):
         unique=True,
         blank=True,
         null=True,
+        db_index=True,
     )
 
     STATUS_CHOICES = [
@@ -31,18 +32,18 @@ class MemberProfile(models.Model):
         db_index=True,
     )
 
-    ROLE_CHOICES = [
-        ("president", "Predseda"),
-        ("vice_president", "Miestopredseda"),
+    POSITION_CHOICES = [
+        ("president", "Předseda"),
+        ("vice_president", "Místopředseda"),
         ("treasurer", "Pokladník"),
         ("registrar", "Registrátor"),
-        ("web_admin", "Správca webu"),
-        ("manager", "Jednateľ"),
+        ("web_admin", "Správce webu"),
+        ("manager", "Jednatel"),
     ]
 
-    role = models.CharField(
+    position = models.CharField(
         max_length=24,
-        choices=ROLE_CHOICES,
+        choices=POSITION_CHOICES,
         blank=True,
         null=True,
     )
@@ -58,16 +59,9 @@ class MemberProfile(models.Model):
 
     class Meta:
         ordering = [F("registration_number").asc(nulls_last=True), "created_at"]
-        constraints = [
-            models.UniqueConstraint(
-                fields=["user"],
-                name="unique_member_per_user",
-            )
-        ]
 
     def __str__(self):
-        name = self.full_name or self.user.email
-        return f"{name} ({self.registration_number or 'no ID'})"
+        return f"{self.full_name} ({self.registration_number or 'no ID'})"
 
     @property
     def is_valid(self):
@@ -77,7 +71,11 @@ class MemberProfile(models.Model):
 
     @property
     def full_name(self):
-        return self.user.full_name
+        return (
+            getattr(self.user, "full_name", "")
+            or f"{self.user.first_name} {self.user.last_name}".strip()
+            or self.user.email
+        )
 
 
 # MembershipApplication model

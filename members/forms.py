@@ -4,7 +4,7 @@ from django import forms
 from django_countries.fields import CountryField
 from django_countries.widgets import CountrySelectWidget
 
-from core.forms import TurnstileField  # ← berieme z core
+from core.forms import TurnstileField
 from core.validators import (
     validate_academic_title,
     validate_birth_date,

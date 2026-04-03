@@ -51,10 +51,10 @@
                 <strong>Jméno:</strong> {{ first_name }} {{ last_name }}
             </p>
             <p>
-                <strong>Titul:</strong> {{ title }}
+                <strong>Titul:</strong> {{ academic_title|default:"—" }}
             </p>
             <p>
-                <strong>Datum narození:</strong> {{ birth_date }}
+                <strong>Datum narození:</strong> {{ birth_date|date:"d.m.Y" }}
             </p>
         </div>
         <div class="section">
@@ -72,13 +72,13 @@
                 <strong>Okres:</strong> {{ district }}
             </p>
             <p>
-                <strong>Stát:</strong> {{ country }}
+                <strong>Stát:</strong> {{ country_name }}
             </p>
         </div>
         <div class="section">
             <h2>📞 Kontakt</h2>
             <p>
-                <strong>Telefon:</strong> {{ phone_number }}
+                <strong>Telefon:</strong> {{ phone_number|default:"—" }}
             </p>
             <p>
                 <strong>E-mail:</strong> {{ email }}
@@ -102,7 +102,7 @@
                 <strong>V:</strong> {{ declaration_place }}
             </p>
             <p>
-                <strong>Dne:</strong> {{ declaration_date }}
+                <strong>Dne:</strong> {{ declaration_date|date:"d.m.Y" }}
             </p>
             <p>
                 <strong>Podpis:</strong> {{ declaration_signature }}

@@ -26,8 +26,10 @@ config = Config(RepositoryEnv(BASE_DIR.parent / ".env"))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", cast=bool)
+USE_MINIFIED_JS = not DEBUG
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: v.split(","))
 CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=lambda v: v.split(","))
@@ -81,6 +83,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "core.context_processors.turnstile_site_key",
+                "core.context_processors.frontend_flags",
             ],
         },
     },

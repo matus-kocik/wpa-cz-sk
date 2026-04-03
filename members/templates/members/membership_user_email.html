@@ -40,11 +40,12 @@
     <body>
         <div class="container">
             <h2>📝 Potvrzení přihlášky ke členství</h2>
-            <p>Dobrý den {{ first_name }},</p>
+            <p>Dobrý den {{ first_name|default:"" }},</p>
             <p>
                 děkujeme za Vaši přihlášku ke členství ve <strong>WPA CZ-SK</strong>.
             </p>
-            <p>Přihláška byla úspěšně odeslána a my Vás budeme kontaktovat v nejbližších dnech.</p>
+            <p><strong>Vaše přihláška byla úspěšně přijata.</strong></p>
+            <p>Budeme Vás kontaktovat v nejbližších dnech s dalšími informacemi o schválení a platbě členského příspěvku.</p>
             <div class="footer">
                 Tato zpráva je automatické potvrzení o přijetí přihlášky na webu <strong>WPA CZ-SK</strong>.
             </div>

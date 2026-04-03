@@ -12,7 +12,7 @@
                 Zobrazit přihlášku ve formátu PDF
             </a>
         </div>
-        <form method="post" action="">
+        <form method="post" action="{% url 'membership_application' %}">
             {% csrf_token %}
             {{ form.non_field_errors }}
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -31,6 +31,7 @@
                             <p class="text-red-600 text-sm mt-1">{{ form.academic_title.errors.0 }}</p>
                         {% endif %}
                     </div>
+                    <!-- Phone number -->
                     <div id="phone-number-group">
                         {{ form.phone_number.label_tag }} {{ form.phone_number }}
                         <p id="phone-number-error" class="text-red-600 text-sm mt-1"></p>
@@ -94,7 +95,13 @@
                         <p id="city-error" class="text-red-600 text-sm mt-1"></p>
                         {% if form.city.errors %}<p class="text-red-600 text-sm mt-1">{{ form.city.errors.0 }}</p>{% endif %}
                     </div>
-                    {{ form.country.label_tag }}{{ form.country }}{{ form.country.errors }}
+                    <div id="country-group">
+                        {{ form.country.label_tag }} {{ form.country }}
+                        <p id="country-error" class="text-red-600 text-sm mt-1"></p>
+                        {% if form.country.errors %}
+                            <p class="text-red-600 text-sm mt-1">{{ form.country.errors.0 }}</p>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <hr class="my-6">
@@ -162,7 +169,7 @@
                 </div>
             </div>
             <hr class="my-6">
-            <div style="display:none;">{{ form.honeypot }}</div>
+            <div class="hidden">{{ form.honeypot }}</div>
             <!-- Cloudflare Turnstile -->
             <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
@@ -172,7 +179,7 @@
                         data-callback="turnstileCallback"></div>
             </div>
 
-            <input type="hidden" name="turnstile">
+            <input type="hidden" name="turnstile" id="turnstile-token">
             {% if form.turnstile.errors %}
                 <p class="text-red-600 text-sm mt-2 text-center">
                 {{ form.turnstile.errors.0 }}
@@ -190,9 +197,9 @@
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'js/turnstile.min.js' %}"></script>
-    {% if debug %}
-    <script src="{% static 'js/form-validation-membership.js' %}"></script>
-    {% else %}
+    {% if USE_MINIFIED_JS %}
     <script src="{% static 'js/form-validation-membership.min.js' %}"></script>
+    {% else %}
+    <script src="{% static 'js/form-validation-membership.js' %}"></script>
     {% endif %}
 {% endblock %}

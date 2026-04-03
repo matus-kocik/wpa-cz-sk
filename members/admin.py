@@ -9,7 +9,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
         "registration_number",
         "full_name",
         "status",
-        "role",
+        "position",
         "is_active",
         "is_valid_display",
         "valid_until",
@@ -18,11 +18,11 @@ class MemberProfileAdmin(admin.ModelAdmin):
 
     list_display_links = ("registration_number", "full_name")
 
-    list_editable = ("status", "role", "is_active")
+    list_editable = ("status", "position", "is_active")
 
     list_filter = (
         "status",
-        "role",
+        "position",
         "is_active",
         "joined_at",
         "valid_until",
@@ -60,7 +60,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
                     "user",
                     "registration_number",
                     "status",
-                    "role",
+                    "position",
                     "is_active",
                 )
             },

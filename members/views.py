@@ -20,7 +20,7 @@ from .forms import MembershipApplicationForm
     name="dispatch",
 )
 class MembershipApplicationView(FormView):
-    template_name = "membership_application.html"
+    template_name = "members/membership_application.html"
     form_class = MembershipApplicationForm
     success_url = reverse_lazy("membership_application")
 
@@ -29,8 +29,9 @@ class MembershipApplicationView(FormView):
         data = form.cleaned_data
 
         country_name = Country(data["country"]).name if data.get("country") else ""
+        data["country_name"] = country_name
 
-        html_content = render_to_string("membership_email.html", data)
+        html_content = render_to_string("members/membership_email.html", data)
 
         text_content = "\n".join(
             [
@@ -64,8 +65,8 @@ class MembershipApplicationView(FormView):
         msg.send()
 
         user_subject = "Potvrzení odeslání přihlášky – WPA CZ-SK"
-        user_text = render_to_string("membership_user_email.txt", data)
-        user_html = render_to_string("membership_user_email.html", data)
+        user_text = render_to_string("members/membership_user_email.txt", data)
+        user_html = render_to_string("members/membership_user_email.html", data)
 
         user_msg = EmailMultiAlternatives(
             subject=user_subject,
