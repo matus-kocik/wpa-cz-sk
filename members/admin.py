@@ -76,7 +76,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
         (
             "Notes",
             {
-                "fields": ("note",)
+                "fields": ("notes",)
             },
         ),
         (
