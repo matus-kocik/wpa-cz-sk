@@ -208,8 +208,14 @@
         {% else %}
             <script src="{% static 'js/scripts.min.js' %}"></script>
         {% endif %}
-        <script src="https://unpkg.com/lucide@latest"></script>
-        <script>lucide.createIcons();</script>
+        <script src="{% static 'js/lucide.min.js' %}"></script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function () {
+              if (window.lucide) {
+                  window.lucide.createIcons();
+              }
+          });
+        </script>
         <script src="https://unpkg.com/flowbite@latest/dist/flowbite.min.js" defer></script>
         {% block extra_js %}
         {% endblock %}
