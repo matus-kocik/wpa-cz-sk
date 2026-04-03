@@ -16,9 +16,9 @@ class MemberProfileAdmin(admin.ModelAdmin):
         "joined_at",
     )
 
-    list_display_links = ("registration_number", "full_name")
+    list_display_links = ("full_name",)
 
-    list_editable = ("status", "position", "is_active")
+    list_editable = ("registration_number", "status", "position", "is_active")
 
     list_filter = (
         "status",
@@ -45,7 +45,6 @@ class MemberProfileAdmin(admin.ModelAdmin):
     empty_value_display = "-"
 
     readonly_fields = (
-        "registration_number",
         "created_at",
         "updated_at",
     )
@@ -203,3 +202,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
             },
         ),
     )
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        obj.approve()

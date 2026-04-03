@@ -52,7 +52,15 @@ class MemberProfile(models.Model):
 
     joined_at = models.DateField(null=True, blank=True)
     valid_until = models.DateField(null=True, blank=True)
-    note = models.TextField(blank=True, max_length=256)
+    notes = models.TextField(blank=True, max_length=256)
+
+    phone_number = models.CharField(max_length=24, blank=True)
+    city = models.CharField(max_length=64, blank=True)
+    street = models.CharField(max_length=128, blank=True)
+    house_number = models.CharField(max_length=32, blank=True)
+    postal_code = models.CharField(max_length=10, blank=True)
+    district = models.CharField(max_length=64, blank=True)
+    country = models.CharField(max_length=2, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -151,3 +159,61 @@ class MembershipApplication(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name} ({self.status}, {self.payment_status})"
+
+    def approve(self):
+        if self.status != "approved":
+            return
+
+        if self.payment_status != "paid":
+            return
+
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+
+        # Create or get user
+        user, created = User.objects.get_or_create(
+            email=self.email,
+            defaults={
+                "first_name": self.first_name,
+                "last_name": self.last_name,
+            },
+        )
+
+        if not created:
+            # Update basic info if user already exists
+            user.first_name = self.first_name
+            user.last_name = self.last_name
+            user.save(update_fields=["first_name", "last_name"])
+
+        self.user = user
+        self.save(update_fields=["user"])
+
+        # Create or update member profile
+        profile, created = MemberProfile.objects.get_or_create(
+            user=user,
+            defaults={
+                "phone_number": self.phone_number,
+                "city": self.city,
+                "street": self.street,
+                "house_number": self.house_number,
+                "postal_code": self.postal_code,
+                "district": self.district,
+                "country": self.country,
+                "notes": self.notes,
+            },
+        )
+
+        if not created:
+            # update existing profile with latest data
+            for field in [
+                "phone_number",
+                "city",
+                "street",
+                "house_number",
+                "postal_code",
+                "district",
+                "country",
+                "notes",
+            ]:
+                setattr(profile, field, getattr(self, field))
+            profile.save()

@@ -127,7 +127,7 @@ class MembershipApplicationForm(forms.ModelForm):
 
     declaration_date = forms.DateField(
         label="Dne",
-        input_formats=["%d.%m.%Y"],
+        input_formats=["%d.%m.%Y", "%Y-%m-%d"],
         widget=forms.TextInput(
             attrs={
                 **input_style,

@@ -3,6 +3,7 @@ import re
 from datetime import date
 
 import dns.resolver
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from phonenumbers import NumberParseException, is_valid_number, parse
 
@@ -40,6 +41,10 @@ ALLOWED_DOMAINS = _load_domain_list(ALLOWLIST_PATH)
 
 
 def validate_email_domain(value):
+    # Skip strict DNS validation in development
+    if settings.DEBUG:
+        return
+
     domain = value.split("@")[-1].lower()
 
     if domain in ALLOWED_DOMAINS:
