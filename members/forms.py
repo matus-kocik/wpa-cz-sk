@@ -146,15 +146,19 @@ class MembershipApplicationForm(forms.ModelForm):
     agree_membership_terms = forms.BooleanField(required=True)
     agree_gdpr = forms.BooleanField(required=True)
 
-    honeypot = forms.CharField(required=False, widget=forms.HiddenInput)
+    website = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"class": "hidden"}),
+        label=""
+    )
     turnstile = TurnstileField(required=True)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["declaration_date"].initial = date.today()
 
-    def clean_honeypot(self):
-        data = self.cleaned_data.get("honeypot")
+    def clean_website(self):
+        data = self.cleaned_data.get("website")
         if data:
             raise forms.ValidationError("Zachycený spam – odeslání zablokováno.")
         return data

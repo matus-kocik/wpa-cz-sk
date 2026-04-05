@@ -169,22 +169,17 @@
                 </div>
             </div>
             <hr class="my-6">
-            <div class="hidden">{{ form.honeypot }}</div>
-            <!-- Cloudflare Turnstile -->
+            <div class="hidden">{{ form.website }}</div>
             <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
+            <!-- Cloudflare Turnstile -->
             <div class="mt-8 flex justify-center">
                 <div class="cf-turnstile"
-                        data-sitekey="{{ TURNSTILE_SITE_KEY }}"
-                        data-callback="turnstileCallback"></div>
+                     data-sitekey="{{ TURNSTILE_SITE_KEY }}"
+                     data-callback="turnstileCallback">
+                </div>
             </div>
 
             <input type="hidden" name="turnstile" id="turnstile-token">
-            {% if form.turnstile.errors %}
-                <p class="text-red-600 text-sm mt-2 text-center">
-                {{ form.turnstile.errors.0 }}
-                </p>
-            {% endif %}
             <div class="mt-8 text-center">
                 <button type="submit"
                         class="bg-green-600 hover:bg-green-700 text-white font-semibold px-8 py-3 rounded-full shadow">

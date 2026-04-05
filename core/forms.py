@@ -121,12 +121,16 @@ class ContactForm(forms.Form):
         ),
     )
 
-    honeypot = forms.CharField(required=False, widget=forms.HiddenInput, label="")
+    website = forms.CharField(
+        required=False,
+        widget=forms.TextInput(attrs={"class": "hidden"}),
+        label=""
+    )
 
     turnstile = TurnstileField(required=True)
 
-    def clean_honeypot(self):
-        value = self.cleaned_data.get("honeypot")
+    def clean_website(self):
+        value = self.cleaned_data.get("website")
         if value:
             raise forms.ValidationError("Neplatný pokus o odeslání formuláře.")
         return value

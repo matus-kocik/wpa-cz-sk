@@ -7,15 +7,28 @@ from django.utils.decorators import method_decorator
 from django.views.generic.edit import FormView
 from django_ratelimit.decorators import ratelimit
 
+if settings.DEBUG:
+    RATE_EMAIL = "50/h"
+    RATE_IP_MIN = "50/m"
+    RATE_IP_HOUR = "200/h"
+else:
+    RATE_EMAIL = "3/h"
+    RATE_IP_MIN = "5/m"
+    RATE_IP_HOUR = "10/h"
+
 from .forms import ContactForm
 
 
 @method_decorator(
-    ratelimit(key="post:email", rate="3/h", method="POST", block=True),
+    ratelimit(key="post:email", rate=RATE_EMAIL, method="POST", block=True),
     name="dispatch",
 )
 @method_decorator(
-    ratelimit(key="ip", rate="10/h", method="POST", block=True),
+    ratelimit(key="ip", rate=RATE_IP_MIN, method="POST", block=True),
+    name="dispatch",
+)
+@method_decorator(
+    ratelimit(key="ip", rate=RATE_IP_HOUR, method="POST", block=True),
     name="dispatch",
 )
 class ContactView(FormView):
