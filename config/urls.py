@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
@@ -10,8 +11,13 @@ sitemaps = {
     "core": CoreViewSitemap,
 }
 
+if settings.DEBUG:
+    admin_url = "admin/"
+else:
+    admin_url = getattr(settings, "ADMIN_URL", "admin/")
+
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path(admin_url, admin.site.urls),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
     path("kontakt/", ContactView.as_view(), name="contact"),
     path(

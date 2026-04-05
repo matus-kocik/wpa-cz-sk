@@ -31,7 +31,7 @@ DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: v.split(","))
 CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=lambda v: v.split(","))
-
+ADMIN_URL = config("ADMIN_URL", default="admin/")
 
 # Application definition
 
@@ -115,18 +115,38 @@ DATABASES = {
 }
 
 EMAIL_BACKEND = config("EMAIL_BACKEND")
-EMAIL_HOST = config("EMAIL_HOST")
-EMAIL_PORT = config("EMAIL_PORT", cast=int)
-EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool)
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
-CONTACT_RECEIVER_EMAIL = config("CONTACT_RECEIVER_EMAIL")
-APPLICATION_RECEIVER_EMAIL = config(
-    "APPLICATION_RECEIVER_EMAIL",
-    default=CONTACT_RECEIVER_EMAIL,
-)
+
+if DEBUG:
+    EMAIL_HOST = config("EMAIL_TEST_HOST")
+    EMAIL_PORT = config("EMAIL_TEST_PORT", cast=int)
+    EMAIL_USE_SSL = config("EMAIL_TEST_USE_SSL", cast=bool)
+    EMAIL_USE_TLS = config("EMAIL_TEST_USE_TLS", cast=bool)
+    EMAIL_HOST_USER = config("EMAIL_TEST_HOST_USER")
+    EMAIL_HOST_PASSWORD = config("EMAIL_TEST_HOST_PASSWORD")
+    DEFAULT_FROM_EMAIL = config("EMAIL_TEST_FROM_EMAIL")
+
+    CONTACT_RECEIVER_EMAIL = config(
+        "CONTACT_TEST_RECEIVER_EMAIL",
+        default=EMAIL_HOST_USER,
+    )
+    APPLICATION_RECEIVER_EMAIL = config(
+        "APPLICATION_TEST_RECEIVER_EMAIL",
+        default=EMAIL_HOST_USER,
+    )
+else:
+    EMAIL_HOST = config("EMAIL_HOST")
+    EMAIL_PORT = config("EMAIL_PORT", cast=int)
+    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool)
+    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
+    EMAIL_HOST_USER = config("EMAIL_HOST_USER")
+    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
+    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+
+    CONTACT_RECEIVER_EMAIL = config("CONTACT_RECEIVER_EMAIL")
+    APPLICATION_RECEIVER_EMAIL = config(
+        "APPLICATION_RECEIVER_EMAIL",
+        default=CONTACT_RECEIVER_EMAIL,
+    )
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -184,7 +204,7 @@ TURNSTILE_SITE_KEY = config("TURNSTILE_SITE_KEY", default="")
 TURNSTILE_SECRET_KEY = config("TURNSTILE_SECRET_KEY", default="")
 
 # Security headers
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
