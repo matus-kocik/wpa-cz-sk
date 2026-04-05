@@ -199,9 +199,9 @@
 {% endblock %}
 {% block extra_js %}
     <script src="{% static 'js/turnstile.min.js' %}"></script>
-    {% if debug %}
-    <script src="{% static 'js/form-validation-contact.js' %}"></script>
-    {% else %}
+    {% if USE_MINIFIED_JS %}
     <script src="{% static 'js/form-validation-contact.min.js' %}"></script>
+    {% else %}
+    <script src="{% static 'js/form-validation-contact.js' %}"></script>
     {% endif %}
 {% endblock %}

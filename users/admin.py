@@ -56,17 +56,20 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
 
-    list_display = ["email", "full_name", "is_active", "is_staff", "date_joined"]
-    list_display_links = ["email"]
+    list_display = ["email", "full_name", "email_verified", "is_active", "is_staff", "date_joined"]
+    list_display_links = ["email", "full_name"]
     list_editable = ["is_active", "is_staff"]
-    search_fields = ["email", "first_name", "last_name"]
-    list_filter = ["is_active", "is_staff", "date_joined"]
+    search_fields = ["email__icontains", "first_name__icontains", "last_name__icontains"]
+    list_filter = ["email_verified", "is_active", "is_staff", "date_joined"]
     ordering = ["-date_joined"]
+    list_select_related = ()
+    date_hierarchy = "date_joined"
     readonly_fields = ["date_joined", "last_login"]
+    filter_horizontal = ("groups", "user_permissions")
 
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name")}),
+        ("Personal info", {"fields": ("first_name", "last_name", "email_verified")}),
         (
             "Permissions",
             {
