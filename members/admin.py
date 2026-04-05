@@ -6,9 +6,10 @@ from .models import MemberProfile, MembershipApplication
 @admin.register(MemberProfile)
 class MemberProfileAdmin(admin.ModelAdmin):
     list_display = (
-        "registration_number",
+        "icch_number",
         "full_name",
-        "status",
+        "payment_status",
+        "membership_type",
         "position",
         "is_active",
         "is_valid_display",
@@ -18,10 +19,11 @@ class MemberProfileAdmin(admin.ModelAdmin):
 
     list_display_links = ("full_name",)
 
-    list_editable = ("registration_number", "status", "position", "is_active")
+    list_editable = ("payment_status", "membership_type", "position", "is_active")
 
     list_filter = (
-        "status",
+        "payment_status",
+        "membership_type",
         "position",
         "is_active",
         "joined_at",
@@ -32,10 +34,10 @@ class MemberProfileAdmin(admin.ModelAdmin):
         "user__email__icontains",
         "user__first_name__icontains",
         "user__last_name__icontains",
-        "registration_number__icontains",
+        "icch_number__icontains",
     )
 
-    ordering = ("registration_number", "joined_at")
+    ordering = ("icch_number", "joined_at")
 
     list_select_related = ("user",)
 
@@ -57,8 +59,9 @@ class MemberProfileAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "user",
-                    "registration_number",
-                    "status",
+                    "icch_number",
+                    "payment_status",
+                    "membership_type",
                     "position",
                     "is_active",
                 )
@@ -103,17 +106,17 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
         "email",
         "user",
         "status",
-        "payment_status",
+        "initial_payment_status",
         "created_at",
     )
 
     list_display_links = ("first_name", "last_name")
 
-    list_editable = ("status", "payment_status")
+    list_editable = ("status", "initial_payment_status")
 
     list_filter = (
         "status",
-        "payment_status",
+        "initial_payment_status",
         "created_at",
     )
 
@@ -182,7 +185,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
                 "fields": (
                     "user",
                     "status",
-                    "payment_status",
+                    "initial_payment_status",
                 )
             },
         ),
@@ -204,5 +207,11 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
+        if (
+            "status" in form.changed_data
+            and obj.status == "approved"
+            and obj.initial_payment_status == "paid"
+        ):
+            obj.approve()
+
         super().save_model(request, obj, form, change)
-        obj.approve()
