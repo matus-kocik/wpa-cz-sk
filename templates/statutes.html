@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
+{% include "partials/page_header.html" with title="Stanovy spolku" subtitle="Oficiální stanovy World Pheasant Association Czech Republic and Slovakia z. s." image="/static/images/cros-desktop-1920-640.webp" %}
 <section class="py-16 bg-white">
   <div class="max-w-6xl mx-auto px-4 text-gray-700 leading-relaxed">
 
-    <h1 class="text-3xl font-bold text-green-700 mb-6">
-      Stanovy spolku „World Pheasant Association Czech Republic and Slovakia z. s.“
-    </h1>
 
     <div class="mb-8">
       <a href="{% static 'docs/stanovy.pdf' %}"

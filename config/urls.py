@@ -70,6 +70,11 @@ urlpatterns = [
         name="krmivo",
     ),
     path(
+        "veterina/",
+        TemplateView.as_view(template_name="veterina.html"),
+        name="veterina",
+    ),
+    path(
         "krouzky/",
         TemplateView.as_view(template_name="velikosti-krouzku.html"),
         name="krouzky",

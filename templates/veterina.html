@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% include "partials/page_header.html" with title="Veterinární problematika" subtitle="Důležité informace o zdraví, prevenci a onemocněních hrabavých ptáků" image="/static/images/pol-bic-1920-640.webp" %}
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4 text-gray-700 leading-relaxed">
+
+    <div class="space-y-4">
+
+      <div>
+        <a href="{% static 'docs/veterinarni-problematika-chovu-hrabavych.pdf' %}"
+           target="_blank"
+           rel="noopener"
+           class="text-green-700 underline hover:text-green-900 text-lg md:text-xl">
+          Veterinární problematika chovu hrabavých (PDF)
+        </a>
+      </div>
+
+      <div>
+        <a href="{% static 'docs/mykoticka-onemocneni.pdf' %}"
+           target="_blank"
+           rel="noopener"
+           class="text-green-700 underline hover:text-green-900 text-lg md:text-xl">
+          Mykotická onemocnění (PDF)
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+{% endblock %}
