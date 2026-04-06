@@ -163,6 +163,20 @@ class MembershipApplicationForm(forms.ModelForm):
             raise forms.ValidationError("Zachycený spam – odeslání zablokováno.")
         return data
 
+    def clean_email(self):
+        email = self.cleaned_data.get("email")
+
+        if email:
+            email = email.strip().lower()
+
+            if MembershipApplication.objects.filter(
+                email__iexact=email,
+                status__in=["pending", "approved"],
+            ).exists():
+                raise forms.ValidationError("Tento email už má aktivní přihlášku.")
+
+        return email
+
     class Meta:
         model = MembershipApplication
         fields = [

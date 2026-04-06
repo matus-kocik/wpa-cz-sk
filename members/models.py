@@ -184,15 +184,15 @@ class MembershipApplication(models.Model):
         if self.academic_title:
             self.academic_title = self.academic_title.strip()
         if self.city:
-            self.city = self.city.strip()
+            self.city = self.city.strip().title()
         if self.street:
-            self.street = self.street.strip()
+            self.street = self.street.strip().title()
         if self.house_number:
             self.house_number = self.house_number.strip()
         if self.postal_code:
             self.postal_code = self.postal_code.strip()
         if self.district:
-            self.district = self.district.strip()
+            self.district = self.district.strip().title()
         if self.country:
             self.country = self.country.strip().upper()
         if self.phone_number:
@@ -202,9 +202,9 @@ class MembershipApplication(models.Model):
         if self.notes:
             self.notes = self.notes.strip()
         if self.declaration_place:
-            self.declaration_place = self.declaration_place.strip()
+            self.declaration_place = self.declaration_place.strip().title()
         if self.declaration_signature:
-            self.declaration_signature = self.declaration_signature.strip()
+            self.declaration_signature = self.declaration_signature.strip().title()
 
         super().save(*args, **kwargs)
     user = models.ForeignKey(
@@ -296,7 +296,7 @@ class MembershipApplication(models.Model):
         user = User.objects.filter(email=self.email).first()
 
         if not user:
-            user = User.objects.create(
+            user = User.objects.create_user(
                 email=self.email,
                 first_name=self.first_name,
                 last_name=self.last_name,
@@ -347,5 +347,4 @@ class MembershipApplication(models.Model):
         if not profile.valid_until:
             profile.valid_until = date(self.declaration_date.year + 1, 3, 31)
 
-        profile.is_active = True
         profile.save()

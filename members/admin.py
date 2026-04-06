@@ -77,6 +77,20 @@ class MemberProfileAdmin(admin.ModelAdmin):
             },
         ),
         (
+            "Contact & Address",
+            {
+                "fields": (
+                    "phone_number",
+                    "city",
+                    "street",
+                    "house_number",
+                    "postal_code",
+                    "district",
+                    "country",
+                )
+            },
+        ),
+        (
             "Notes",
             {
                 "fields": ("notes",)
@@ -207,11 +221,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        if (
-            "status" in form.changed_data
-            and obj.status == "approved"
-            and obj.initial_payment_status == "paid"
-        ):
+        if obj.status == "approved" and obj.initial_payment_status == "paid":
             obj.approve()
 
         super().save_model(request, obj, form, change)
