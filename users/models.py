@@ -246,9 +246,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """
         Ensures full model validation before saving unless explicitly disabled.
         """
-        validate = kwargs.pop("validate", True)
 
-        # Validate ONLY on create to avoid production DB issues during login/update
-        if validate and not self.pk:
-            self.full_clean()
+        # TEMP FIX: disable full_clean completely (causing production login crash)
+        # if validate and not self.pk:
+        #     self.full_clean()
         super().save(*args, **kwargs)
