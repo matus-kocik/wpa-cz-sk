@@ -234,9 +234,13 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
         # Ensure email uniqueness (Django already enforces unique=True,
         # but this prevents case-sensitive issues)
-
-        if self.__class__.objects.exclude(pk=self.pk).filter(email=self.email).exists():
-            raise ValidationError({"email": "A user with this email already exists."})
+        # Handle create vs update to avoid DB edge-cases
+        if not self.pk:
+            if self.__class__.objects.filter(email__iexact=self.email).exists():
+                raise ValidationError({"email": "A user with this email already exists."})
+        else:
+            if self.__class__.objects.exclude(pk=self.pk).filter(email__iexact=self.email).exists():
+                raise ValidationError({"email": "A user with this email already exists."})
 
     def save(self, *args, **kwargs):
         """
