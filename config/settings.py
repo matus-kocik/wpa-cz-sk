@@ -11,8 +11,10 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 USE_MINIFIED_JS = not DEBUG
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: v.split(","))
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=lambda v: v.split(","))
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="", cast=lambda v: [h.strip() for h in v.split(",") if h])
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", default="", cast=lambda v: [h.strip() for h in v.split(",") if h])
+if DEBUG:
+    ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
 ADMIN_URL = config("ADMIN_URL")
 
 # Application definition

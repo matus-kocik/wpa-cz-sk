@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+{% include "partials/page_header.html" with title="Začínáme s chovem" subtitle="Základní informace pro nové chovatele – první kroky, výběr druhů a praktické zkušenosti" image="/static/images/pol-bic-1920-640.webp" %}
+
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4 text-gray-700 leading-relaxed">
+
+    <div class="space-y-8">
+
+      <div class="p-6 bg-gray-50 rounded-xl border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">
+          Začínáme s chovem bažantů I
+        </h2>
+        <p class="text-sm text-gray-500 mb-4">
+          Autor: Míla Stehlík
+        </p>
+
+        <p class="mb-4">
+          Úvod do chovu okrasných bažantů – výběr druhu, základní požadavky na chov a první kroky.
+        </p>
+
+        <p class="text-sm text-gray-500 mb-4">
+          Publikováno v 
+          <a href="https://www.novaexota.eu/" target="_blank" rel="noopener" class="underline hover:text-green-700">
+            Nová Exota
+          </a>
+        </p>
+
+        <a href="{% static 'docs/zaciname-s-chovem-bazantu-1.pdf' %}"
+           target="_blank"
+           rel="noopener"
+           class="inline-block px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition">
+          Otevřít článek (PDF)
+        </a>
+      </div>
+
+      <div class="p-6 bg-gray-50 rounded-xl border border-gray-200">
+        <h2 class="text-2xl font-bold text-gray-900 mb-2">
+          Začínáme s chovem bažantů II
+        </h2>
+        <p class="text-sm text-gray-500 mb-4">
+          Autor: Míla Stehlík
+        </p>
+
+        <p class="mb-4">
+          Pokračování článku zaměřené na zařízení voliér, krmení a praktické zkušenosti z chovu.
+        </p>
+
+        <p class="text-sm text-gray-500 mb-4">
+          Publikováno v 
+          <a href="https://www.novaexota.eu/" target="_blank" rel="noopener" class="underline hover:text-green-700">
+            Nová Exota
+          </a>
+        </p>
+
+        <a href="{% static 'docs/zaciname-s-chovem-bazantu-2.pdf' %}"
+           target="_blank"
+           rel="noopener"
+           class="inline-block px-6 py-3 bg-green-600 text-white font-semibold rounded-lg shadow hover:bg-green-700 transition">
+          Otevřít článek (PDF)
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+{% endblock %}

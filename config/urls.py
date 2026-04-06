@@ -62,6 +62,11 @@ urlpatterns = [
         name="chovatelske_rady",
     ),
     path(
+        "zaciname/",
+        TemplateView.as_view(template_name="zaciname.html"),
+        name="zaciname",
+    ),
+    path(
         "liahnutie/",
         TemplateView.as_view(template_name="liahnutie.html"),
         name="liahnutie",
