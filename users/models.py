@@ -106,8 +106,7 @@ class CustomUserManager(BaseUserManager):
         """
         if not email:
             raise ValueError("Natural key (email) must be provided")
-        # Case-insensitive lookup
-        return self.get(email__iexact=email)
+        return self.get(email=email)
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
