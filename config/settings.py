@@ -49,6 +49,10 @@ MIDDLEWARE = [
 # Custom User Model
 AUTH_USER_MODEL = "users.CustomUser"
 
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
+]
+
 ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
@@ -91,7 +95,7 @@ else:
         }
     }
 
-EMAIL_BACKEND = config("EMAIL_BACKEND")
+EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
 
 if DEBUG:
     EMAIL_HOST = config("EMAIL_TEST_HOST")

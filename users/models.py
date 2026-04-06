@@ -88,25 +88,25 @@ class CustomUserManager(BaseUserManager):
 
         return self.create_user(email, password, **extra_fields)
 
-    def get_by_natural_key(self, email):
+    def get_by_natural_key(self, username):
         """
-        Retrieves a user instance by their natural key (email).
+        Retrieves a user instance by their natural key (username/email).
 
         This method is used by Django's authentication system to find users
         during login or permission checks.
 
         Args:
-            email (str): The email of the user.
+            username (str): The username or email of the user.
 
         Returns:
             CustomUser: The user instance.
 
         Raises:
-            ValueError: If the email is not provided.
+            ValueError: If the username is not provided.
         """
-        if not email:
-            raise ValueError("Natural key (email) must be provided")
-        return self.get(email=email)
+        if not username:
+            raise ValueError("Natural key (username/email) must be provided")
+        return self.get(email__iexact=username)
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
