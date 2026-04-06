@@ -15,7 +15,7 @@ sitemaps = {
 if settings.DEBUG:
     admin_url = "admin/"
 else:
-    admin_url = getattr(settings, "ADMIN_URL")
+    admin_url = getattr(settings, "ADMIN_URL", "admin/")
 
 urlpatterns = [
     path(admin_url, admin.site.urls),
