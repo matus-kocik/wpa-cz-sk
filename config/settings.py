@@ -13,7 +13,7 @@ USE_MINIFIED_JS = not DEBUG
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=lambda v: v.split(","))
 CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=lambda v: v.split(","))
-ADMIN_URL = config("ADMIN_URL", default="admin/")
+ADMIN_URL = config("ADMIN_URL")
 
 # Application definition
 
