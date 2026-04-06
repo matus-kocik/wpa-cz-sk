@@ -199,7 +199,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             (newest first).
         """
 
-        db_table = "accounts_user"
         verbose_name = "User"
         verbose_name_plural = "Users"
         ordering = ["-date_joined"]

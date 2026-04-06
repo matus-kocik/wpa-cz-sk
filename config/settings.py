@@ -98,13 +98,13 @@ else:
 EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
 
 if DEBUG:
-    EMAIL_HOST = config("EMAIL_TEST_HOST")
-    EMAIL_PORT = config("EMAIL_TEST_PORT", cast=int)
-    EMAIL_USE_SSL = config("EMAIL_TEST_USE_SSL", cast=bool)
-    EMAIL_USE_TLS = config("EMAIL_TEST_USE_TLS", cast=bool)
-    EMAIL_HOST_USER = config("EMAIL_TEST_HOST_USER")
-    EMAIL_HOST_PASSWORD = config("EMAIL_TEST_HOST_PASSWORD")
-    DEFAULT_FROM_EMAIL = config("EMAIL_TEST_FROM_EMAIL")
+    EMAIL_HOST = config("EMAIL_TEST_HOST", default="")
+    EMAIL_PORT = config("EMAIL_TEST_PORT", cast=int, default=587)
+    EMAIL_USE_SSL = config("EMAIL_TEST_USE_SSL", cast=bool, default=False)
+    EMAIL_USE_TLS = config("EMAIL_TEST_USE_TLS", cast=bool, default=True)
+    EMAIL_HOST_USER = config("EMAIL_TEST_HOST_USER", default="")
+    EMAIL_HOST_PASSWORD = config("EMAIL_TEST_HOST_PASSWORD", default="")
+    DEFAULT_FROM_EMAIL = config("EMAIL_TEST_FROM_EMAIL", default="")
 
     CONTACT_RECEIVER_EMAIL = config(
         "CONTACT_TEST_RECEIVER_EMAIL",
@@ -174,8 +174,8 @@ TURNSTILE_SITE_KEY = config("TURNSTILE_SITE_KEY", default="")
 TURNSTILE_SECRET_KEY = config("TURNSTILE_SECRET_KEY", default="")
 
 # Security headers
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SECURE = not DEBUG
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 CSRF_COOKIE_DOMAIN = None
 SESSION_COOKIE_DOMAIN = None
