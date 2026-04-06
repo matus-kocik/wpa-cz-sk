@@ -215,7 +215,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         This method:
         - Ensures that the email is always stored in lowercase.
         - Validates that first and last names are not empty.
-        - Prevents duplicate emails from being registered.
 
         Raises:
             ValidationError: If any validation rule fails.
@@ -231,16 +230,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
         if not self.last_name:
             raise ValidationError({"last_name": "The Last Name field is required"})
-
-        # Ensure email uniqueness (Django already enforces unique=True,
-        # but this prevents case-sensitive issues)
-        # Handle create vs update to avoid DB edge-cases
-        if not self.pk:
-            if self.__class__.objects.filter(email__iexact=self.email).exists():
-                raise ValidationError({"email": "A user with this email already exists."})
-        else:
-            if self.__class__.objects.exclude(pk=self.pk).filter(email__iexact=self.email).exists():
-                raise ValidationError({"email": "A user with this email already exists."})
 
     def save(self, *args, **kwargs):
         """
