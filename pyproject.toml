@@ -14,7 +14,7 @@ dependencies = [
     "django-ratelimit>=4.1.0",
     "dnspython>=2.7.0",
     "phonenumbers>=9.0.9",
-    "psycopg-binary>=3.2.9",
+    "psycopg2-binary>=2.9.11",
     "python-decouple>=3.8",
     "requests>=2.32.4",
 ]
