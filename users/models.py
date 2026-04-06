@@ -55,7 +55,7 @@ class CustomUserManager(BaseUserManager):
             # Set an unusable password (e.g., for OAuth users...)
             user.set_unusable_password()
 
-        user.save(using=self._db, validate=False)
+        user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password=None, **extra_fields):
