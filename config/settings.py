@@ -29,8 +29,11 @@ INSTALLED_APPS = [
     "django.contrib.sitemaps",
     # Local apps
     "users",
+    "common",
     "core",
     "members",
+    "articles",
+    "taxonomy",
     # Third-party apps
     "django_countries",
 ]

@@ -17,18 +17,30 @@ class SlugModel(models.Model):
     class Meta:
         abstract = True
 
+
     def save(self, *args, **kwargs):
-        if not self.slug and hasattr(self, "title"):
-            base_slug = slugify(self.title)
-            slug = base_slug
-            counter = 1
+        if not self.slug:
+            source = None
 
-            ModelClass = self.__class__
-            while ModelClass.objects.filter(slug=slug).exclude(pk=self.pk).exists():
-                slug = f"{base_slug}-{counter}"
-                counter += 1
+            if hasattr(self, "title") and self.title:
+                source = self.title
+            elif hasattr(self, "latin_name") and self.latin_name:
+                source = self.latin_name
+            elif hasattr(self, "name") and self.name:
+                source = self.name
 
-            self.slug = slug
+            # ensure source is not empty or whitespace
+            if source and str(source).strip():
+                base_slug = slugify(source)
+                slug = base_slug
+                counter = 1
+
+                ModelClass = self.__class__
+                while ModelClass.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                    slug = f"{base_slug}-{counter}"
+                    counter += 1
+
+                self.slug = slug
 
         super().save(*args, **kwargs)
 
