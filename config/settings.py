@@ -32,8 +32,13 @@ INSTALLED_APPS = [
     "common",
     "core",
     "members",
+    "profiles",
     "articles",
     "taxonomy",
+    "breeding",
+    "studbook",
+    "projects",
+    "events",
     # Third-party apps
     "django_countries",
 ]
