@@ -81,11 +81,26 @@ Application submitted by a user to become a member.
 
 ---
 
+## Approval Logic
+
+Calling `approve()` performs the following:
+
+- Sets application status to "approved"
+- If `initial_payment_status` is "paid":
+  - creates a user account if it does not exist
+  - creates or updates a MemberProfile
+- If payment is not completed:
+  - no user or member profile is created
+
+The method is idempotent (safe to call multiple times without creating duplicates).
+
+---
+
 ## Notes
 
 - MemberProfile is the central model used across the system
 - MembershipApplication handles onboarding workflow
-- Approval process creates or updates user and member profile
+- Approval process creates or updates user and member profile only if payment is completed
 
 ---
 

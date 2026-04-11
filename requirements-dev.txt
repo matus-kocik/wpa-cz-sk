@@ -6,3 +6,6 @@ djlint==1.36.4
 isort==8.0.1
 ruff==0.15.9
 tqdm==4.67.3
+
+pytest==9.0.3
+pytest-django==4.12.0

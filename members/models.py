@@ -210,18 +210,19 @@ class MemberProfile(models.Model):
 
             self.icch_number = str(next_number).zfill(4)
 
-        # Sync payment status ONLY on change
-        if self.payment_status == "paid" and old_payment_status != "paid":
+        # Sync payment status (always keep is_active in sync)
+        if self.payment_status == "paid":
             self.is_active = True
 
-            today = date.today()
+            # extend or set validity when transitioning to paid
+            if old_payment_status != "paid":
+                today = date.today()
 
-            if self.valid_until and self.valid_until >= today:
-                self.valid_until = date(self.valid_until.year + 1, 3, 31)
-            else:
-                self.valid_until = date(today.year + 1, 3, 31)
-
-        elif self.payment_status == "unpaid" and old_payment_status == "paid":
+                if self.valid_until and self.valid_until >= today:
+                    self.valid_until = date(self.valid_until.year + 1, 3, 31)
+                else:
+                    self.valid_until = date(today.year + 1, 3, 31)
+        else:
             self.is_active = False
 
         from django.db import IntegrityError
@@ -465,11 +466,15 @@ class MembershipApplication(models.Model):
     # Approves application and creates/updates user and member profile
     @transaction.atomic
     def approve(self):
-        if self.status != "approved":
+        # Prevent re-processing already approved applications with user
+        if self.status == "approved" and self.user:
             return
 
         if self.initial_payment_status != "paid":
             return
+
+        self.status = "approved"
+        self.save(update_fields=["status"])
 
         User = get_user_model()
 
