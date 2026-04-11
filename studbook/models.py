@@ -6,6 +6,11 @@ from common.models import TimeStampedModel
 
 
 class BirdRecord(TimeStampedModel):
+    """
+    Core record representing a single bird in the studbook.
+
+    Stores identity, origin, ownership, and lineage data.
+    """
     SEX_CHOICES = (
         ("male", "Samec"),
         ("female", "Samice"),
@@ -144,11 +149,18 @@ class BirdRecord(TimeStampedModel):
         verbose_name = "Jedinec"
         verbose_name_plural = "Jedinci"
         ordering = ["species__latin_name", "ring_number", "name"]
+        indexes = [
+            models.Index(fields=["species"]),
+            models.Index(fields=["member"]),
+            models.Index(fields=["status"]),
+            models.Index(fields=["ring_number"]),
+        ]
 
     def __str__(self):
         label = self.ring_number or self.name or f"ID {self.pk}"
         return f"{self.species} – {label}"
 
+    # Validation to ensure logical parent relationships
     def clean(self):
         if self.father_id and self.father_id == self.pk:
             raise ValidationError({"father": "Jedinec nemůže být sám sobě otcem."})
@@ -164,6 +176,11 @@ class BirdRecord(TimeStampedModel):
 
 
 class BirdEvent(TimeStampedModel):
+    """
+    Timeline event related to a specific bird.
+
+    Used to track lifecycle events such as birth, transfer, or death.
+    """
     EVENT_TYPE_CHOICES = (
         ("note", "Poznámka"),
         ("birth", "Vylíhnutí / narození"),
@@ -211,12 +228,22 @@ class BirdEvent(TimeStampedModel):
         verbose_name = "Událost jedince"
         verbose_name_plural = "Události jedince"
         ordering = ["-event_date", "-created_at"]
+        indexes = [
+            models.Index(fields=["event_type"]),
+            models.Index(fields=["event_date"]),
+        ]
 
+    # Human-readable event representation
     def __str__(self):
         return f"{self.bird} – {self.get_event_type_display()} ({self.event_date})"
 
 
 class HealthRecord(TimeStampedModel):
+    """
+    Health-related record for a bird.
+
+    Stores diagnosis, treatment, and veterinary info.
+    """
     bird = models.ForeignKey(
         BirdRecord,
         on_delete=models.CASCADE,
@@ -256,12 +283,21 @@ class HealthRecord(TimeStampedModel):
         verbose_name = "Zdravotní záznam"
         verbose_name_plural = "Zdravotní záznamy"
         ordering = ["-record_date", "-created_at"]
+        indexes = [
+            models.Index(fields=["record_date"]),
+        ]
 
+    # Human-readable health record
     def __str__(self):
         return f"{self.bird} – {self.record_date}"
 
 
 class CareRecord(TimeStampedModel):
+    """
+    Routine care record for a bird.
+
+    Includes feeding, treatments, and scheduled care.
+    """
     CARE_TYPE_CHOICES = (
         ("feeding", "Krmení"),
         ("deworming", "Odčervení"),
@@ -317,12 +353,22 @@ class CareRecord(TimeStampedModel):
         verbose_name = "Záznam péče"
         verbose_name_plural = "Záznamy péče"
         ordering = ["-care_date", "-created_at"]
+        indexes = [
+            models.Index(fields=["care_type"]),
+            models.Index(fields=["care_date"]),
+        ]
 
+    # Human-readable care record
     def __str__(self):
         return f"{self.bird} – {self.get_care_type_display()} ({self.care_date})"
 
 
 class TransferRecord(TimeStampedModel):
+    """
+    Record of ownership transfer or movement of a bird.
+
+    Tracks sales, gifts, exchanges, and relocations.
+    """
     TRANSFER_TYPE_CHOICES = (
         ("sale", "Prodej"),
         ("gift", "Darování"),
@@ -381,6 +427,11 @@ class TransferRecord(TimeStampedModel):
         verbose_name = "Záznam převodu"
         verbose_name_plural = "Záznamy převodů"
         ordering = ["-transfer_date", "-created_at"]
+        indexes = [
+            models.Index(fields=["transfer_type"]),
+            models.Index(fields=["transfer_date"]),
+        ]
 
+    # Human-readable transfer record
     def __str__(self):
         return f"{self.bird} – {self.get_transfer_type_display()} ({self.transfer_date})"

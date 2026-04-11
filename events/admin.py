@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 
 from .models import Event
@@ -34,16 +33,22 @@ class EventAdmin(admin.ModelAdmin):
 
     autocomplete_fields = ("species",)
 
+    list_select_related = ("section",)
+
     filter_horizontal = ("species",)
 
     prepopulated_fields = {"slug": ("title",)}
 
     readonly_fields = ("created_at", "updated_at")
 
-    ordering = ("start_date",)
+    ordering = ("-start_date",)
+
+    list_per_page = 25
+
+    date_hierarchy = "start_date"
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": (
                 "title",
                 "slug",
@@ -71,7 +76,7 @@ class EventAdmin(admin.ModelAdmin):
         ("Poznámky", {
             "fields": ("notes",)
         }),
-        ("Meta", {
+        ("Metadata", {
             "fields": ("created_at", "updated_at")
         }),
     )

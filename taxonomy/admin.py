@@ -8,6 +8,7 @@ class FamilyAdmin(admin.ModelAdmin):
     list_display = ("latin_name", "name", "slug")
     list_filter = ()
     ordering = ("latin_name",)
+    list_per_page = 25
     search_fields = ("latin_name", "name")
     prepopulated_fields = {"slug": ("latin_name",)}
 
@@ -18,6 +19,8 @@ class GenusAdmin(admin.ModelAdmin):
     list_filter = ("family",)
     search_fields = ("latin_name", "name")
     ordering = ("latin_name",)
+    list_select_related = ("family",)
+    list_per_page = 25
     autocomplete_fields = ("family",)
     prepopulated_fields = {"slug": ("latin_name",)}
 
@@ -35,14 +38,15 @@ class SpeciesAdmin(admin.ModelAdmin):
     list_filter = ("genus", "status_in_nature", "is_active")
     search_fields = ("latin_name", "czech_name", "authority")
     ordering = ("latin_name",)
-    list_select_related = ("genus",)
+    list_select_related = ("genus", "genus__family")
+    list_per_page = 25
     autocomplete_fields = ("genus",)
     prepopulated_fields = {"slug": ("latin_name",)}
 
     inlines = [SubspeciesInline]
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": ("latin_name", "authority", "czech_name", "slug", "genus", "is_active")
         }),
         ("Poddruhy", {
@@ -54,7 +58,7 @@ class SpeciesAdmin(admin.ModelAdmin):
         ("Stav", {
             "fields": ("status_in_nature", "status_in_captivity")
         }),
-        ("Biológia", {
+        ("Biologie", {
             "fields": ("maturity", "length", "weight", "clutch", "incubation")
         }),
         ("Chov", {
@@ -81,4 +85,6 @@ class SubspeciesAdmin(admin.ModelAdmin):
     list_filter = ("species",)
     search_fields = ("latin_name", "species__latin_name")
     ordering = ("latin_name",)
+    list_select_related = ("species",)
+    list_per_page = 25
     autocomplete_fields = ("species",)

@@ -1,10 +1,14 @@
-
 from django.db import models
 
 from common.models import SEOModel, TimeStampedModel
 
 
 class Event(SEOModel, TimeStampedModel):
+    """
+    Represents an event or activity within WPA sections.
+
+    Includes scheduling, location, related species, and visibility settings.
+    """
     SECTION_CHOICES = (
         ("cz_sk", "WPA CZ-SK"),
         ("de", "WPA Deutschland"),
@@ -25,6 +29,7 @@ class Event(SEOModel, TimeStampedModel):
         blank=True,
         verbose_name="Slug",
         help_text="Unikátní URL identifikátor události.",
+        db_index=True,
     )
     description = models.TextField(
         blank=True,
@@ -51,6 +56,7 @@ class Event(SEOModel, TimeStampedModel):
         null=True,
         verbose_name="Konec",
         help_text="Datum a čas ukončení události.",
+        db_index=True,
     )
 
     location = models.CharField(
@@ -58,12 +64,14 @@ class Event(SEOModel, TimeStampedModel):
         blank=True,
         verbose_name="Místo",
         help_text="Místo konání události.",
+        db_index=True,
     )
     organizer = models.CharField(
         max_length=255,
         blank=True,
         verbose_name="Organizátor",
         help_text="Organizátor nebo pořadatel události.",
+        db_index=True,
     )
 
     species = models.ManyToManyField(
@@ -105,17 +113,26 @@ class Event(SEOModel, TimeStampedModel):
         default=True,
         verbose_name="Veřejná",
         help_text="Určuje, zda se má událost zobrazit veřejně.",
+        db_index=True,
     )
     is_featured = models.BooleanField(
         default=False,
         verbose_name="Doporučená",
         help_text="Zvýrazněná událost, například na homepage.",
+        db_index=True,
     )
 
     class Meta:
         verbose_name = "Událost"
         verbose_name_plural = "Události"
         ordering = ["start_date"]
+        indexes = [
+            models.Index(fields=["start_date"]),
+            models.Index(fields=["section"]),
+            models.Index(fields=["is_public"]),
+            models.Index(fields=["is_featured"]),
+        ]
 
+    # Human-readable event title
     def __str__(self):
         return self.title

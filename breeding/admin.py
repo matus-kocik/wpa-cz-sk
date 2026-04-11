@@ -14,7 +14,7 @@ class BreedingRecordInline(admin.TabularInline):
 @admin.register(BreedingReport)
 class BreedingReportAdmin(admin.ModelAdmin):
     list_display = ("member", "year", "status", "submitted_at", "approved_at", "updated_at")
-    list_filter = ("year", "status")
+    list_filter = ("year", "status", "submitted_at", "approved_at")
     search_fields = (
         "member__user__email",
         "member__user__first_name",
@@ -24,14 +24,16 @@ class BreedingReportAdmin(admin.ModelAdmin):
     )
     autocomplete_fields = ("member",)
     readonly_fields = ("created_at", "updated_at", "submitted_at", "approved_at")
+    list_select_related = ("member", "member__user")
+    list_per_page = 25
     ordering = ("-year", "member")
     inlines = [BreedingRecordInline]
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": ("member", "year", "status")
         }),
-        ("Snapshot člena", {
+        ("Údaje člena", {
             "fields": (
                 "full_name",
                 "address",
@@ -48,7 +50,7 @@ class BreedingReportAdmin(admin.ModelAdmin):
         ("Stav odeslání", {
             "fields": ("submitted_at", "approved_at")
         }),
-        ("Meta", {
+        ("Metadata", {
             "fields": ("created_at", "updated_at")
         }),
     )
@@ -74,10 +76,12 @@ class BreedingRecordAdmin(admin.ModelAdmin):
         "species__czech_name",
     )
     autocomplete_fields = ("report", "species")
+    list_select_related = ("report", "report__member", "species")
+    list_per_page = 25
     ordering = ("report", "species")
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": ("report", "species")
         }),
         ("Chov", {

@@ -11,8 +11,8 @@ class CustomUserCreationForm(forms.ModelForm):
     """
     Form for creating new users in the Django admin.
     """
-    password1 = forms.CharField(label="Password", widget=forms.PasswordInput)
-    password2 = forms.CharField(label="Confirm Password", widget=forms.PasswordInput)
+    password1 = forms.CharField(label="Heslo", widget=forms.PasswordInput)
+    password2 = forms.CharField(label="Potvrzení hesla", widget=forms.PasswordInput)
 
     class Meta:
         model = CustomUser
@@ -23,7 +23,7 @@ class CustomUserCreationForm(forms.ModelForm):
         password2 = self.cleaned_data.get("password2")
 
         if password1 and password2 and password1 != password2:
-            raise forms.ValidationError("Passwords do not match.")
+            raise forms.ValidationError("Hesla se neshodují.")
         return password2
 
     def save(self, commit=True):
@@ -40,9 +40,7 @@ class CustomUserChangeForm(forms.ModelForm):
     """
     password = ReadOnlyPasswordHashField(
         help_text=(
-            "Passwords are not stored in plain text, so there is no way to see "
-            "this user's password. You can change the password using "
-            "<a href=\"../password/\">this form</a>."
+            "Hesla nejsou ukládána v čitelné podobě, proto není možné je zobrazit. Heslo můžete změnit pomocí <a href=\"../password/\">tohoto formuláře</a>."
         )
     )
 
@@ -62,16 +60,17 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ["email__icontains", "first_name__icontains", "last_name__icontains"]
     list_filter = ["email_verified", "is_active", "is_staff", "date_joined"]
     ordering = ["-date_joined"]
-    list_select_related = ()
+    list_per_page = 25
+    list_select_related = ()  # no FK, kept for consistency
     date_hierarchy = "date_joined"
     readonly_fields = ["date_joined", "last_login"]
     filter_horizontal = ("groups", "user_permissions")
 
     fieldsets = (
         (None, {"fields": ("email", "password")}),
-        ("Personal info", {"fields": ("first_name", "last_name", "email_verified")}),
+        ("Osobní údaje", {"fields": ("first_name", "last_name", "email_verified")}),
         (
-            "Permissions",
+            "Oprávnění",
             {
                 "fields": (
                     "is_active",
@@ -82,12 +81,12 @@ class CustomUserAdmin(UserAdmin):
                 )
             },
         ),
-        ("Important dates", {"fields": ("last_login", "date_joined")}),
+        ("Důležité údaje", {"fields": ("last_login", "date_joined")}),
     )
 
     add_fieldsets = (
         (
-            None,
+            "Nový uživatel",
             {
                 "classes": ("wide",),
                 "fields": (

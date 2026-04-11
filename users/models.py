@@ -133,37 +133,37 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         unique=True,
         db_index=True,  # Optimizes queries involving email searches
-        verbose_name="Email Address",  # Display name in Django Admin and forms
+        verbose_name="E-mail",  # Display name in Django Admin and forms
         # Appears in Django Admin as field description
-        help_text="User's unique email address.",
+        help_text="Unikátní e-mail uživatele",
     )
     first_name = models.CharField(
-        max_length=64, verbose_name="First Name", help_text="User's first name."
+        max_length=64, verbose_name="Jméno", help_text="Křestní jméno"
     )
     last_name = models.CharField(
-        max_length=64, verbose_name="Last Name", help_text="User's last name."
+        max_length=64, verbose_name="Příjmení", help_text="Příjmení"
     )
     email_verified = models.BooleanField(
         default=False,
-        verbose_name="Email Verified",
-        help_text="Indicates whether the user's email has been verified.",
+        verbose_name="E-mail ověřen",
+        help_text="Zda byl e-mail uživatele ověřen",
     )
     is_active = models.BooleanField(
         default=True,
         db_index=True,
-        verbose_name="Active User",
-        help_text="Indicates whether the user account is active.",
+        verbose_name="Aktivní",
+        help_text="Zda je uživatelský účet aktivní",
     )
     is_staff = models.BooleanField(
         default=False,
-        verbose_name="Staff User",
-        help_text="Indicates whether the user has admin privileges.",
+        verbose_name="Administrátor",
+        help_text="Zda má uživatel přístup do administrace",
     )
     date_joined = models.DateTimeField(
         auto_now_add=True,
         db_index=True,
-        verbose_name="Date Joined",
-        help_text="Timestamp when the user registered.",
+        verbose_name="Datum registrace",
+        help_text="Datum a čas vytvoření účtu",
     )
 
     objects = CustomUserManager()
@@ -172,6 +172,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
+    # Returns full name composed from first and last name
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}".strip()
@@ -199,13 +200,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             (newest first).
         """
 
-        verbose_name = "User"
-        verbose_name_plural = "Users"
+        verbose_name = "Uživatel"
+        verbose_name_plural = "Uživatelé"
         ordering = ["-date_joined"]
         indexes = [
             models.Index(Lower("email"), name="user_email_lower_idx"),
         ]
 
+    # Normalize and validate user data before saving
     def clean(self):
         """
         Custom validation for the user model.
@@ -229,12 +231,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not self.last_name:
             raise ValidationError({"last_name": "The Last Name field is required"})
 
+    # Custom save logic (validation currently disabled due to production issue)
     def save(self, *args, **kwargs):
         """
-        Ensures full model validation before saving unless explicitly disabled.
+        Ensures full model validation before saving.
         """
 
-        # TEMP FIX: disable full_clean completely (causing production login crash)
-        # if validate and not self.pk:
-        #     self.full_clean()
+        self.full_clean()
         super().save(*args, **kwargs)

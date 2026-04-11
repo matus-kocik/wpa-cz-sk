@@ -55,7 +55,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (
-            "Member",
+            "Člen",
             {
                 "fields": (
                     "user",
@@ -68,7 +68,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Membership Dates",
+            "Členství",
             {
                 "fields": (
                     "joined_at",
@@ -77,7 +77,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Contact & Address",
+            "Kontakt a adresa",
             {
                 "fields": (
                     "phone_number",
@@ -91,7 +91,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Notes",
+            "Poznámky",
             {
                 "fields": ("notes",)
             },
@@ -107,7 +107,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
         ),
     )
 
-    @admin.display(boolean=True, description="Valid")
+    @admin.display(boolean=True, description="Platné")
     def is_valid_display(self, obj):
         return obj.is_valid
 
@@ -153,7 +153,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (
-            "Basic Info",
+            "Základní informace",
             {
                 "fields": (
                     "first_name",
@@ -164,7 +164,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Contact",
+            "Kontakt",
             {
                 "fields": (
                     "email",
@@ -173,7 +173,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Address",
+            "Adresa",
             {
                 "fields": (
                     "city",
@@ -186,7 +186,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Declaration",
+            "Prohlášení",
             {
                 "fields": (
                     "declaration_place",
@@ -196,7 +196,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Status",
+            "Stav",
             {
                 "fields": (
                     "user",
@@ -206,7 +206,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
             },
         ),
         (
-            "Notes",
+            "Poznámky",
             {
                 "fields": ("notes",)
             },

@@ -36,18 +36,20 @@ class TransferRecordInline(admin.TabularInline):
 @admin.register(BirdRecord)
 class BirdRecordAdmin(admin.ModelAdmin):
     list_display = (
-        "species",
         "ring_number",
+        "species",
         "name",
         "sex",
         "status",
         "member",
+        "current_location",
     )
 
     list_filter = (
         "species",
         "sex",
         "status",
+        "member",
     )
 
     search_fields = (
@@ -68,10 +70,16 @@ class BirdRecordAdmin(admin.ModelAdmin):
         "mother",
     )
 
+    list_select_related = ("member", "member__user", "species", "subspecies", "father", "mother")
+
+    date_hierarchy = "hatch_date"
+
+    list_per_page = 25
+
     readonly_fields = ("created_at", "updated_at")
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": (
                 "member",
                 "species",
@@ -101,7 +109,7 @@ class BirdRecordAdmin(admin.ModelAdmin):
         ("Poznámky", {
             "fields": ("notes",)
         }),
-        ("Meta", {
+        ("Metadata", {
             "fields": ("created_at", "updated_at")
         }),
     )
@@ -123,6 +131,9 @@ class BirdEventAdmin(admin.ModelAdmin):
         "bird__name",
     )
     autocomplete_fields = ("bird",)
+    list_select_related = ("bird",)
+    list_per_page = 25
+    date_hierarchy = "event_date"
 
 
 @admin.register(HealthRecord)
@@ -131,6 +142,9 @@ class HealthRecordAdmin(admin.ModelAdmin):
     list_filter = ("record_date",)
     search_fields = ("bird__ring_number", "diagnosis")
     autocomplete_fields = ("bird",)
+    list_select_related = ("bird",)
+    list_per_page = 25
+    date_hierarchy = "record_date"
 
 
 @admin.register(CareRecord)
@@ -139,6 +153,9 @@ class CareRecordAdmin(admin.ModelAdmin):
     list_filter = ("care_type", "care_date")
     search_fields = ("bird__ring_number", "product")
     autocomplete_fields = ("bird",)
+    list_select_related = ("bird",)
+    list_per_page = 25
+    date_hierarchy = "care_date"
 
 
 @admin.register(TransferRecord)
@@ -147,3 +164,6 @@ class TransferRecordAdmin(admin.ModelAdmin):
     list_filter = ("transfer_type", "transfer_date")
     search_fields = ("bird__ring_number", "partner_name")
     autocomplete_fields = ("bird",)
+    list_select_related = ("bird",)
+    list_per_page = 25
+    date_hierarchy = "transfer_date"

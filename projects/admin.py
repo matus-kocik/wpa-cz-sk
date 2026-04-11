@@ -1,4 +1,3 @@
-
 from django.contrib import admin
 
 from .models import Project, ProjectMembership
@@ -14,16 +13,18 @@ class ProjectMembershipInline(admin.TabularInline):
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ("name", "status", "coordinator", "start_date", "end_date", "is_public")
-    list_filter = ("status", "is_public")
+    list_filter = ("status", "is_public", "start_date")
     search_fields = ("name", "description", "coordinator__user__email", "coordinator__user__first_name", "coordinator__user__last_name")
     autocomplete_fields = ("coordinator", "species")
+    list_select_related = ("coordinator", "coordinator__user")
     filter_horizontal = ("species",)
     prepopulated_fields = {"slug": ("name",)}
     readonly_fields = ("created_at", "updated_at")
     ordering = ("-start_date", "name")
+    list_per_page = 25
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": ("name", "slug", "status", "is_public")
         }),
         ("Popis", {
@@ -38,7 +39,7 @@ class ProjectAdmin(admin.ModelAdmin):
         ("Poznámky", {
             "fields": ("notes",)
         }),
-        ("Meta", {
+        ("Metadata", {
             "fields": ("created_at", "updated_at")
         }),
     )
@@ -57,10 +58,12 @@ class ProjectMembershipAdmin(admin.ModelAdmin):
         "project__name",
     )
     autocomplete_fields = ("member", "project")
+    list_select_related = ("member", "member__user", "project")
     ordering = ("-year", "project", "member")
+    list_per_page = 25
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": ("member", "project", "year")
         }),
         ("Platba", {

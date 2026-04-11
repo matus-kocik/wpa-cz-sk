@@ -1,10 +1,15 @@
-
+from django.core.validators import MinValueValidator
 from django.db import models
 
 from common.models import SEOModel, TimeStampedModel
 
 
 class BreedingReport(SEOModel, TimeStampedModel):
+    """
+    Annual breeding report submitted by a member.
+
+    Contains summary data and snapshot of member info at submission time.
+    """
     STATUS_CHOICES = (
         ("draft", "Rozpracováno"),
         ("submitted", "Odesláno"),
@@ -17,10 +22,12 @@ class BreedingReport(SEOModel, TimeStampedModel):
         related_name="breeding_reports",
         verbose_name="Člen",
         help_text="Člen organizace, ke kterému patří tento roční výkaz chovu.",
+        db_index=True,
     )
     year = models.PositiveIntegerField(
         verbose_name="Rok",
         help_text="Rok, pro který je výkaz chovu veden.",
+        validators=[MinValueValidator(1900)],
         db_index=True,
     )
     status = models.CharField(
@@ -44,7 +51,7 @@ class BreedingReport(SEOModel, TimeStampedModel):
         help_text="Datum a čas schválení výkazu administrátorem.",
     )
 
-    # snapshot údajů člena v čase odeslání
+    # Snapshot of member data at time of submission
     full_name = models.CharField(
         max_length=255,
         blank=True,
@@ -103,18 +110,30 @@ class BreedingReport(SEOModel, TimeStampedModel):
                 name="unique_member_year_breeding_report",
             )
         ]
+        indexes = [
+            models.Index(fields=["year"]),
+            models.Index(fields=["status"]),
+            models.Index(fields=["member"]),
+        ]
 
+    # Human-readable representation of report
     def __str__(self):
         return f"{self.member} – {self.year}"
 
 
 class BreedingRecord(SEOModel, TimeStampedModel):
+    """
+    Detailed record for a specific species within a breeding report.
+
+    Stores counts of animals and offspring.
+    """
     report = models.ForeignKey(
         BreedingReport,
         on_delete=models.CASCADE,
         related_name="records",
         verbose_name="Výkaz chovu",
         help_text="Výkaz chovu, do kterého tento řádek patří.",
+        db_index=True,
     )
     species = models.ForeignKey(
         "taxonomy.Species",
@@ -122,6 +141,7 @@ class BreedingRecord(SEOModel, TimeStampedModel):
         related_name="breeding_records",
         verbose_name="Druh",
         help_text="Druh, který člen v daném roce chová.",
+        db_index=True,
     )
     pairs_with_chicks = models.PositiveIntegerField(
         default=0,
@@ -169,14 +189,21 @@ class BreedingRecord(SEOModel, TimeStampedModel):
                 name="unique_report_species_breeding_record",
             )
         ]
+        indexes = [
+            models.Index(fields=["species"]),
+            models.Index(fields=["report"]),
+        ]
 
+    # Human-readable representation of record
     def __str__(self):
         return f"{self.report} – {self.species}"
 
+    # Total adult animals of this species
     @property
     def total_count_of_species(self):
         return self.number_of_males + self.number_of_females
 
+    # Total offspring count
     @property
     def total_count_offspring(self):
         return (

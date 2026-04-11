@@ -10,6 +10,7 @@ class CategoryAdmin(admin.ModelAdmin):
     list_filter = ("order",)
     prepopulated_fields = {"slug": ("name",)}
     ordering = ("order", "name")
+    list_per_page = 25
 
 
 @admin.register(Contributor)
@@ -18,13 +19,21 @@ class ContributorAdmin(admin.ModelAdmin):
     list_filter = ("role",)
     search_fields = ("name", "member__username", "member__first_name", "member__last_name")
     ordering = ("name",)
-    raw_id_fields = ("member",)
+    autocomplete_fields = ("member",)
+    list_select_related = ("member",)
+    list_per_page = 25
 
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     def contributors_list(self, obj):
-        return ", ".join([c.name for c in obj.contributors.all()[:3]])
+        names = []
+        for c in obj.contributors.all()[:3]:
+            if c.name:
+                names.append(c.name)
+            elif c.member:
+                names.append(str(c.member))
+        return ", ".join(names)
 
     contributors_list.short_description = "Přispěvatelé"
 
@@ -37,10 +46,11 @@ class ArticleAdmin(admin.ModelAdmin):
     filter_horizontal = ("contributors", "species")
     list_select_related = ("category",)
     ordering = ("-publication_date",)
+    list_per_page = 25
     date_hierarchy = "publication_date"
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": ("title", "slug", "category", "publication_date")
         }),
         ("Druhy", {

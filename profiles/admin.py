@@ -8,12 +8,17 @@ class PublicProfileAdmin(admin.ModelAdmin):
     list_display = (
         "display_name",
         "member",
+        "location",
         "is_public",
+        "show_email",
         "updated_at",
     )
 
     list_filter = (
         "is_public",
+        "show_email",
+        "show_phone",
+        "show_location",
     )
 
     search_fields = (
@@ -21,16 +26,19 @@ class PublicProfileAdmin(admin.ModelAdmin):
         "member__user__email",
         "member__user__first_name",
         "member__user__last_name",
+        "location",
     )
 
-    autocomplete_fields = ("member",)
+    list_select_related = ("member", "member__user")
+
+    autocomplete_fields = ("member", "species")
 
     filter_horizontal = ("species",)
 
     readonly_fields = ("slug", "created_at", "updated_at")
 
     fieldsets = (
-        ("Základ", {
+        ("Základní informace", {
             "fields": ("member", "display_name", "slug", "avatar")
         }),
         ("Popis", {
@@ -42,10 +50,10 @@ class PublicProfileAdmin(admin.ModelAdmin):
         ("Chov", {
             "fields": ("species", "specialization", "breeding_focus", "years_of_experience")
         }),
-        ("Sociálne siete", {
+        ("Sociální sítě", {
             "fields": ("facebook_url", "youtube_url")
         }),
-        ("Viditeľnosť", {
+        ("Viditelnost", {
             "fields": (
                 "is_public",
                 "show_email",
@@ -54,9 +62,10 @@ class PublicProfileAdmin(admin.ModelAdmin):
                 "show_breeding",
             )
         }),
-        ("Meta", {
+        ("Metadata", {
             "fields": ("created_at", "updated_at")
         }),
     )
 
     ordering = ("-updated_at",)
+    list_per_page = 25
