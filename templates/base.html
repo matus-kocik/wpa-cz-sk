@@ -83,6 +83,24 @@
                         <i data-lucide="youtube"
                            class=" stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
                     </a>
+                    {% if user.is_authenticated %}
+                        <form action="{% url 'logout' %}" method="post" class="inline">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    title="Odhlásit"
+                                    class="group bg-transparent hover:bg-green-700 rounded-full p-2 transition-colors duration-200 cursor-pointer">
+                                <i data-lucide="log-out"
+                                   class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                            </button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}"
+                           title="Přihlášení"
+                           class="group bg-transparent hover:bg-green-700 rounded-full p-2 transition-colors duration-200">
+                            <i data-lucide="log-in"
+                               class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </section>
@@ -143,14 +161,14 @@
         </section>
         {% endcomment %}
         {% if messages %}
-            <div class="container mx-auto mt-4 px-4">
+            <div class="container mx-auto mt-4 px-4 flex justify-center">
                 {% for message in messages %}
                     {% if message.tags == "success" %}
-                        <div class="bg-green-100 text-green-900 border border-green-400 rounded p-4 mb-4">{{ message }}</div>
+                        <div class="bg-green-100 text-green-900 border border-green-400 rounded p-4 mb-4 max-w-xl w-full text-center">{{ message }}</div>
                     {% elif message.tags == "error" %}
-                        <div class="bg-red-100 text-red-900 border border-red-400 rounded p-4 mb-4">{{ message }}</div>
+                        <div class="bg-red-100 text-red-900 border border-red-400 rounded p-4 mb-4 max-w-xl w-full text-center">{{ message }}</div>
                     {% else %}
-                        <div class="bg-gray-100 text-gray-900 border border-gray-400 rounded p-4 mb-4">{{ message }}</div>
+                        <div class="bg-gray-100 text-gray-900 border border-gray-400 rounded p-4 mb-4 max-w-xl w-full text-center">{{ message }}</div>
                     {% endif %}
                 {% endfor %}
             </div>

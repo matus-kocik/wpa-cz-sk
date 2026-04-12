@@ -105,39 +105,30 @@ else:
         }
     }
 
-EMAIL_BACKEND = config("EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend")
+EMAIL_BACKEND = config(
+    "EMAIL_BACKEND",
+    default="django.core.mail.backends.smtp.EmailBackend"
+)
 
-if DEBUG:
-    EMAIL_HOST = config("EMAIL_TEST_HOST", default="")
-    EMAIL_PORT = config("EMAIL_TEST_PORT", cast=int, default=587)
-    EMAIL_USE_SSL = config("EMAIL_TEST_USE_SSL", cast=bool, default=False)
-    EMAIL_USE_TLS = config("EMAIL_TEST_USE_TLS", cast=bool, default=True)
-    EMAIL_HOST_USER = config("EMAIL_TEST_HOST_USER", default="")
-    EMAIL_HOST_PASSWORD = config("EMAIL_TEST_HOST_PASSWORD", default="")
-    DEFAULT_FROM_EMAIL = config("EMAIL_TEST_FROM_EMAIL", default="")
+EMAIL_HOST = config("EMAIL_HOST", default="")
+EMAIL_PORT = config("EMAIL_PORT", cast=int, default=587)
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=EMAIL_HOST_USER)
 
-    CONTACT_RECEIVER_EMAIL = config(
-        "CONTACT_TEST_RECEIVER_EMAIL",
-        default=EMAIL_HOST_USER,
-    )
-    APPLICATION_RECEIVER_EMAIL = config(
-        "APPLICATION_TEST_RECEIVER_EMAIL",
-        default=EMAIL_HOST_USER,
-    )
-else:
-    EMAIL_HOST = config("EMAIL_HOST")
-    EMAIL_PORT = config("EMAIL_PORT", cast=int)
-    EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool)
-    EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
-    EMAIL_HOST_USER = config("EMAIL_HOST_USER")
-    EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
-    DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
+CONTACT_RECEIVER_EMAIL = config(
+    "CONTACT_RECEIVER_EMAIL",
+    default=EMAIL_HOST_USER,
+)
+APPLICATION_RECEIVER_EMAIL = config(
+    "APPLICATION_RECEIVER_EMAIL",
+    default=CONTACT_RECEIVER_EMAIL,
+)
 
-    CONTACT_RECEIVER_EMAIL = config("CONTACT_RECEIVER_EMAIL")
-    APPLICATION_RECEIVER_EMAIL = config(
-        "APPLICATION_RECEIVER_EMAIL",
-        default=CONTACT_RECEIVER_EMAIL,
-    )
+# Site URL for building absolute links (e.g. password reset)
+SITE_URL = config("SITE_URL", default="http://127.0.0.1:8000")
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -197,3 +188,7 @@ SESSION_ENGINE = "django.contrib.sessions.backends.db"
 
 SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
+
+# Auth redirects
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"

@@ -2,9 +2,14 @@ from datetime import date
 
 from django.conf import settings
 from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import send_mail
 from django.db import models, transaction
 from django.db.models import F, IntegerField
 from django.db.models.functions import Cast
+from django.urls import reverse
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode
 
 
 class MemberProfile(models.Model):
@@ -467,7 +472,7 @@ class MembershipApplication(models.Model):
     @transaction.atomic
     def approve(self):
         # Prevent re-processing already approved applications with user
-        if self.status == "approved" and self.user:
+        if self.user:
             return
 
         if self.initial_payment_status != "paid":
@@ -533,3 +538,22 @@ class MembershipApplication(models.Model):
             profile.valid_until = date(self.declaration_date.year + 1, 3, 31)
 
         profile.save()
+
+        # Send password reset email
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        reset_path = reverse(
+            "password_reset_confirm",
+            kwargs={"uidb64": uid, "token": token},
+        )
+
+        domain = getattr(settings, "SITE_URL", "http://localhost:8000")
+        reset_link = f"{domain}{reset_path}"
+
+        send_mail(
+            subject="Dokončenie registrace",
+            message=f"Nastavte si heslo: {reset_link}",
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[user.email],
+        )
