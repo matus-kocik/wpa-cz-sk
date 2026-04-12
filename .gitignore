@@ -13,6 +13,9 @@ tools
 !static/images/wpa-logo-black-512.png
 .env.example
 .env.prod
+env.example
+env.prod
+env
 
 ### Django ###
 *.log
