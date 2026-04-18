@@ -9,6 +9,7 @@ from django.views.generic import TemplateView
 from core.sitemaps import CoreViewSitemap
 from core.views import ContactView
 from members.views import MembershipApplicationView
+from profiles.views import PublicProfileDetailView, members_view
 from users.forms import CustomPasswordResetForm, CustomSetPasswordForm, LoginForm
 from users.views import CustomLoginView, CustomLogoutView
 
@@ -106,9 +107,8 @@ urlpatterns = [
         TemplateView.as_view(template_name="statutes.html"),
         name="statutes",
     ),
-    path(
-        "clenove/", TemplateView.as_view(template_name="members.html"), name="members"
-    ),
+    path("clenove/", members_view, name="members"),
+    path("clen/<slug:slug>/", PublicProfileDetailView.as_view(), name="member_detail"),
     path(
         "podpora/",
         TemplateView.as_view(template_name="support.html"),

@@ -1,0 +1,218 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block content %}
+{% include "partials/page_header.html" with title="Profil člena" subtitle=object.display_name|default:object.member.display_name image="/static/images/arb-1920-640.webp" %}
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+
+    <div class="bg-white rounded-xl shadow p-6 flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+        {% if object.avatar %}
+          {% if request.user.is_authenticated or object.show_avatar %}
+            <img src="{{ object.avatar.url }}" class="w-24 h-24 rounded-full object-cover">
+          {% else %}
+            <img src="{% static 'images/default-avatar.png' %}" class="w-24 h-24 rounded-full object-cover">
+          {% endif %}
+        {% else %}
+          <img src="{% static 'images/default-avatar.png' %}" class="w-24 h-24 rounded-full object-cover">
+        {% endif %}
+
+        <div class="text-center md:text-left">
+          <h1 class="text-2xl font-bold text-gray-900">
+            {{ object.display_name|default:object.member.display_name }}
+          </h1>
+
+          <div class="flex flex-wrap gap-2 mt-2 justify-center md:justify-start">
+            {% if object.member.icch_number %}
+            <span class="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">
+              ICCH {{ object.member.icch_number }}
+            </span>
+            {% endif %}
+            {% if object.location_display %}
+              {% if request.user.is_authenticated or object.show_location %}
+                <span class="text-xs bg-gray-100 px-2 py-1 rounded">
+                  {{ object.location_display }}
+                </span>
+              {% endif %}
+            {% endif %}
+          </div>
+
+        </div>
+      </div>
+
+      <div class="flex gap-3 mt-4 md:mt-0 md:ml-auto">
+        {% if object.facebook_url %}
+          {% if request.user.is_authenticated or object.show_social %}
+            <a href="{{ object.facebook_url }}" target="_blank" class="group bg-transparent hover:bg-[#1877F2] rounded-full p-2 transition-colors duration-200">
+              <i data-lucide="facebook" class="w-6 h-6 stroke-gray-700 stroke-[1.5] group-hover:stroke-white"></i>
+            </a>
+          {% endif %}
+        {% endif %}
+
+        {% if object.instagram_url %}
+          {% if request.user.is_authenticated or object.show_social %}
+            <a href="{{ object.instagram_url }}" target="_blank" class="group bg-transparent hover:bg-[#E4405F] rounded-full p-2 transition-colors duration-200">
+              <i data-lucide="instagram" class="w-6 h-6 stroke-gray-700 stroke-[1.5] group-hover:stroke-white"></i>
+            </a>
+          {% endif %}
+        {% endif %}
+
+        {% if object.youtube_url %}
+          {% if request.user.is_authenticated or object.show_videos %}
+            <a href="{{ object.youtube_url }}" target="_blank" class="group bg-transparent hover:bg-[#FF0000] rounded-full p-2 transition-colors duration-200">
+              <i data-lucide="youtube" class="w-6 h-6 stroke-gray-700 stroke-[1.5] group-hover:stroke-white"></i>
+            </a>
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 mt-6">
+
+      <div class="md:col-span-2 space-y-6">
+
+        <div class="bg-green-50 rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-lg mb-4">O chovateli</h2>
+          {% if request.user.is_authenticated or object.show_bio %}
+            {% if object.bio %}
+              <p class="text-gray-700">{{ object.bio }}</p>
+            {% else %}
+              <p class="text-gray-400">Neuvedeno</p>
+            {% endif %}
+          {% else %}
+            <p class="text-gray-400">Neuvedeno</p>
+          {% endif %}
+        </div>
+
+        <div class="bg-green-50 rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-lg mb-4">Chované druhy</h2>
+          <div class="flex flex-wrap gap-2">
+            {% if request.user.is_authenticated or object.show_species %}
+              {% if object.species.exists %}
+                {% for sp in object.species.all %}
+                  <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">{{ sp }}</span>
+                {% endfor %}
+                {% if object.other_species %}
+                  <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">
+                    {{ object.other_species }}
+                  </span>
+                {% endif %}
+              {% else %}
+                <span class="text-gray-400">Neuvedeno</span>
+              {% endif %}
+            {% else %}
+              <span class="text-gray-400">Neuvedeno</span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="bg-green-50 rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-lg mb-4">Galerie</h2>
+          {% if object.gallery.exists %}
+            {% if request.user.is_authenticated or object.show_gallery %}
+              <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
+                {% for img in object.gallery.all %}
+                <a href="{{ img.image.url }}" target="_blank">
+                  <img src="{{ img.image.url }}" class="rounded-xl object-cover w-full h-40 block hover:opacity-90 cursor-pointer transition">
+                </a>
+                {% endfor %}
+              </div>
+            {% else %}
+              <span class="text-gray-400">Neuvedeno</span>
+            {% endif %}
+          {% else %}
+            <span class="text-gray-400">Neuvedeno</span>
+          {% endif %}
+        </div>
+
+        <div class="bg-green-50 rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-lg mb-4">Video</h2>
+
+          {% if object.youtube_url %}
+            {% if request.user.is_authenticated or object.show_videos %}
+              <a href="{{ object.youtube_url }}" target="_blank"
+                  class="inline-block text-green-600 hover:underline">
+                  ▶ Zobrazit video na YouTube
+              </a>
+            {% else %}
+              <span class="text-gray-400">Neuvedeno</span>
+            {% endif %}
+          {% else %}
+            <span class="text-gray-400">Neuvedeno</span>
+          {% endif %}
+
+        </div>
+
+      </div>
+
+      <div class="space-y-6">
+
+        <div class="bg-green-50 rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-lg mb-4">Kontakt</h2>
+          {% if request.user.is_authenticated or object.show_email %}
+            {% if object.public_email %}
+              <p>📧 {{ object.public_email }}</p>
+            {% endif %}
+          {% endif %}
+
+          {% if request.user.is_authenticated or object.show_phone %}
+            {% if object.phone %}
+              <p>📞 {{ object.phone }}</p>
+            {% endif %}
+          {% endif %}
+
+          {% if request.user.is_authenticated or object.show_website %}
+            {% if object.website %}
+              <p>🌐 <a href="{{ object.website }}" class="text-green-600 hover:underline">{{ object.website }}</a></p>
+            {% endif %}
+          {% endif %}
+
+          {% if not request.user.is_authenticated and not object.show_email and not object.show_phone and not object.show_website %}
+            <span class="text-gray-400">Neuvedeno</span>
+          {% endif %}
+          {% if request.user.is_authenticated and not object.public_email and not object.phone and not object.website %}
+            <span class="text-gray-400">Neuvedeno</span>
+          {% endif %}
+        </div>
+
+        <div class="bg-green-50 rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-lg mb-4">Projekty</h2>
+          {% if request.user.is_authenticated or object.show_projects %}
+            {% if object.member.has_projects %}
+              <ul class="space-y-1">
+                {% for project in object.member.projects.all %}
+                  <li class="text-gray-700">• {{ project.name }}</li>
+                {% endfor %}
+              </ul>
+            {% else %}
+              <span class="text-gray-400">Neuvedeno</span>
+            {% endif %}
+          {% else %}
+            <span class="text-gray-400">Neuvedeno</span>
+          {% endif %}
+        </div>
+
+        <div class="bg-green-50 rounded-xl shadow-sm p-6">
+          <h2 class="font-semibold text-lg mb-4">Další informace</h2>
+          {% if request.user.is_authenticated or object.show_additional_info %}
+            {% if object.additional_info %}
+              <p class="text-gray-700">{{ object.additional_info }}</p>
+            {% else %}
+              <p class="text-gray-400">Neuvedeno</p>
+            {% endif %}
+          {% else %}
+            <p class="text-gray-400">Neuvedeno</p>
+          {% endif %}
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

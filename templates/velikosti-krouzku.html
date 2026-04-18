@@ -1,5 +1,3 @@
-
-
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
@@ -9,34 +7,34 @@
   <div class="max-w-6xl mx-auto px-4 text-gray-700 leading-relaxed">
 
 
-    <table class="w-full border border-gray-300 text-sm">
-      <thead class="bg-gray-100">
+    <table class="w-full table-auto border border-gray-200 border-collapse text-gray-900">
+      <thead class="bg-green-600 text-white sticky top-0 z-10">
         <tr>
-          <th class="text-left p-2 border">Druh</th>
-          <th class="text-left p-2 border">Velikost (mm)</th>
+          <th class="px-3 py-2 text-left font-semibold border border-gray-200">Druh</th>
+          <th class="px-3 py-2 text-left font-semibold border border-gray-200">Velikost (mm)</th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">AFROPAVO</td><td class="p-2 border">16</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">ARGUSIANUS</td><td class="p-2 border">16</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">CATREUS</td><td class="p-2 border">14</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">CROSSOPTILON</td><td class="p-2 border">14</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">CHRYSOLOPHUS pictus</td><td class="p-2 border">10</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">CHRYSOLOPHUS amherstiae</td><td class="p-2 border">12</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">GALLUS</td><td class="p-2 border">12</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">ITHAGINIS</td><td class="p-2 border">10</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">LOPHOPHORUS</td><td class="p-2 border">15</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">Lophura ignita</td><td class="p-2 border">14</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">Lophura swinhoii</td><td class="p-2 border">14</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">Lophura nycthemera</td><td class="p-2 border">14</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">LOPHURA OSTATNÍ</td><td class="p-2 border">12</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">PAVO</td><td class="p-2 border">20</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">PHASIANUS</td><td class="p-2 border">12</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">POLYPLECTRON</td><td class="p-2 border">10</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">PUCRASIA</td><td class="p-2 border">12</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">RHEINARDIA</td><td class="p-2 border">16</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">SYRMATICUS</td><td class="p-2 border">12</td></tr>
-        <tr class="odd:bg-gray-50"><td class="p-2 border">TRAGOPAN</td><td class="p-2 border">14</td></tr>
+      <tbody class="bg-white [&>tr:nth-child(even)]:bg-green-50">
+        <tr><td class="px-2 py-2 border border-gray-200">AFROPAVO</td><td class="px-2 py-2 border border-gray-200">16</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">ARGUSIANUS</td><td class="px-2 py-2 border border-gray-200">16</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">CATREUS</td><td class="px-2 py-2 border border-gray-200">14</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">CROSSOPTILON</td><td class="px-2 py-2 border border-gray-200">14</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">CHRYSOLOPHUS pictus</td><td class="px-2 py-2 border border-gray-200">10</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">CHRYSOLOPHUS amherstiae</td><td class="px-2 py-2 border border-gray-200">12</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">GALLUS</td><td class="px-2 py-2 border border-gray-200">12</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">ITHAGINIS</td><td class="px-2 py-2 border border-gray-200">10</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">LOPHOPHORUS</td><td class="px-2 py-2 border border-gray-200">15</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">Lophura ignita</td><td class="px-2 py-2 border border-gray-200">14</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">Lophura swinhoii</td><td class="px-2 py-2 border border-gray-200">14</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">Lophura nycthemera</td><td class="px-2 py-2 border border-gray-200">14</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">LOPHURA OSTATNÍ</td><td class="px-2 py-2 border border-gray-200">12</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">PAVO</td><td class="px-2 py-2 border border-gray-200">20</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">PHASIANUS</td><td class="px-2 py-2 border border-gray-200">12</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">POLYPLECTRON</td><td class="px-2 py-2 border border-gray-200">10</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">PUCRASIA</td><td class="px-2 py-2 border border-gray-200">12</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">RHEINARDIA</td><td class="px-2 py-2 border border-gray-200">16</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">SYRMATICUS</td><td class="px-2 py-2 border border-gray-200">12</td></tr>
+        <tr><td class="px-2 py-2 border border-gray-200">TRAGOPAN</td><td class="px-2 py-2 border border-gray-200">14</td></tr>
       </tbody>
     </table>
 

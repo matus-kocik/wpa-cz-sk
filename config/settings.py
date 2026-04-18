@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     "common",
     "core",
     "members",
-    "profiles",
+    "profiles.apps.ProfilesConfig",
     "articles",
     "taxonomy",
     "breeding",

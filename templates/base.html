@@ -59,46 +59,64 @@
                 <div class="flex items-center space-x-4">
                     <small class="flex flex-col sm:flex-row sm:space-x-6 text-sm">
                         <a href="tel:+420602419057"
-                            class="flex items-center space-x-1 text-green-900 hover:text-green-700">
-                            <i data-lucide="phone"></i><span>+420 602 419 057</span>
+                           class="flex items-center space-x-2">
+                            <span class="group bg-green-600 rounded-full p-2 transition-colors duration-200 hover:bg-green-700">
+                                <i data-lucide="phone"
+                                   class="stroke-white stroke-[1.5]"></i>
+                            </span>
+                            <span class="text-green-900 text-base font-normal">+420 602 419 057</span>
                         </a>
+
                         <a href="mailto:info@wpacz-sk.com"
-                            class="flex items-center space-x-1 text-green-900 hover:text-green-700">
-                            <i data-lucide="mail"></i><span>info@wpacz-sk.com</span>
+                           class="flex items-center space-x-2">
+                            <span class="group bg-green-600 rounded-full p-2 transition-colors duration-200 hover:bg-green-700">
+                                <i data-lucide="mail"
+                                   class="stroke-white stroke-[1.5]"></i>
+                            </span>
+                            <span class="text-green-900 text-base font-normal">info@wpacz-sk.com</span>
                         </a>
                     </small>
                 </div>
                 <div class="flex items-center space-x-4 mt-2 sm:mt-0">
                     <!-- Facebook -->
                     <a href="https://www.facebook.com/wpacz"
-                       class="group bg-transparent hover:bg-[#1877F2] rounded-full p-2 transition-colors duration-200"
+                       class="group bg-green-600 hover:bg-[#1877F2] rounded-full p-2 transition-colors duration-200"
                        target="_blank">
                         <i data-lucide="facebook"
-                           class=" stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                           class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
                     </a>
+                    {% comment %}
+                    Instagram
+                    <a href="#"
+                       class="group bg-green-600 hover:bg-[#E4405F] rounded-full p-2 transition-colors duration-200"
+                       target="_blank">
+                        <i data-lucide="instagram"
+                           class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
+                    </a>
+                    {% endcomment %}
                     <!-- YouTube -->
                     <a href="https://www.youtube.com/@wpacz-sk7012"
-                       class="group bg-transparent hover:bg-[#FF0000] rounded-full p-2 transition-colors duration-200"
+                       class="group bg-green-600 hover:bg-[#FF0000] rounded-full p-2 transition-colors duration-200"
                        target="_blank">
                         <i data-lucide="youtube"
-                           class=" stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                           class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
                     </a>
                     {% if user.is_authenticated %}
                         <form action="{% url 'logout' %}" method="post" class="inline">
                             {% csrf_token %}
                             <button type="submit"
                                     title="Odhlásit"
-                                    class="group bg-transparent hover:bg-green-700 rounded-full p-2 transition-colors duration-200 cursor-pointer">
+                                    class="group bg-green-600 hover:bg-green-700 rounded-full p-2 transition-colors duration-200 cursor-pointer">
                                 <i data-lucide="log-out"
-                                   class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                                   class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
                             </button>
                         </form>
                     {% else %}
                         <a href="{% url 'login' %}"
                            title="Přihlášení"
-                           class="group bg-transparent hover:bg-green-700 rounded-full p-2 transition-colors duration-200">
+                           class="group bg-green-600 hover:bg-green-700 rounded-full p-2 transition-colors duration-200">
                             <i data-lucide="log-in"
-                               class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                               class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
                         </a>
                     {% endif %}
                 </div>
@@ -107,22 +125,22 @@
         <!-- Main Navigation -->
         <section>
             <nav class="bg-green-200 shadow sticky top-0 z-50">
-                <div class="container mx-auto px-4 flex items-center justify-between h-16">
+                <div class="container mx-auto px-4 py-1 flex items-center justify-between">
                     <a href="{% url 'home' %}" class="flex items-center space-x-2">
                         <img src="{% static 'images/logo/wpa-logo-black.webp' %}"
                              alt="World Pheasant Association CZ-SK logo"
                              class="h-[60px] w-auto object-contain">
-                        <span class="text-lg font-bold text-green-900 leading-tight">WPA CZ-SK</span>
+                        <span class="text-3xl font-bold text-green-900 leading-tight">WPA CZ-SK</span>
                     </a>
                     <div class="hidden md:flex space-x-6">
-                        <a href="{% url 'home' %}" class="text-green-800 hover:text-green-900">Domov</a>
-                        <a href="{% url 'members' %}" class="text-green-800 hover:text-green-900">Členové</a>
-                        <a href="{% url 'projects' %}" class="text-green-800 hover:text-green-900">Projekty</a>
+                        <a href="{% url 'home' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Domov</a>
+                        <a href="{% url 'members' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Členové</a>
+                        <a href="{% url 'projects' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Projekty</a>
                         <a href="{% url 'documents' %}"
-                           class="text-green-800 hover:text-green-900">Dokumenty</a>
-                        <a href="{% url 'chovatelske_rady' %}" class="text-green-800 hover:text-green-900">Chovatelské rady</a>
+                           class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Dokumenty</a>
+                        <a href="{% url 'chovatelske_rady' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Chovatelské rady</a>
                         <a href="{% url 'contact' %}"
-                           class="text-green-800 hover:text-green-900">Kontakt</a>
+                           class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Kontakt</a>
                     </div>
                     <div class="md:hidden">
                         <button id="mobileMenuButton" class="text-green-800 focus:outline-none">
@@ -138,15 +156,15 @@
                 </div>
                 <div id="mobileMenu" class="hidden md:hidden px-4 pb-4">
                     <a href="{% url 'home' %}"
-                       class="block py-2 text-green-800 hover:text-green-900">Domov</a>
-                    <a href="{% url 'members' %}" class="text-green-800 hover:text-green-900">Členové</a>
+                       class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Domov</a>
+                    <a href="{% url 'members' %}" class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Členové</a>
                     <a href="{% url 'projects' %}"
-                       class="block py-2 text-green-800 hover:text-green-900">Projekty</a>
+                       class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Projekty</a>
                     <a href="{% url 'documents' %}"
-                       class="block py-2 text-green-800 hover:text-green-900">Dokumenty</a>
-                    <a href="{% url 'chovatelske_rady' %}" class="block py-2 text-green-800 hover:text-green-900">Chovatelské rady</a>
+                       class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Dokumenty</a>
+                    <a href="{% url 'chovatelske_rady' %}" class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Chovatelské rady</a>
                     <a href="{% url 'contact' %}"
-                       class="block py-2 text-green-800 hover:text-green-900">Kontakt</a>
+                       class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Kontakt</a>
                 </div>
             </nav>
         </section>
@@ -209,18 +227,98 @@
         </section>
         {% endcomment %}
         <!-- Footer Section -->
-        <footer aria-label="Website footer" class="bg-green-100 text-green-900 text-center py-10 text-base font-medium">
-          <div class="container mx-auto px-4 space-y-2">
-            <p>
-              &copy; <span id="currentYear"></span> WPA CZ-SK. Všechna práva vyhrazena.
-              Vytvořil
-            <a href="https://www.matuskocik.com/"
-              class="hover:underline text-green-700 font-semibold"
-              target="_blank"
-              rel="noopener">
-              Matúš Kočik
-            </a>
-            </p>
+        <footer class="mt-0">
+          <div class="bg-green-100 text-green-900">
+            <div class="max-w-6xl mx-auto px-4 py-12 grid md:grid-cols-3 gap-10 text-base md:text-lg items-center">
+
+            <!-- Navigace -->
+            <div class="text-center">
+              <h3 class="text-lg font-semibold mb-3">Navigace</h3>
+              <ul class="space-y-2 flex flex-col items-center">
+                <li><a href="{% url 'home' %}" class="hover:underline">Úvod</a></li>
+                <li><a href="{% url 'members' %}" class="hover:underline">Členové</a></li>
+                <li><a href="{% url 'projects' %}" class="hover:underline">Projekty</a></li>
+                <li><a href="{% url 'documents' %}" class="hover:underline">Dokumenty</a></li>
+                <li><a href="{% url 'chovatelske_rady' %}" class="hover:underline">Chovatelské rady</a></li>
+                <li><a href="{% url 'contact' %}" class="hover:underline">Kontakt</a></li>
+              </ul>
+            </div>
+
+            <!-- O organizaci -->
+            <div class="text-center max-w-md mx-auto">
+              <h3 class="text-xl md:text-2xl font-semibold mb-4">
+                WPA CZ-SK
+              </h3>
+              <p class="text-gray-700 leading-relaxed space-y-2">
+                <span class="block">Oficiální web československé sekce</span>
+                Zaměřujeme se na ochranu hrabavých ptáků, chovatelské projekty a podporu chovu.
+              </p>
+            </div>
+
+            <!-- Kontakt + Social -->
+            <div class="text-center">
+              <h3 class="text-lg font-semibold mb-3">Kontakt</h3>
+
+              <p class="mb-2 flex items-center gap-2 justify-center">
+                <i data-lucide="mail"></i> info@wpacz-sk.com
+              </p>
+              <p class="mb-4 flex items-center gap-2 justify-center">
+                <i data-lucide="phone"></i> +420 602 419 057
+              </p>
+
+              <div class="flex space-x-3 mt-2 justify-center">
+                <a href="https://www.facebook.com/wpacz"
+                   class="group bg-transparent hover:bg-[#1877F2] rounded-full p-2 transition-colors duration-200"
+                   target="_blank">
+                  <i data-lucide="facebook"
+                     class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                </a>
+
+                {% comment %}
+                Instagram
+                <a href="#"
+                   class="group bg-transparent hover:bg-[#E4405F] rounded-full p-2 transition-colors duration-200"
+                   target="_blank">
+                  <i data-lucide="instagram"
+                     class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                </a>
+                {% endcomment %}
+
+                <a href="https://www.youtube.com/@wpacz-sk7012"
+                   class="group bg-transparent hover:bg-[#FF0000] rounded-full p-2 transition-colors duration-200"
+                   target="_blank">
+                  <i data-lucide="youtube"
+                     class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                </a>
+
+                {% if not user.is_authenticated %}
+                <a href="{% url 'login' %}"
+                   class="group bg-transparent hover:bg-green-700 rounded-full p-2 transition-colors duration-200">
+                  <i data-lucide="log-in"
+                     class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
+                </a>
+                {% endif %}
+              </div>
+            </div>
+
+            </div>
+          </div>
+
+          <!-- bottom bar -->
+          <div class="bg-white border-t border-green-200 py-6 text-center text-base md:text-lg text-green-900">
+            <div class="flex flex-col items-center justify-center gap-3">
+              <div>
+                &copy; <span id="currentYear"></span> WPA CZ-SK. Všechna práva vyhrazena.
+              </div>
+              <div class="flex items-center justify-center gap-2">
+                <span class="text-gray-700">Web vytvořil</span>
+                <a href="https://www.matuskocik.com/"
+                   class="group inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#003D5B] text-[#EDAE49] font-semibold text-sm transition-colors hover:bg-[#EDAE49]"
+                   target="_blank" rel="noopener">
+                   <span class="group-hover:text-[#003D5B] transition-colors">Matúš Kočik</span>
+                </a>
+              </div>
+            </div>
           </div>
         </footer>
         {% if DEBUG %}

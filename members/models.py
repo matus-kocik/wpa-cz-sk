@@ -10,6 +10,21 @@ from django.db.models.functions import Cast
 from django.urls import reverse
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django_countries.fields import CountryField
+
+
+# New Role model
+class Role(models.Model):
+    name = models.CharField(max_length=50, unique=True, verbose_name="Názov")
+    slug = models.SlugField(unique=True, verbose_name="Slug")
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Role"
+        verbose_name_plural = "Role (funkcie)"
+        ordering = ["name"]
 
 
 class MemberProfile(models.Model):
@@ -28,7 +43,7 @@ class MemberProfile(models.Model):
     )
 
     icch_number = models.CharField(
-        max_length=4,
+        max_length=3,
         unique=True,
         blank=True,
         null=True,
@@ -52,22 +67,26 @@ class MemberProfile(models.Model):
         help_text="Typ členství v organizaci",
     )
 
-    POSITION_CHOICES = [
-        ("president", "Předseda"),
-        ("vice_president", "Místopředseda"),
-        ("treasurer", "Pokladník"),
-        ("registrar", "Registrátor"),
-        ("web_admin", "Správce webu"),
-        ("manager", "Jednatel"),
+    MEMBER_TYPE_CHOICES = [
+        ("person", "Fyzická osoba"),
+        ("organization", "Organizace"),
     ]
 
-    position = models.CharField(
-        max_length=24,
-        choices=POSITION_CHOICES,
+    member_type = models.CharField(
+        max_length=20,
+        choices=MEMBER_TYPE_CHOICES,
+        default="person",
+        db_index=True,
+        verbose_name="Typ člena",
+        help_text="Určuje, zda jde o fyzickou osobu nebo organizaci (např. ZOO)",
+    )
+
+    roles = models.ManyToManyField(
+        Role,
         blank=True,
-        null=True,
-        verbose_name="Pozice",
-        help_text="Funkce člena v organizaci",
+        related_name="members",
+        verbose_name="Role",
+        help_text="Funkcie člena v organizaci",
     )
 
     is_active = models.BooleanField(
@@ -149,11 +168,10 @@ class MemberProfile(models.Model):
         verbose_name="Okres",
         help_text="Okres nebo region",
     )
-    country = models.CharField(
-        max_length=2,
+    country = CountryField(
         blank=True,
         verbose_name="Stát",
-        help_text="Kód státu (např. CZ, SK)",
+        help_text="Stát (výběr ze seznamu)",
         db_index=True,
     )
 
@@ -168,9 +186,9 @@ class MemberProfile(models.Model):
         help_text="Datum a čas poslední aktualizace záznamu",
     )
 
-    # Custom save handling for cleaning, ICCH assignment, and payment logic
-    def save(self, *args, **kwargs):
-        # Clean data
+    def clean(self):
+        super().clean()
+
         if self.phone_number:
             self.phone_number = self.phone_number.strip()
         if self.city:
@@ -183,10 +201,22 @@ class MemberProfile(models.Model):
             self.postal_code = self.postal_code.strip()
         if self.district:
             self.district = self.district.strip()
-        if self.country:
-            self.country = self.country.strip().upper()
         if self.notes:
             self.notes = self.notes.strip()
+        if self.country:
+            self.country = str(self.country).upper()
+
+        # Prevent ICCH changes unless explicitly allowed
+        if self.pk:
+            old = MemberProfile.objects.filter(pk=self.pk).values("icch_number").first()
+            if old and old["icch_number"] != self.icch_number:
+                if not getattr(self, "_allow_icch_change", False) and not getattr(self, "_admin_override", False):
+                    raise ValueError("ICCH number cannot be changed")
+
+    # Custom save handling for cleaning, ICCH assignment, and payment logic
+    def save(self, *args, **kwargs):
+        if kwargs.pop("clean", True):
+            self.full_clean()
 
         # detect previous payment_status
         old_payment_status = None
@@ -213,7 +243,7 @@ class MemberProfile(models.Model):
             else:
                 next_number = 1
 
-            self.icch_number = str(next_number).zfill(4)
+            self.icch_number = str(next_number).zfill(3)
 
         # Sync payment status (always keep is_active in sync)
         if self.payment_status == "paid":
@@ -269,6 +299,24 @@ class MemberProfile(models.Model):
             or self.user.email
         )
 
+    @property
+    def display_name(self):
+        """
+        Returns a clean display name for UI.
+        - Organizations: use first_name (holds org name)
+        - Persons: use full_name
+        """
+        if self.member_type == "organization":
+            return (self.user.first_name or "").strip() or self.full_name
+        return self.full_name
+
+    @property
+    def has_projects(self):
+        """
+        Returns True if member is involved in any project.
+        """
+        return self.projects.exists()
+
 
 # Clean data before saving
 class MembershipApplication(models.Model):
@@ -297,7 +345,8 @@ class MembershipApplication(models.Model):
         if self.district:
             self.district = self.district.strip().title()
         if self.country:
-            self.country = self.country.strip().upper()
+            # CountryField returns a Country object, use its code
+            self.country = str(self.country).upper()
         if self.phone_number:
             self.phone_number = self.phone_number.strip()
         if self.email:
@@ -368,10 +417,9 @@ class MembershipApplication(models.Model):
         verbose_name="Okres",
         help_text="Okres nebo region",
     )
-    country = models.CharField(
-        max_length=2,
+    country = CountryField(
         verbose_name="Stát",
-        help_text="Kód státu (např. CZ, SK)",
+        help_text="Stát (výběr ze seznamu)",
     )
 
     phone_number = models.CharField(
@@ -473,10 +521,10 @@ class MembershipApplication(models.Model):
     def approve(self):
         # Prevent re-processing already approved applications with user
         if self.user:
-            return
+            raise ValueError("Application already processed")
 
         if self.initial_payment_status != "paid":
-            return
+            raise ValueError("Cannot approve unpaid application")
 
         self.status = "approved"
         self.save(update_fields=["status"])
@@ -551,9 +599,12 @@ class MembershipApplication(models.Model):
         domain = getattr(settings, "SITE_URL", "http://localhost:8000")
         reset_link = f"{domain}{reset_path}"
 
-        send_mail(
-            subject="Dokončenie registrace",
-            message=f"Nastavte si heslo: {reset_link}",
-            from_email=settings.DEFAULT_FROM_EMAIL,
-            recipient_list=[user.email],
-        )
+        try:
+            send_mail(
+                subject="Dokončenie registrace",
+                message=f"Nastavte si heslo: {reset_link}",
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[user.email],
+            )
+        except Exception:
+            pass

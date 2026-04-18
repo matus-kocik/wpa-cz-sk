@@ -13,12 +13,12 @@
           <tr>
             <th class="px-3 py-2 text-left font-semibold">#</th>
             <th class="px-3 py-2 text-left font-semibold">ICCH</th>
-            <th class="px-3 py-2 text-left font-semibold">Jméno a příjmení</th>
+            <th class="px-3 py-2 text-left font-semibold">Jméno / Název</th>
             <th class="px-3 py-2 text-left font-semibold">E-mail</th>
             <th class="px-3 py-2 text-left font-semibold">Mobil</th>
             <th class="px-3 py-2 text-left font-semibold">Funkce</th>
             <th class="px-3 py-2 text-left font-semibold">
-              Zapojen v projektu
+              Projekty / Zapojení
             </th>
             <th class="px-3 py-2 text-left font-semibold">Poznámka</th>
           </tr>
@@ -591,4 +591,70 @@
     </div>
   </div>
 </section>
+
+<section class="py-16 bg-gray-50">
+  <div class="max-w-6xl mx-auto px-4">
+    <h2 class="text-xl font-bold mb-4">Testovací dynamický seznam</h2>
+
+    <div class="bg-white shadow ring-1 ring-gray-200 rounded-lg">
+      <table class="w-full table-auto border border-gray-200 border-collapse text-gray-900 text-sm">
+        <thead class="bg-green-600 text-white sticky top-0 z-10">
+          <tr>
+            <th class="px-3 py-2 text-left font-semibold border border-gray-200">#</th>
+            <th class="px-3 py-2 text-left font-semibold border border-gray-200">ICCH</th>
+            <th class="px-3 py-2 text-left font-semibold border border-gray-200">Jméno / Název</th>
+            <th class="px-3 py-2 text-left font-semibold border border-gray-200">Funkce</th>
+            <th class="px-3 py-2 text-left font-semibold border border-gray-200">Projekty / Zapojení</th>
+            <th class="px-3 py-2 text-left font-semibold border border-gray-200">Poznámka</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          {% for m in members %}
+          <tr
+            class="border border-gray-200 cursor-pointer odd:bg-white even:bg-green-50 hover:!bg-green-100 {% if not m.public_profile or not m.public_profile.slug %}opacity-50{% endif %}"
+            {% if m.public_profile and m.public_profile.slug %}
+            onclick="window.location.href='{% url 'member_detail' m.public_profile.slug %}'"
+            title="Zobrazit detail"
+            {% endif %}
+          >
+            <td class="px-2 py-2 border border-gray-200 text-right">{{ forloop.counter }}.</td>
+            <td class="px-2 py-2 border border-gray-200 font-semibold">{{ m.icch_number }}</td>
+            <td class="px-2 py-2 border border-gray-200">{{ m }}</td>
+            <td class="px-2 py-2 border border-gray-200">
+              {% if m.position %}
+                {{ m.get_position_display }}
+              {% else %}
+                —
+              {% endif %}
+            </td>
+            <td class="px-2 py-2 border border-gray-200">
+              {% if m.projects.count %}
+                {% for p in m.projects.all %}
+                  {{ p.name }}{% if not forloop.last %}; {% endif %}
+                {% endfor %}
+              {% else %}
+                —
+              {% endif %}
+            </td>
+            <td class="px-2 py-2 border border-gray-200">
+              {% if m.membership_type %}
+                {{ m.get_membership_type_display }}
+              {% else %}
+                —
+              {% endif %}
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="6" class="px-3 py-4 text-center text-gray-500 border border-gray-200">
+              Žádní členové
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
 {% endblock %}
+

@@ -10,7 +10,8 @@ class MemberProfileAdmin(admin.ModelAdmin):
         "full_name",
         "payment_status",
         "membership_type",
-        "position",
+        "member_type",
+        "country",
         "is_active",
         "is_valid_display",
         "valid_until",
@@ -19,25 +20,27 @@ class MemberProfileAdmin(admin.ModelAdmin):
 
     list_display_links = ("full_name",)
 
-    list_editable = ("payment_status", "membership_type", "position", "is_active")
+    list_editable = ("payment_status", "membership_type", "is_active")
 
     list_filter = (
         "payment_status",
         "membership_type",
-        "position",
+        "member_type",
         "is_active",
         "joined_at",
         "valid_until",
+        "country",
+        "roles",
     )
 
     search_fields = (
-        "user__email__icontains",
-        "user__first_name__icontains",
-        "user__last_name__icontains",
-        "icch_number__icontains",
+        "user__email",
+        "user__first_name",
+        "user__last_name",
+        "icch_number",
     )
 
-    ordering = ("icch_number", "joined_at")
+    ordering = ("icch_number", "user__last_name")
 
     list_select_related = ("user",)
 
@@ -46,12 +49,9 @@ class MemberProfileAdmin(admin.ModelAdmin):
 
     empty_value_display = "-"
 
-    readonly_fields = (
-        "created_at",
-        "updated_at",
-    )
 
     autocomplete_fields = ("user",)
+    filter_horizontal = ("roles",)
 
     fieldsets = (
         (
@@ -62,8 +62,9 @@ class MemberProfileAdmin(admin.ModelAdmin):
                     "icch_number",
                     "payment_status",
                     "membership_type",
-                    "position",
+                    "member_type",
                     "is_active",
+                    "roles",
                 )
             },
         ),
@@ -71,7 +72,6 @@ class MemberProfileAdmin(admin.ModelAdmin):
             "Členství",
             {
                 "fields": (
-                    "joined_at",
                     "valid_until",
                 )
             },
@@ -111,6 +111,11 @@ class MemberProfileAdmin(admin.ModelAdmin):
     def is_valid_display(self, obj):
         return obj.is_valid
 
+    def get_readonly_fields(self, request, obj=None):
+        if request.user.is_superuser:
+            return ("created_at", "updated_at", "joined_at")
+        return ("created_at", "updated_at", "joined_at", "icch_number")
+
 
 @admin.register(MembershipApplication)
 class MembershipApplicationAdmin(admin.ModelAdmin):
@@ -118,6 +123,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
         "first_name",
         "last_name",
         "email",
+        "country",
         "user",
         "status",
         "initial_payment_status",
@@ -132,12 +138,14 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
         "status",
         "initial_payment_status",
         "created_at",
+        "country",
     )
 
     search_fields = (
         "first_name__icontains",
         "last_name__icontains",
         "email__icontains",
+        "country__icontains",
     )
 
     ordering = ("-created_at",)
@@ -223,7 +231,21 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        if obj.status == "approved" and obj.initial_payment_status == "paid":
-            obj.approve()
-
+        # First save normally
         super().save_model(request, obj, form, change)
+
+        # Then handle approval logic safely (only on change)
+        if (
+            change
+            and obj.status == "approved"
+            and obj.initial_payment_status == "paid"
+            and not obj.user
+        ):
+            try:
+                obj.approve()
+            except Exception as e:
+                self.message_user(
+                    request,
+                    f"Approve failed: {e}",
+                    level="error",
+                )
