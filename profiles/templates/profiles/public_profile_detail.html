@@ -76,7 +76,7 @@
       <div class="md:col-span-2 space-y-6">
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
-          <h2 class="font-semibold text-lg mb-4">O chovateli</h2>
+          <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">O chovateli</h2>
           {% if request.user.is_authenticated or object.show_bio %}
             {% if object.bio %}
               <p class="text-gray-700">{{ object.bio }}</p>
@@ -89,7 +89,7 @@
         </div>
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
-          <h2 class="font-semibold text-lg mb-4">Chované druhy</h2>
+          <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Chované druhy</h2>
           <div class="flex flex-wrap gap-2">
             {% if request.user.is_authenticated or object.show_species %}
               {% if object.species.exists %}
@@ -111,7 +111,7 @@
         </div>
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
-          <h2 class="font-semibold text-lg mb-4">Galerie</h2>
+          <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Galerie</h2>
           {% if object.gallery.exists %}
             {% if request.user.is_authenticated or object.show_gallery %}
               <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
@@ -130,7 +130,7 @@
         </div>
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
-          <h2 class="font-semibold text-lg mb-4">Video</h2>
+          <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Video</h2>
 
           {% if object.youtube_url %}
             {% if request.user.is_authenticated or object.show_videos %}
@@ -152,7 +152,7 @@
       <div class="space-y-6">
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
-          <h2 class="font-semibold text-lg mb-4">Kontakt</h2>
+          <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Kontakt</h2>
           {% if request.user.is_authenticated or object.show_email %}
             {% if object.public_email %}
               <p>📧 {{ object.public_email }}</p>
@@ -180,7 +180,7 @@
         </div>
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
-          <h2 class="font-semibold text-lg mb-4">Projekty</h2>
+          <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Projekty</h2>
           {% if request.user.is_authenticated or object.show_projects %}
             {% if object.member.has_projects %}
               <ul class="space-y-1">
@@ -197,7 +197,7 @@
         </div>
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
-          <h2 class="font-semibold text-lg mb-4">Další informace</h2>
+          <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Další informace</h2>
           {% if request.user.is_authenticated or object.show_additional_info %}
             {% if object.additional_info %}
               <p class="text-gray-700">{{ object.additional_info }}</p>

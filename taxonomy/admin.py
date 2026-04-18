@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import Family, Genus, Species, SpeciesLink, Subspecies
+from .models import Family, Genus, Species, SpeciesLink, Subfamily, Subspecies
+
+
+class SpeciesLinkInline(admin.TabularInline):
+    model = SpeciesLink
+    extra = 1
 
 
 @admin.register(Family)
@@ -10,33 +15,30 @@ class FamilyAdmin(admin.ModelAdmin):
     ordering = ("latin_name",)
     list_per_page = 25
     search_fields = ("latin_name", "czech_name", "slovak_name", "english_name", "german_name")
-    prepopulated_fields = {"slug": ("latin_name",)}
+    readonly_fields = ("slug",)
+
+
+@admin.register(Subfamily)
+class SubfamilyAdmin(admin.ModelAdmin):
+    list_display = ("latin_name", "czech_name", "slovak_name", "english_name", "german_name", "family", "slug")
+    list_filter = ("family",)
+    ordering = ("latin_name",)
+    list_per_page = 25
+    search_fields = ("latin_name", "czech_name", "slovak_name", "english_name", "german_name")
+    autocomplete_fields = ("family",)
+    readonly_fields = ("slug",)
 
 
 @admin.register(Genus)
 class GenusAdmin(admin.ModelAdmin):
-    list_display = ("latin_name", "czech_name", "slovak_name", "english_name", "german_name", "family")
-    list_filter = ("family",)
+    list_display = ("latin_name", "czech_name", "slovak_name", "english_name", "german_name", "subfamily")
+    list_filter = ("subfamily",)
     search_fields = ("latin_name", "czech_name", "slovak_name", "english_name", "german_name")
     ordering = ("latin_name",)
-    list_select_related = ("family",)
+    list_select_related = ("subfamily", "subfamily__family")
     list_per_page = 25
-    autocomplete_fields = ("family",)
-    prepopulated_fields = {"slug": ("latin_name",)}
-
-
-class SubspeciesInline(admin.TabularInline):
-    model = Subspecies
-    extra = 0
-    show_change_link = True
-    ordering = ("latin_name",)
-
-
-class SpeciesLinkInline(admin.TabularInline):
-    model = SpeciesLink
-    extra = 0
-    show_change_link = True
-    ordering = ("type",)
+    autocomplete_fields = ("subfamily",)
+    readonly_fields = ("slug",)
 
 
 @admin.register(Species)
@@ -45,12 +47,11 @@ class SpeciesAdmin(admin.ModelAdmin):
     list_filter = ("genus", "status_in_nature", "is_active")
     search_fields = ("latin_name", "czech_name", "slovak_name", "english_name", "german_name", "authority", "authority_year")
     ordering = ("latin_name",)
-    list_select_related = ("genus", "genus__family")
+    list_select_related = ("genus", "genus__subfamily", "genus__subfamily__family")
     list_per_page = 25
     autocomplete_fields = ("genus",)
-    prepopulated_fields = {"slug": ("latin_name",)}
-
-    inlines = [SubspeciesInline, SpeciesLinkInline]
+    readonly_fields = ("slug",)
+    inlines = [SpeciesLinkInline]
 
     fieldsets = (
         ("Základní informace", {
@@ -62,9 +63,9 @@ class SpeciesAdmin(admin.ModelAdmin):
                 "slovak_name",
                 "english_name",
                 "german_name",
-                "slug",
                 "genus",
                 "is_active",
+                "slug",
             )
         }),
         ("Poddruhy", {
@@ -79,13 +80,19 @@ class SpeciesAdmin(admin.ModelAdmin):
         ("Biologie", {
             "fields": (
                 "maturity",
-                ("length_male_min", "length_male_max"),
-                ("length_female_min", "length_female_max"),
-                ("weight_male_min", "weight_male_max"),
-                ("weight_female_min", "weight_female_max"),
-                ("clutch_min", "clutch_max"),
+                "length_male_min",
+                "length_male_max",
+                "length_female_min",
+                "length_female_max",
+                "weight_male_min",
+                "weight_male_max",
+                "weight_female_min",
+                "weight_female_max",
+                "clutch_min",
+                "clutch_max",
                 "clutch_note",
-                ("incubation_min", "incubation_max"),
+                "incubation_min",
+                "incubation_max",
                 "incubation_note",
             )
         }),
@@ -97,9 +104,6 @@ class SpeciesAdmin(admin.ModelAdmin):
         }),
         ("Poznámky", {
             "fields": ("notes",)
-        }),
-        ("SEO", {
-            "fields": ("meta_title", "meta_description", "meta_keywords")
         }),
     )
 

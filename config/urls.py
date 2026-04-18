@@ -10,6 +10,7 @@ from core.sitemaps import CoreViewSitemap
 from core.views import ContactView
 from members.views import MembershipApplicationView
 from profiles.views import PublicProfileDetailView, members_view
+from taxonomy.views import SpeciesDetailView, species_list_view
 from users.forms import CustomPasswordResetForm, CustomSetPasswordForm, LoginForm
 from users.views import CustomLoginView, CustomLogoutView
 
@@ -109,6 +110,8 @@ urlpatterns = [
     ),
     path("clenove/", members_view, name="members"),
     path("clen/<slug:slug>/", PublicProfileDetailView.as_view(), name="member_detail"),
+    path("druhy/", species_list_view, name="species_list"),
+    path("druhy/<slug:slug>/", SpeciesDetailView.as_view(), name="species_detail"),
     path(
         "podpora/",
         TemplateView.as_view(template_name="support.html"),

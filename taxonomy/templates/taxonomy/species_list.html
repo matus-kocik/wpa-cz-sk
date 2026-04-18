@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include "partials/page_header.html" with title="Seznam druhů" subtitle="Přehled druhů hrabavých ptáků" image="/static/images/trag-tem-1920-640.webp" %}
+
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+
+    <div class="space-y-10">
+
+      <!-- TAXONOMY INTRO -->
+      <div class="bg-green-50 rounded-xl shadow-sm p-6">
+        <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-700">
+          Taxonomie řádu hrabaví (Galliformes)
+        </h2>
+
+        <ul class="space-y-3 text-gray-700">
+
+{% for family in families %}
+  <li>
+    <strong>Čeľaď:</strong> {{ family.czech_name|default:family.latin_name }}
+    <span class="italic text-gray-500">({{ family.latin_name }})</span>
+
+    <ul class="pl-5 mt-2 space-y-2">
+      {% for subfamily in family.subfamilies.all %}
+        <li>
+          <strong>Podčeľaď:</strong> {{ subfamily.czech_name|default:subfamily.latin_name }}
+          <span class="italic text-gray-500">({{ subfamily.latin_name }})</span>
+
+          <ul class="pl-5 mt-1 space-y-2">
+            {% for genus in subfamily.genera.all %}
+              <li>
+                <strong>Rod:</strong> {{ genus.latin_name }}
+                <span class="text-sm text-gray-500">({{ genus.species.all|length }} druhů)</span>
+
+                <ul class="pl-5 mt-1 space-y-1">
+                  {% for species in genus.species.all|dictsort:"latin_name" %}
+                    <li class="{% if species.is_active %}text-gray-900{% else %}text-gray-400{% endif %}">
+                      {% if species.slug %}
+                        <a href="{% url 'species_detail' species.slug %}" class="text-green-700 hover:underline">
+                          <span class="font-medium">
+                            Druh: {{ species.czech_name|default:species.latin_name }}
+                          </span>
+                        </a>
+                      {% else %}
+                        <span class="font-medium">
+                          Druh: {{ species.czech_name|default:species.latin_name }}
+                        </span>
+                      {% endif %}
+                      <span class="text-gray-500 italic text-sm">({{ species.latin_name }})</span>
+                    </li>
+                  {% empty %}
+                    <li class="text-gray-400">Žádné druhy</li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% empty %}
+              <li class="text-gray-400">Žádné rody</li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% empty %}
+        <li class="text-gray-400">Žádné podčeľade</li>
+      {% endfor %}
+    </ul>
+  </li>
+{% empty %}
+  <li class="text-gray-400">Žádné čeľade</li>
+{% endfor %}
+
+</ul>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+{% endblock %}
