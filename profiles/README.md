@@ -20,13 +20,11 @@ Public-facing profile linked to a member.
 - display_name – name shown publicly
 - bio – short introduction
 - avatar – profile image
-- location – city or region
 - public_email – visible email
 - phone – contact phone number
 - website – external website link
-- specialization – breeding specialization
-- breeding_focus – detailed breeding info
-- years_of_experience – number of years in breeding
+- additional_info – additional public information about the breeder
+- other_species – other animals bred (free text, e.g. pigeons, parrots)
 
 - species – related species (ManyToMany)
 
@@ -34,6 +32,7 @@ Public-facing profile linked to a member.
 
 - facebook_url – Facebook profile
 - youtube_url – YouTube channel
+- instagram_url – Instagram profile
 
 **Visibility settings:**
 
@@ -41,7 +40,13 @@ Public-facing profile linked to a member.
 - show_email – display email
 - show_phone – display phone
 - show_location – display location
-- show_breeding – display breeding info
+- show_avatar – display profile image
+- show_bio – display bio
+- show_social – display social links
+- show_species – display species list
+- show_other_species – display other species
+- show_additional_info – display additional information
+- show_website – display website
 
 **Other:**
 
@@ -52,7 +57,7 @@ Public-facing profile linked to a member.
 ## Notes
 
 - Each member has exactly one public profile
-- Visibility flags control what is shown on the frontend
+- Each data section has a corresponding visibility flag (show_*) controlling frontend display
 - Designed for public directory of breeders
 
 ---
