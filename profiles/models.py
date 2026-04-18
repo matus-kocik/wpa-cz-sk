@@ -29,7 +29,6 @@ class PublicProfile(TimeStampedModel, SlugModel):
     other_species = models.CharField(
         max_length=255,
         blank=True,
-        null=True,
         verbose_name="Další druhy",
         help_text="Např. papoušci, holubi apod.",
     )
@@ -38,14 +37,12 @@ class PublicProfile(TimeStampedModel, SlugModel):
     display_name = models.CharField(
         max_length=150,
         blank=True,
-        null=True,
         db_index=True,
         verbose_name="Zobrazované jméno",
         help_text="Jméno zobrazené na veřejném profilu",
     )
     bio = models.TextField(
         blank=True,
-        null=True,
         verbose_name="O chovateli",
         help_text="Informace o chovateli (zobrazené na veřejném profilu)",
     )
@@ -58,7 +55,6 @@ class PublicProfile(TimeStampedModel, SlugModel):
     )
     public_email = models.EmailField(
         blank=True,
-        null=True,
         db_index=True,
         verbose_name="Veřejný e-mail",
         help_text="E-mail zobrazený na profilu",
@@ -66,32 +62,27 @@ class PublicProfile(TimeStampedModel, SlugModel):
     phone = models.CharField(
         max_length=50,
         blank=True,
-        null=True,
         validators=[MinLengthValidator(7)],
         verbose_name="Telefon",
         help_text="Telefonní číslo v mezinárodním formátu",
     )
     website = models.URLField(
         blank=True,
-        null=True,
         verbose_name="Web",
         help_text="Odkaz na webové stránky",
     )
     facebook_url = models.URLField(
         blank=True,
-        null=True,
         verbose_name="Facebook",
         help_text="Odkaz na Facebook profil",
     )
     instagram_url = models.URLField(
         blank=True,
-        null=True,
         verbose_name="Instagram",
         help_text="Odkaz na Instagram profil",
     )
     youtube_url = models.URLField(
         blank=True,
-        null=True,
         verbose_name="YouTube",
         help_text="Odkaz na YouTube kanál",
     )
@@ -162,13 +153,11 @@ class PublicProfile(TimeStampedModel, SlugModel):
     # extra
     notes = models.TextField(
         blank=True,
-        null=True,
         verbose_name="Poznámky",
         help_text="Interní poznámky (neveřejné)",
     )
     additional_info = models.TextField(
         blank=True,
-        null=True,
         verbose_name="Doplňující informace",
         help_text="Další informace o chovu, zkušenosti, poznámky apod.",
     )
@@ -274,7 +263,6 @@ class ProfileVideo(models.Model):
     title = models.CharField(
         max_length=255,
         blank=True,
-        null=True,
         verbose_name="Název",
         help_text="Volitelný název videa"
     )
@@ -309,7 +297,6 @@ class ProfileGallery(models.Model):
     caption = models.CharField(
         max_length=255,
         blank=True,
-        null=True,
         verbose_name="Popis",
         help_text="Volitelný popis fotografie"
     )

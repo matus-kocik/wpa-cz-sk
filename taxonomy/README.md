@@ -17,8 +17,11 @@ Top-level biological group.
 
 **Fields:**
 
-- name – common name
 - latin_name – scientific name
+- czech_name – Czech name
+- slovak_name – Slovak name
+- english_name – English name
+- german_name – German name
 - slug – URL identifier
 
 ---
@@ -29,8 +32,11 @@ Belongs to a family and groups related species.
 
 **Fields:**
 
-- name – common name
 - latin_name – scientific name
+- czech_name – Czech name
+- slovak_name – Slovak name
+- english_name – English name
+- german_name – German name
 - family – parent family
 
 ---
@@ -43,21 +49,31 @@ Main taxonomy entity used across the project.
 
 - genus – parent genus
 - latin_name – scientific name
-- czech_name – common name
+- czech_name – Czech name
+- slovak_name – Slovak name
+- english_name – English name
+- german_name – German name
 - authority – naming authority
+- authority_year – year of description
+- is_active – active flag
 
 **Biology:**
 
 - maturity – age of maturity
-- length – body length
-- weight – body weight
-- clutch – number of eggs
-- incubation – incubation period
+- length_male_min / length_male_max – male length (cm)
+- length_female_min / length_female_max – female length (cm)
+- weight_male_min / weight_male_max – male weight (g)
+- weight_female_min / weight_female_max – female weight (g)
+- clutch_min / clutch_max – clutch size (eggs)
+- clutch_note – additional clutch info
+- incubation_min / incubation_max – incubation period (days)
+- incubation_note – additional incubation info
 
 **Conservation:**
 
 - status_in_nature – IUCN status
 - status_in_captivity – notes about captive breeding
+- population – population in CZ/SK
 
 **Breeding & care:**
 
@@ -68,14 +84,13 @@ Main taxonomy entity used across the project.
 
 - distribution – geographic range
 - habitat – natural habitat
+- subspecies_note – monotypic / polytypic
 - notes – additional notes
 
 **Media:**
 
 - main_image – primary image
-- secondary_image – additional image
-- videos – YouTube links
-- images_url – external gallery link
+- links – external links (YouTube, Facebook)
 
 ---
 
@@ -87,7 +102,23 @@ Optional subdivision of a species.
 
 - species – parent species
 - latin_name – scientific name
-- note – additional info
+- czech_name – Czech name
+- slovak_name – Slovak name
+- english_name – English name
+- german_name – German name
+
+---
+
+### SpeciesLink
+
+External links related to a species.
+
+**Fields:**
+
+- species – parent species
+- type – link type (YouTube, Facebook)
+- url – external URL
+- title – optional title
 
 ---
 
