@@ -55,7 +55,7 @@
     <body class="bg-white text-gray-900 font-sans">
         <!-- Top Bar -->
         <section class="py-2 bg-green-100">
-            <div class="container mx-auto px-4 flex justify-between items-center flex-wrap">
+            <div class="container mx-auto px-4 flex justify-between items-center flex-wrap relative z-50">
                 <div class="flex items-center space-x-4">
                     <small class="flex flex-col sm:flex-row sm:space-x-6 text-sm">
                         <a href="tel:+420602419057"
@@ -102,15 +102,10 @@
                            class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
                     </a>
                     {% if user.is_authenticated %}
-                        <form action="{% url 'logout' %}" method="post" class="inline">
-                            {% csrf_token %}
-                            <button type="submit"
-                                    title="Odhlásit"
-                                    class="group bg-green-600 hover:bg-green-700 rounded-full p-2 transition-colors duration-200 cursor-pointer">
-                                <i data-lucide="log-out"
-                                   class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
-                            </button>
-                        </form>
+                      <a href="{% url 'dashboard_home' %}"
+                         class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-full text-sm">
+                        {{ user.first_name|default:user.email }}
+                      </a>
                     {% else %}
                         <a href="{% url 'login' %}"
                            title="Přihlášení"
@@ -124,7 +119,7 @@
         </section>
         <!-- Main Navigation -->
         <section>
-            <nav class="bg-green-200 shadow sticky top-0 z-50">
+            <nav class="bg-green-200 shadow sticky top-0 z-40">
                 <div class="container mx-auto px-4 py-1 flex items-center justify-between">
                     <a href="{% url 'home' %}" class="flex items-center space-x-2">
                         <img src="{% static 'images/logo/wpa-logo-black.webp' %}"
@@ -133,15 +128,15 @@
                         <span class="text-3xl font-bold text-green-900 leading-tight">WPA CZ-SK</span>
                     </a>
                     <div class="hidden md:flex space-x-6">
-                        <a href="{% url 'home' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Domov</a>
-                        <a href="{% url 'members' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Členové</a>
-                        <a href="{% url 'projects' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Projekty</a>
-                        <a href="{% url 'species_list' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Druhy</a>
+                        <a href="{% url 'home' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Domov</a>
+                        <a href="{% url 'members' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Členové</a>
+                        <a href="{% url 'projects' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Projekty</a>
+                        <a href="{% url 'species_list' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Druhy</a>
                         <a href="{% url 'documents' %}"
-                           class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Dokumenty</a>
-                        <a href="{% url 'chovatelske_rady' %}" class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Chovatelské rady</a>
+                           class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Dokumenty</a>
+                        <a href="{% url 'chovatelske_rady' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Chovatelské rady</a>
                         <a href="{% url 'contact' %}"
-                           class="text-green-800 hover:text-green-900 text-base md:text-lg font-medium tracking-wide">Kontakt</a>
+                           class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Kontakt</a>
                     </div>
                     <div class="md:hidden">
                         <button id="mobileMenuButton" class="text-green-800 focus:outline-none cursor-pointer">

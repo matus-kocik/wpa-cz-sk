@@ -8,8 +8,13 @@ from django.views.generic import TemplateView
 
 from core.sitemaps import CoreViewSitemap
 from core.views import ContactView
+from dashboard.views import DashboardHomeView
 from members.views import MembershipApplicationView
-from profiles.views import PublicProfileDetailView, members_view
+from profiles.views import (
+    PublicProfileDetailView,
+    PublicProfileUpdateView,
+    members_view,
+)
 from taxonomy.views import SpeciesDetailView, species_list_view
 from users.forms import CustomPasswordResetForm, CustomSetPasswordForm, LoginForm
 from users.views import CustomLoginView, CustomLogoutView
@@ -109,7 +114,8 @@ urlpatterns = [
         name="statutes",
     ),
     path("clenove/", members_view, name="members"),
-    path("clen/<slug:slug>/", PublicProfileDetailView.as_view(), name="member_detail"),
+    path("clen/<slug:slug>/", PublicProfileDetailView.as_view(), name="public_profile_detail"),
+    path("profil/upravit/", PublicProfileUpdateView.as_view(), name="public_profile_edit"),
     path("druhy/", species_list_view, name="species_list"),
     path("druhy/<slug:slug>/", SpeciesDetailView.as_view(), name="species_detail"),
     path(
@@ -157,6 +163,7 @@ urlpatterns = [
         "robots.txt",
         TemplateView.as_view(template_name="robots.txt", content_type="text/plain"),
     ),
+    path("dashboard/", DashboardHomeView.as_view(), name="dashboard_home"),
 ]
 
 if settings.DEBUG:

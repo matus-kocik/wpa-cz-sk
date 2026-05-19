@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block content %}
 {% include "partials/page_header.html" with title="Profil člena" subtitle=object.display_name|default:object.member.display_name image="/static/images/arb-1920-640.webp" %}
 
@@ -12,7 +11,7 @@
 
       <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
         {% if object.avatar %}
-          {% if request.user.is_authenticated or object.show_avatar %}
+          {% if is_owner or object.show_avatar %}
             <img src="{{ object.avatar.url }}" class="w-24 h-24 rounded-full object-cover">
           {% else %}
             <img src="{% static 'images/default-avatar.png' %}" class="w-24 h-24 rounded-full object-cover">
@@ -33,7 +32,7 @@
             </span>
             {% endif %}
             {% if object.location_display %}
-              {% if request.user.is_authenticated or object.show_location %}
+              {% if is_owner or object.show_location %}
                 <span class="text-xs bg-gray-100 px-2 py-1 rounded">
                   {{ object.location_display }}
                 </span>
@@ -46,7 +45,7 @@
 
       <div class="flex gap-3 mt-4 md:mt-0 md:ml-auto">
         {% if object.facebook_url %}
-          {% if request.user.is_authenticated or object.show_social %}
+          {% if is_owner or object.show_social %}
             <a href="{{ object.facebook_url }}" target="_blank" class="group bg-transparent hover:bg-[#1877F2] rounded-full p-2 transition-colors duration-200">
               <i data-lucide="facebook" class="w-6 h-6 stroke-gray-700 stroke-[1.5] group-hover:stroke-white"></i>
             </a>
@@ -54,7 +53,7 @@
         {% endif %}
 
         {% if object.instagram_url %}
-          {% if request.user.is_authenticated or object.show_social %}
+          {% if is_owner or object.show_social %}
             <a href="{{ object.instagram_url }}" target="_blank" class="group bg-transparent hover:bg-[#E4405F] rounded-full p-2 transition-colors duration-200">
               <i data-lucide="instagram" class="w-6 h-6 stroke-gray-700 stroke-[1.5] group-hover:stroke-white"></i>
             </a>
@@ -62,13 +61,21 @@
         {% endif %}
 
         {% if object.youtube_url %}
-          {% if request.user.is_authenticated or object.show_videos %}
+          {% if is_owner or object.show_videos %}
             <a href="{{ object.youtube_url }}" target="_blank" class="group bg-transparent hover:bg-[#FF0000] rounded-full p-2 transition-colors duration-200">
               <i data-lucide="youtube" class="w-6 h-6 stroke-gray-700 stroke-[1.5] group-hover:stroke-white"></i>
             </a>
           {% endif %}
         {% endif %}
       </div>
+      {% if is_owner %}
+        <div class="w-full md:w-auto mt-4 md:mt-0">
+          <a href="{% url 'public_profile_edit' %}"
+              class="inline-block bg-green-600 hover:bg-green-700 text-white text-sm font-semibold px-5 py-2 rounded-full shadow">
+            Upravit profil
+          </a>
+        </div>
+      {% endif %}
     </div>
 
     <div class="grid md:grid-cols-3 gap-6 mt-6">
@@ -77,7 +84,7 @@
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
           <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">O chovateli</h2>
-          {% if request.user.is_authenticated or object.show_bio %}
+          {% if is_owner or object.show_bio %}
             {% if object.bio %}
               <p class="text-gray-700">{{ object.bio }}</p>
             {% else %}
@@ -91,7 +98,7 @@
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
           <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Chované druhy</h2>
           <div class="flex flex-wrap gap-2">
-            {% if request.user.is_authenticated or object.show_species %}
+            {% if is_owner or object.show_species %}
               {% if object.species.exists %}
                 {% for sp in object.species.all %}
                   <span class="px-3 py-1 bg-gray-100 rounded-full text-sm">{{ sp }}</span>
@@ -113,7 +120,7 @@
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
           <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Galerie</h2>
           {% if object.gallery.exists %}
-            {% if request.user.is_authenticated or object.show_gallery %}
+            {% if is_owner or object.show_gallery %}
               <div class="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-5">
                 {% for img in object.gallery.all %}
                 <a href="{{ img.image.url }}" target="_blank">
@@ -133,7 +140,7 @@
           <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Video</h2>
 
           {% if object.youtube_url %}
-            {% if request.user.is_authenticated or object.show_videos %}
+            {% if is_owner or object.show_videos %}
               <a href="{{ object.youtube_url }}" target="_blank"
                   class="inline-block text-green-600 hover:underline">
                   ▶ Zobrazit video na YouTube
@@ -153,35 +160,32 @@
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
           <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Kontakt</h2>
-          {% if request.user.is_authenticated or object.show_email %}
+          {% if is_owner or object.show_email %}
             {% if object.public_email %}
               <p>📧 {{ object.public_email }}</p>
             {% endif %}
           {% endif %}
 
-          {% if request.user.is_authenticated or object.show_phone %}
+          {% if is_owner or object.show_phone %}
             {% if object.phone %}
               <p>📞 {{ object.phone }}</p>
             {% endif %}
           {% endif %}
 
-          {% if request.user.is_authenticated or object.show_website %}
+          {% if is_owner or object.show_website %}
             {% if object.website %}
               <p>🌐 <a href="{{ object.website }}" class="text-green-600 hover:underline">{{ object.website }}</a></p>
             {% endif %}
           {% endif %}
 
-          {% if not request.user.is_authenticated and not object.show_email and not object.show_phone and not object.show_website %}
-            <span class="text-gray-400">Neuvedeno</span>
-          {% endif %}
-          {% if request.user.is_authenticated and not object.public_email and not object.phone and not object.website %}
+          {% if not object.public_email and not object.phone and not object.website %}
             <span class="text-gray-400">Neuvedeno</span>
           {% endif %}
         </div>
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
           <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Projekty</h2>
-          {% if request.user.is_authenticated or object.show_projects %}
+          {% if is_owner or object.show_projects %}
             {% if object.member.has_projects %}
               <ul class="space-y-1">
                 {% for project in object.member.projects.all %}
@@ -198,7 +202,7 @@
 
         <div class="bg-green-50 rounded-xl shadow-sm p-6">
           <h2 class="font-semibold text-lg mb-4 border-b border-green-400 pb-2 text-gray-900">Další informace</h2>
-          {% if request.user.is_authenticated or object.show_additional_info %}
+          {% if is_owner or object.show_additional_info %}
             {% if object.additional_info %}
               <p class="text-gray-700">{{ object.additional_info }}</p>
             {% else %}

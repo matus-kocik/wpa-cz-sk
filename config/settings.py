@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "studbook",
     "projects",
     "events",
+    "dashboard",
     # Third-party apps
     "django_countries",
 ]
@@ -190,5 +191,5 @@ SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
 
 # Auth redirects
-LOGIN_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "dashboard_home"
 LOGOUT_REDIRECT_URL = "home"

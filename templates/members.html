@@ -613,7 +613,7 @@
           <tr
             class="border border-gray-200 cursor-pointer odd:bg-white even:bg-green-50 hover:!bg-green-100 {% if not m.public_profile or not m.public_profile.slug %}opacity-50{% endif %}"
             {% if m.public_profile and m.public_profile.slug %}
-            onclick="window.location.href='{% url 'member_detail' m.public_profile.slug %}'"
+            onclick="window.location.href='{% url 'public_profile_detail' m.public_profile.slug %}'"
             title="Zobrazit detail"
             {% endif %}
           >

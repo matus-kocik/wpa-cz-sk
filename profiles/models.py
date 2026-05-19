@@ -1,5 +1,7 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MinLengthValidator
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 from common.models import SlugModel, TimeStampedModel
@@ -168,7 +170,7 @@ class PublicProfile(TimeStampedModel, SlugModel):
     )
 
     def clean(self):
-        # Normalize string fields (strip whitespace, convert empty to None)
+        # Normalize string fields (strip whitespace, convert empty to empty string)
         fields_to_clean = [
             "display_name",
             "bio",
@@ -185,10 +187,19 @@ class PublicProfile(TimeStampedModel, SlugModel):
             value = getattr(self, field, None)
             if isinstance(value, str):
                 value = value.strip()
-                setattr(self, field, value or None)
+                setattr(self, field, value or "")
 
     def save(self, *args, **kwargs):
         self.clean()
+
+        # store old avatar before saving
+        old_avatar = None
+        if self.pk:
+            try:
+                old_avatar = PublicProfile.objects.get(pk=self.pk).avatar
+            except PublicProfile.DoesNotExist:
+                old_avatar = None
+
         if not self.slug or self.slug.strip() == "":
             base_slug = slugify(
                 f"{self.member.user.first_name}-{self.member.user.last_name}"
@@ -197,6 +208,16 @@ class PublicProfile(TimeStampedModel, SlugModel):
             self.slug = f"{base_slug}-{suffix}"
 
         super().save(*args, **kwargs)
+
+        # delete old avatar file if it was replaced or removed
+        if old_avatar and old_avatar != self.avatar:
+            old_avatar.delete(save=False)
+
+
+    def delete(self, *args, **kwargs):
+        if self.avatar:
+            self.avatar.delete(save=False)
+        super().delete(*args, **kwargs)
 
     class Meta:
         verbose_name = "Veřejný profil"
@@ -239,6 +260,9 @@ class PublicProfile(TimeStampedModel, SlugModel):
         return city or country or None
 
 
+    def get_absolute_url(self):
+        return reverse("public_profile_detail", kwargs={"slug": self.slug})
+
     # Display name fallback to member string representation
     def __str__(self):
         return self.display_name or str(self.member)
@@ -267,6 +291,39 @@ class ProfileVideo(models.Model):
         help_text="Volitelný název videa"
     )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+
+        # store old image before saving
+        old_image = None
+        if self.pk:
+            try:
+                old_image = ProfileGallery.objects.get(pk=self.pk).image
+            except ProfileGallery.DoesNotExist:
+                old_image = None
+
+        super().save(*args, **kwargs)
+
+        # delete old image if replaced
+        if old_image and old_image != self.image:
+            old_image.delete(save=False)
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+        # Limit to 3 videos per profile
+        if self.profile_id and not self.pk:
+            if self.profile.videos.count() >= 3:
+                raise ValidationError("Maximálně 3 videa.")
+
+        # Normalize YouTube URLs (basic cleanup)
+        if self.url:
+            self.url = self.url.strip()
 
     class Meta:
         verbose_name = "Video"
@@ -300,12 +357,43 @@ class ProfileGallery(models.Model):
         verbose_name="Popis",
         help_text="Volitelný popis fotografie"
     )
+    is_primary = models.BooleanField(
+        default=False,
+        verbose_name="Hlavní fotografie",
+        help_text="Označit jako hlavní profilovou fotografii"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        return super().save(*args, **kwargs)
+
+    def clean(self):
+        super().clean()
+        # Limit to 6 images per profile
+        if self.profile_id and not self.pk:
+            if self.profile.gallery.count() >= 6:
+                raise ValidationError("Maximálně 6 fotografií.")
+
+        # Ensure only one primary image per profile
+        if self.is_primary:
+            qs = self.profile.gallery.filter(is_primary=True)
+            if self.pk:
+                qs = qs.exclude(pk=self.pk)
+            if qs.exists():
+                raise ValidationError("Každý profil může mít pouze jednu hlavní fotografii.")
 
     class Meta:
         verbose_name = "Fotografie"
         verbose_name_plural = "Galerie"
-        ordering = ["-created_at"]
+        ordering = ["-is_primary", "-created_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["profile"],
+                condition=models.Q(is_primary=True),
+                name="unique_primary_image_per_profile"
+            )
+        ]
 
     def __str__(self):
         return self.caption or f"Gallery image {self.id}"

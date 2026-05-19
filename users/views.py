@@ -11,6 +11,8 @@ class CustomLoginView(LoginView):
 
 
 class CustomLogoutView(LogoutView):
+    next_page = "home"
+
     def dispatch(self, request, *args, **kwargs):
         messages.success(request, "Byli jste úspěšně odhlášeni.")
         return super().dispatch(request, *args, **kwargs)
