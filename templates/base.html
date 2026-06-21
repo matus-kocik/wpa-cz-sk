@@ -101,6 +101,7 @@
                         <i data-lucide="youtube"
                            class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
                     </a>
+                    {% comment %}
                     {% if user.is_authenticated %}
                       <a href="{% url 'dashboard_home' %}"
                          class="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-full text-sm">
@@ -114,6 +115,7 @@
                                class="stroke-white stroke-[1.5] group-hover:stroke-white"></i>
                         </a>
                     {% endif %}
+                    {% endcomment %}
                 </div>
             </div>
         </section>
@@ -131,7 +133,9 @@
                         <a href="{% url 'home' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Domov</a>
                         <a href="{% url 'members' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Členové</a>
                         <a href="{% url 'projects' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Projekty</a>
+                        {% comment %}
                         <a href="{% url 'species_list' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Druhy</a>
+                        {% endcomment %}
                         <a href="{% url 'documents' %}"
                            class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Dokumenty</a>
                         <a href="{% url 'chovatelske_rady' %}" class="text-green-800 hover:text-green-900 text-base md:text-base font-medium tracking-wide">Chovatelské rady</a>
@@ -156,7 +160,9 @@
                     <a href="{% url 'members' %}" class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Členové</a>
                     <a href="{% url 'projects' %}"
                        class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Projekty</a>
+                    {% comment %}
                     <a href="{% url 'species_list' %}" class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Druhy</a>
+                    {% endcomment %}
                     <a href="{% url 'documents' %}"
                        class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Dokumenty</a>
                     <a href="{% url 'chovatelske_rady' %}" class="block py-2 text-green-800 hover:text-green-900 text-base font-medium tracking-wide">Chovatelské rady</a>
@@ -235,7 +241,9 @@
                 <li><a href="{% url 'home' %}" class="hover:underline">Úvod</a></li>
                 <li><a href="{% url 'members' %}" class="hover:underline">Členové</a></li>
                 <li><a href="{% url 'projects' %}" class="hover:underline">Projekty</a></li>
+                {% comment %}
                 <li><a href="{% url 'species_list' %}" class="hover:underline">Druhy</a></li>
+                {% endcomment %}
                 <li><a href="{% url 'documents' %}" class="hover:underline">Dokumenty</a></li>
                 <li><a href="{% url 'chovatelske_rady' %}" class="hover:underline">Chovatelské rady</a></li>
                 <li><a href="{% url 'contact' %}" class="hover:underline">Kontakt</a></li>
@@ -289,6 +297,7 @@
                      class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
                 </a>
 
+                {% comment %}
                 {% if not user.is_authenticated %}
                 <a href="{% url 'login' %}"
                    class="group bg-transparent hover:bg-green-700 rounded-full p-2 transition-colors duration-200">
@@ -296,6 +305,7 @@
                      class="stroke-green-900 stroke-[1.5] group-hover:stroke-white"></i>
                 </a>
                 {% endif %}
+                {% endcomment %}
               </div>
             </div>
 
