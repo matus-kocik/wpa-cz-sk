@@ -9,9 +9,15 @@ from phonenumbers import NumberParseException, is_valid_number, parse
 
 
 def validate_human_name(value):
-    if len(value.strip()) < 2:
+    value = value.strip()
+
+    if len(value) < 2:
         raise ValidationError("Toto pole musí mít alespoň 2 znaky.")
-    if not re.match(r"^[A-Za-zÁÉÍÓÚÝĎŤŇŘŠČŽáéíóúýďťňřščžäëïöüÄËÏÖÜ' -]+$", value):
+
+    if not re.fullmatch(
+        r"[A-Za-zÁÄČĎÉÍĹĽŇÓÔŔŘŠŤÚŮÝŽ" r"áäčďéíĺľňóôŕřšťúůýž" r"ËÏÖÜëïöü' -]+",
+        value,
+    ):
         raise ValidationError(
             "Může obsahovat pouze písmena, mezery, pomlčky nebo apostrof."
         )
@@ -81,7 +87,15 @@ def validate_message_body(value):
 
 
 def validate_academic_title(value):
-    if not re.match(r"^[A-Za-zČŠŽŤĎĚŇŘÁÉÍÓÚÝÄÖÜĽŔŮĚ\. ]*$", value):
+    if not value:
+        return
+
+    value = value.strip()
+
+    if not re.fullmatch(
+        r"[A-Za-zÁÄČĎÉĚÍĹĽŇÓÔÖŔŘŠŤÚŮÜÝŽ" r"áäčďéěíĺľňóôöŕřšťúůüýž. ]+",
+        value,
+    ):
         raise ValidationError("Titul může obsahovat pouze písmena, tečky a mezery.")
 
 
@@ -133,15 +147,22 @@ def validate_house_number(value):
 
 
 def validate_location_name(value):
-    pattern = r"^[A-Za-zÁÉÍÓÚÝĎŤŇŘŠČŽäëïöüÄËÏÖÜáéíóúýďťňřščž0-9.,()'\- ]+$"
-    if not re.match(pattern, value):
+    pattern = (
+        r"^[A-Za-z"
+        r"ÁÄČĎÉĚÍĹĽŇÓÔÖŔŘŠŤÚŮÜÝŽ"
+        r"áäčďéěíĺľňóôöŕřšťúůüýž"
+        r"0-9.,()'\- ]+$"
+    )
+
+    if not re.fullmatch(pattern, value):
         raise ValidationError(
-            "Toto pole může obsahovat pouze písmena, čísla, pomlčky, tečky a mezery."
+            "Toto pole může obsahovat pouze písmena, čísla, pomlčky, "
+            "tečky, čárky, závorky, apostrofy a mezery."
         )
 
 
 def validate_postal_code(value):
-    if not re.match(r"^[\w\s\-]{3,10}$", value):
+    if not re.fullmatch(r"[A-Za-zÀ-ž0-9 -]{3,10}", value):
         raise ValidationError(
             "Zadejte platné PSČ – povolena čísla, písmena, mezery a pomlčky."
         )

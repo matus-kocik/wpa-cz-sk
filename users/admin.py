@@ -2,6 +2,7 @@ from django import forms
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
+from django.contrib.auth.password_validation import validate_password
 
 from .models import CustomUser
 
@@ -11,12 +12,19 @@ class CustomUserCreationForm(forms.ModelForm):
     """
     Form for creating new users in the Django admin.
     """
+
     password1 = forms.CharField(label="Heslo", widget=forms.PasswordInput)
     password2 = forms.CharField(label="Potvrzení hesla", widget=forms.PasswordInput)
 
     class Meta:
         model = CustomUser
         fields = ("email", "first_name", "last_name")
+
+    def clean_password1(self):
+        password1 = self.cleaned_data.get("password1")
+        if password1:
+            validate_password(password1)
+        return password1
 
     def clean_password2(self):
         password1 = self.cleaned_data.get("password1")
@@ -38,9 +46,10 @@ class CustomUserChangeForm(forms.ModelForm):
     """
     Form for updating users in the Django admin.
     """
+
     password = ReadOnlyPasswordHashField(
         help_text=(
-            "Hesla nejsou ukládána v čitelné podobě, proto není možné je zobrazit. Heslo můžete změnit pomocí <a href=\"../password/\">tohoto formuláře</a>."
+            'Hesla nejsou ukládána v čitelné podobě, proto není možné je zobrazit. Heslo můžete změnit pomocí <a href="../password/">tohoto formuláře</a>.'
         )
     )
 
@@ -54,16 +63,26 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
 
-    list_display = ["email", "full_name", "email_verified", "is_active", "is_staff", "date_joined"]
+    list_display = [
+        "email",
+        "full_name",
+        "email_verified",
+        "is_active",
+        "is_staff",
+        "date_joined",
+    ]
     list_display_links = ["email", "full_name"]
-    list_editable = ["is_active", "is_staff"]
-    search_fields = ["email__icontains", "first_name__icontains", "last_name__icontains"]
+    list_editable = ["is_active"]
+    search_fields = [
+        "email__icontains",
+        "first_name__icontains",
+        "last_name__icontains",
+    ]
     list_filter = ["email_verified", "is_active", "is_staff", "date_joined"]
     ordering = ["-date_joined"]
     list_per_page = 25
     list_select_related = ()  # no FK, kept for consistency
     date_hierarchy = "date_joined"
-    readonly_fields = ["date_joined", "last_login"]
     filter_horizontal = ("groups", "user_permissions")
 
     fieldsets = (
@@ -101,6 +120,19 @@ class CustomUserAdmin(UserAdmin):
             },
         ),
     )
+
+    def get_readonly_fields(self, request, obj=None):
+        readonly = ["date_joined", "last_login"]
+
+        if not request.user.is_superuser:
+            readonly += [
+                "is_staff",
+                "is_superuser",
+                "groups",
+                "user_permissions",
+            ]
+
+        return readonly
 
 
 admin.site.register(CustomUser, CustomUserAdmin)

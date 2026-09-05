@@ -6,13 +6,15 @@ class CustomLoginView(LoginView):
     template_name = "registration/login.html"
 
     def form_valid(self, form):
+        response = super().form_valid(form)
         messages.success(self.request, "Byli jste úspěšně přihlášeni.")
-        return super().form_valid(form)
+        return response
 
 
 class CustomLogoutView(LogoutView):
     next_page = "home"
 
-    def dispatch(self, request, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
         messages.success(request, "Byli jste úspěšně odhlášeni.")
-        return super().dispatch(request, *args, **kwargs)
+        return response

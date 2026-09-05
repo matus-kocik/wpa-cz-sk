@@ -20,7 +20,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
 
     list_display_links = ("full_name",)
 
-    list_editable = ("payment_status", "membership_type", "is_active")
+    list_editable = ("payment_status", "membership_type")
 
     list_filter = (
         "payment_status",
@@ -49,7 +49,6 @@ class MemberProfileAdmin(admin.ModelAdmin):
 
     empty_value_display = "-"
 
-
     autocomplete_fields = ("user",)
     filter_horizontal = ("roles",)
 
@@ -70,11 +69,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
         ),
         (
             "Členství",
-            {
-                "fields": (
-                    "valid_until",
-                )
-            },
+            {"fields": ("valid_until",)},
         ),
         (
             "Kontakt a adresa",
@@ -92,9 +87,7 @@ class MemberProfileAdmin(admin.ModelAdmin):
         ),
         (
             "Poznámky",
-            {
-                "fields": ("notes",)
-            },
+            {"fields": ("notes",)},
         ),
         (
             "Metadata",
@@ -115,6 +108,12 @@ class MemberProfileAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return ("created_at", "updated_at", "joined_at")
         return ("created_at", "updated_at", "joined_at", "icch_number")
+
+    def save_model(self, request, obj, form, change):
+        if request.user.is_superuser:
+            obj._admin_override = True
+
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(MembershipApplication)
@@ -215,9 +214,7 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
         ),
         (
             "Poznámky",
-            {
-                "fields": ("notes",)
-            },
+            {"fields": ("notes",)},
         ),
         (
             "Metadata",

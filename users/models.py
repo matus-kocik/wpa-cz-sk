@@ -231,11 +231,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not self.last_name:
             raise ValidationError({"last_name": "The Last Name field is required"})
 
-    # Custom save logic (validation currently disabled due to production issue)
+    # Validate user data before saving
     def save(self, *args, **kwargs):
         """
-        Ensures full model validation before saving.
+        Ensures email normalization and full model validation before saving.
         """
+
+        if self.email:
+            self.email = self.email.strip().lower()
 
         self.full_clean()
         super().save(*args, **kwargs)

@@ -147,9 +147,7 @@ class MembershipApplicationForm(forms.ModelForm):
     agree_gdpr = forms.BooleanField(required=True)
 
     website = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"class": "hidden"}),
-        label=""
+        required=False, widget=forms.TextInput(attrs={"class": "hidden"}), label=""
     )
     turnstile = TurnstileField(required=True)
 

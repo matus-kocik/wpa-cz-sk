@@ -14,15 +14,24 @@ from .validators import (
 class TurnstileField(forms.Field):
     def validate(self, value):
         super().validate(value)
-        response = requests.post(
-            "https://challenges.cloudflare.com/turnstile/v0/siteverify",
-            data={
-                "secret": settings.TURNSTILE_SECRET_KEY,
-                "response": value,
-            },
-            timeout=5,
-        ).json()
-        if not response.get("success"):
+
+        try:
+            response = requests.post(
+                "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+                data={
+                    "secret": settings.TURNSTILE_SECRET_KEY,
+                    "response": value,
+                },
+                timeout=5,
+            )
+            response.raise_for_status()
+            result = response.json()
+        except (requests.RequestException, ValueError):
+            raise forms.ValidationError(
+                "Ověření proti spamu se nepodařilo. Zkuste to prosím znovu."
+            ) from None
+
+        if not result.get("success"):
             raise forms.ValidationError("Ověření proti spamu selhalo.")
 
 
@@ -122,9 +131,7 @@ class ContactForm(forms.Form):
     )
 
     website = forms.CharField(
-        required=False,
-        widget=forms.TextInput(attrs={"class": "hidden"}),
-        label=""
+        required=False, widget=forms.TextInput(attrs={"class": "hidden"}), label=""
     )
 
     turnstile = TurnstileField(required=True)

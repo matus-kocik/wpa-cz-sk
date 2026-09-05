@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
-from django.db import models, transaction
+from django.db import IntegrityError, models, transaction
 from django.db.models import F, IntegerField
 from django.db.models.functions import Cast
 from django.urls import reverse
@@ -33,6 +33,7 @@ class MemberProfile(models.Model):
 
     Stores membership data, contact info, and payment status.
     """
+
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -210,7 +211,9 @@ class MemberProfile(models.Model):
         if self.pk:
             old = MemberProfile.objects.filter(pk=self.pk).values("icch_number").first()
             if old and old["icch_number"] != self.icch_number:
-                if not getattr(self, "_allow_icch_change", False) and not getattr(self, "_admin_override", False):
+                if not getattr(self, "_allow_icch_change", False) and not getattr(
+                    self, "_admin_override", False
+                ):
                     raise ValueError("ICCH number cannot be changed")
 
     # Custom save handling for cleaning, ICCH assignment, and payment logic
@@ -229,7 +232,6 @@ class MemberProfile(models.Model):
 
         # Auto-assign ICCH number if not set
         if not self.icch_number:
-
             last = (
                 MemberProfile.objects.exclude(icch_number__isnull=True)
                 .filter(icch_number__regex=r"^\d+$")
@@ -260,13 +262,29 @@ class MemberProfile(models.Model):
         else:
             self.is_active = False
 
-        from django.db import IntegrityError
-        for _ in range(3):
+        for attempt in range(3):
             try:
-                super().save(*args, **kwargs)
+                with transaction.atomic():
+                    super().save(*args, **kwargs)
                 break
             except IntegrityError:
-                self.icch_number = None
+                if attempt == 2:
+                    raise
+
+                last = (
+                    MemberProfile.objects.exclude(icch_number__isnull=True)
+                    .filter(icch_number__regex=r"^\d+$")
+                    .annotate(icch_int=Cast("icch_number", IntegerField()))
+                    .order_by("-icch_int")
+                    .first()
+                )
+
+                if last and last.icch_number.isdigit():
+                    next_number = int(last.icch_number) + 1
+                else:
+                    next_number = 1
+
+                self.icch_number = str(next_number).zfill(3)
 
     class Meta:
         ordering = [F("icch_number").asc(nulls_last=True), "created_at"]
@@ -325,6 +343,7 @@ class MembershipApplication(models.Model):
 
     Stores personal data, status, and approval workflow.
     """
+
     # Clean and normalize input data before saving
     def save(self, *args, **kwargs):
         # Clean data
@@ -359,6 +378,7 @@ class MembershipApplication(models.Model):
             self.declaration_signature = self.declaration_signature.strip().title()
 
         super().save(*args, **kwargs)
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -512,16 +532,14 @@ class MembershipApplication(models.Model):
         ]
 
     def __str__(self):
-        return (
-            f"{self.first_name} {self.last_name} ({self.status}, {self.initial_payment_status})"
-        )
+        return f"{self.first_name} {self.last_name} ({self.status}, {self.initial_payment_status})"
 
     # Approves application and creates/updates user and member profile
     @transaction.atomic
     def approve(self):
         # Prevent re-processing already approved applications with user
         if self.user:
-            raise ValueError("Application already processed")
+            return self.user
 
         if self.initial_payment_status != "paid":
             raise ValueError("Cannot approve unpaid application")
@@ -581,9 +599,6 @@ class MembershipApplication(models.Model):
         # Set membership dates
         if not profile.joined_at:
             profile.joined_at = self.declaration_date
-
-        if not profile.valid_until:
-            profile.valid_until = date(self.declaration_date.year + 1, 3, 31)
 
         profile.save()
 
