@@ -18,6 +18,7 @@ class TimeStampedModel(models.Model):
     """
     Abstract base model that provides created and updated timestamps.
     """
+
     created_at = models.DateTimeField(
         auto_now_add=True,
         verbose_name="Vytvořeno",
@@ -38,6 +39,7 @@ class SlugModel(models.Model):
     """
     Abstract model that provides an auto-generated unique slug field.
     """
+
     slug = models.SlugField(
         unique=True,
         blank=True,
@@ -48,7 +50,6 @@ class SlugModel(models.Model):
 
     class Meta:
         abstract = True
-
 
     def save(self, *args, **kwargs):
         # Automatically generate slug from available name-like fields
@@ -82,6 +83,7 @@ class SEOModel(models.Model):
     """
     Abstract model providing basic SEO metadata fields.
     """
+
     meta_title = models.CharField(
         max_length=255,
         blank=True,
@@ -108,6 +110,7 @@ class SoftDeleteManager(models.Manager):
     """
     Manager that filters out soft-deleted records by default.
     """
+
     def get_queryset(self):
         return super().get_queryset().filter(is_deleted=False)
 
@@ -116,6 +119,7 @@ class SoftDeleteModel(models.Model):
     """
     Abstract model implementing soft delete functionality.
     """
+
     is_deleted = models.BooleanField(
         default=False,
         db_index=True,
@@ -149,6 +153,7 @@ class PublishableModel(models.Model):
     """
     Abstract model handling publication state and timestamps.
     """
+
     is_published = models.BooleanField(
         default=True,
         db_index=True,
