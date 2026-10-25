@@ -16,6 +16,7 @@ class Family(SlugModel):
     """
     Biological family grouping multiple genera.
     """
+
     latin_name = models.CharField(
         max_length=100,
         verbose_name="Latinský název",
@@ -68,6 +69,7 @@ class Subfamily(SlugModel):
     """
     Biological subfamily grouping multiple genera within a family.
     """
+
     latin_name = models.CharField(
         max_length=100,
         verbose_name="Latinský název",
@@ -129,6 +131,7 @@ class Genus(SlugModel):
     """
     Biological genus belonging to a family.
     """
+
     latin_name = models.CharField(
         max_length=100,
         verbose_name="Latinský název",
@@ -164,7 +167,6 @@ class Genus(SlugModel):
         db_index=True,
     )
 
-
     subfamily = models.ForeignKey(
         Subfamily,
         on_delete=models.CASCADE,
@@ -193,6 +195,7 @@ class Species(TimeStampedModel, SlugModel):
     """
     Represents a species with taxonomy, biology, and breeding data.
     """
+
     genus = models.ForeignKey(
         Genus,
         on_delete=models.CASCADE,
@@ -441,7 +444,6 @@ class Species(TimeStampedModel, SlugModel):
         help_text="Hlavní obrázek druhu",
     )
 
-
     class Meta:
         verbose_name = "Druh"
         verbose_name_plural = "Druhy"
@@ -490,16 +492,22 @@ class Species(TimeStampedModel, SlugModel):
 
         if self.length_female_min is not None and self.length_female_max is not None:
             if self.length_female_min > self.length_female_max:
-                errors["length_female_min"] = "Min délka samice nemůže být větší než max"
+                errors["length_female_min"] = (
+                    "Min délka samice nemůže být větší než max"
+                )
 
         # weight validation
         if self.weight_male_min is not None and self.weight_male_max is not None:
             if self.weight_male_min > self.weight_male_max:
-                errors["weight_male_min"] = "Min hmotnost samec nemůže být větší než max"
+                errors["weight_male_min"] = (
+                    "Min hmotnost samec nemůže být větší než max"
+                )
 
         if self.weight_female_min is not None and self.weight_female_max is not None:
             if self.weight_female_min > self.weight_female_max:
-                errors["weight_female_min"] = "Min hmotnost samice nemůže být větší než max"
+                errors["weight_female_min"] = (
+                    "Min hmotnost samice nemůže být větší než max"
+                )
 
         # clutch validation
         if self.clutch_min is not None and self.clutch_max is not None:
@@ -591,6 +599,7 @@ class Subspecies(models.Model):
     """
     Represents a subspecies of a species.
     """
+
     species = models.ForeignKey(
         Species,
         on_delete=models.CASCADE,
@@ -635,7 +644,6 @@ class Subspecies(models.Model):
         db_index=True,
     )
 
-
     class Meta:
         verbose_name = "Poddruh"
         verbose_name_plural = "Poddruhy"
@@ -655,6 +663,7 @@ class SpeciesLink(models.Model):
     """
     External links related to a species (YouTube videos, Facebook albums, etc.).
     """
+
     species = models.ForeignKey(
         Species,
         on_delete=models.CASCADE,

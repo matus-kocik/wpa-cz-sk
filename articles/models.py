@@ -19,6 +19,7 @@ class Category(SlugModel):
     """
     Article category used for grouping and ordering in listings.
     """
+
     name = models.CharField(
         max_length=100,
         verbose_name="Název",
@@ -47,6 +48,7 @@ class Contributor(models.Model):
 
     Can be linked to a member or defined by name.
     """
+
     ROLE_CHOICES = (
         ("author", "Autor"),
         ("photographer", "Fotograf"),
@@ -105,6 +107,7 @@ class Article(
 
     Supports SEO, publishing workflow, and relations to species and contributors.
     """
+
     title = models.CharField(
         max_length=200,
         verbose_name="Titulek",
@@ -147,7 +150,6 @@ class Article(
         verbose_name="Hlavní obrázek",
         help_text="Hlavní ilustrační obrázek článku",
     )
-
 
     contributors = models.ManyToManyField(
         Contributor,

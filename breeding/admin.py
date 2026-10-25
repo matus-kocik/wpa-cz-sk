@@ -13,7 +13,14 @@ class BreedingRecordInline(admin.TabularInline):
 
 @admin.register(BreedingReport)
 class BreedingReportAdmin(admin.ModelAdmin):
-    list_display = ("member", "year", "status", "submitted_at", "approved_at", "updated_at")
+    list_display = (
+        "member",
+        "year",
+        "status",
+        "submitted_at",
+        "approved_at",
+        "updated_at",
+    )
     list_filter = ("year", "status", "submitted_at", "approved_at")
     search_fields = (
         "member__user__email",
@@ -30,29 +37,24 @@ class BreedingReportAdmin(admin.ModelAdmin):
     inlines = [BreedingRecordInline]
 
     fieldsets = (
-        ("Základní informace", {
-            "fields": ("member", "year", "status")
-        }),
-        ("Údaje člena", {
-            "fields": (
-                "full_name",
-                "address",
-                "city",
-                "postal_code",
-                "country",
-                "phone",
-                "email",
-            )
-        }),
-        ("Poznámky", {
-            "fields": ("notes",)
-        }),
-        ("Stav odeslání", {
-            "fields": ("submitted_at", "approved_at")
-        }),
-        ("Metadata", {
-            "fields": ("created_at", "updated_at")
-        }),
+        ("Základní informace", {"fields": ("member", "year", "status")}),
+        (
+            "Údaje člena",
+            {
+                "fields": (
+                    "full_name",
+                    "address",
+                    "city",
+                    "postal_code",
+                    "country",
+                    "phone",
+                    "email",
+                )
+            },
+        ),
+        ("Poznámky", {"fields": ("notes",)}),
+        ("Stav odeslání", {"fields": ("submitted_at", "approved_at")}),
+        ("Metadata", {"fields": ("created_at", "updated_at")}),
     )
 
 
@@ -81,20 +83,20 @@ class BreedingRecordAdmin(admin.ModelAdmin):
     ordering = ("report", "species")
 
     fieldsets = (
-        ("Základní informace", {
-            "fields": ("report", "species")
-        }),
-        ("Chov", {
-            "fields": ("pairs_with_chicks", "number_of_males", "number_of_females")
-        }),
-        ("Odchov", {
-            "fields": (
-                "number_of_male_offspring",
-                "number_of_female_offspring",
-                "number_of_unsexed_offspring",
-            )
-        }),
-        ("Poznámky", {
-            "fields": ("notes",)
-        }),
+        ("Základní informace", {"fields": ("report", "species")}),
+        (
+            "Chov",
+            {"fields": ("pairs_with_chicks", "number_of_males", "number_of_females")},
+        ),
+        (
+            "Odchov",
+            {
+                "fields": (
+                    "number_of_male_offspring",
+                    "number_of_female_offspring",
+                    "number_of_unsexed_offspring",
+                )
+            },
+        ),
+        ("Poznámky", {"fields": ("notes",)}),
     )

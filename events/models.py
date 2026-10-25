@@ -9,6 +9,7 @@ class Event(SEOModel, TimeStampedModel):
 
     Includes scheduling, location, related species, and visibility settings.
     """
+
     SECTION_CHOICES = (
         ("cz_sk", "WPA CZ-SK"),
         ("de", "WPA Deutschland"),

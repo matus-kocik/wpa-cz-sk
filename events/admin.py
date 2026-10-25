@@ -48,35 +48,24 @@ class EventAdmin(admin.ModelAdmin):
     date_hierarchy = "start_date"
 
     fieldsets = (
-        ("Základní informace", {
-            "fields": (
-                "title",
-                "slug",
-                "section",
-                "is_external",
-                "is_public",
-                "is_featured",
-            )
-        }),
-        ("Popis", {
-            "fields": ("description", "itinerary")
-        }),
-        ("Termíny", {
-            "fields": ("start_date", "end_date")
-        }),
-        ("Místo a organizace", {
-            "fields": ("location", "organizer")
-        }),
-        ("Odkazy", {
-            "fields": ("source_url", "external_url")
-        }),
-        ("Taxonomie", {
-            "fields": ("species",)
-        }),
-        ("Poznámky", {
-            "fields": ("notes",)
-        }),
-        ("Metadata", {
-            "fields": ("created_at", "updated_at")
-        }),
+        (
+            "Základní informace",
+            {
+                "fields": (
+                    "title",
+                    "slug",
+                    "section",
+                    "is_external",
+                    "is_public",
+                    "is_featured",
+                )
+            },
+        ),
+        ("Popis", {"fields": ("description", "itinerary")}),
+        ("Termíny", {"fields": ("start_date", "end_date")}),
+        ("Místo a organizace", {"fields": ("location", "organizer")}),
+        ("Odkazy", {"fields": ("source_url", "external_url")}),
+        ("Taxonomie", {"fields": ("species",)}),
+        ("Poznámky", {"fields": ("notes",)}),
+        ("Metadata", {"fields": ("created_at", "updated_at")}),
     )

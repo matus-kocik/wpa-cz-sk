@@ -1,8 +1,7 @@
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-
-# from django.contrib.auth import views as auth_views
+from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
 from django.urls import path
 from django.views.generic import TemplateView
@@ -16,11 +15,9 @@ from profiles.views import (
     PublicProfileUpdateView,
     members_view,
 )
-
-# from taxonomy.views import SpeciesDetailView, species_list_view
-
-# from users.forms import CustomPasswordResetForm, CustomSetPasswordForm, LoginForm
-# from users.views import CustomLoginView, CustomLogoutView
+from taxonomy.views import SpeciesDetailView, species_list_view
+from users.forms import CustomPasswordResetForm, CustomSetPasswordForm, LoginForm
+from users.views import CustomLoginView, CustomLogoutView
 
 sitemaps = {
     "core": CoreViewSitemap,
@@ -125,48 +122,48 @@ urlpatterns = [
     path(
         "profil/upravit/", PublicProfileUpdateView.as_view(), name="public_profile_edit"
     ),
-    # path("druhy/", species_list_view, name="species_list"),
-    # path("druhy/<slug:slug>/", SpeciesDetailView.as_view(), name="species_detail"),
+    path("druhy/", species_list_view, name="species_list"),
+    path("druhy/<slug:slug>/", SpeciesDetailView.as_view(), name="species_detail"),
     path(
         "podpora/",
         TemplateView.as_view(template_name="support.html"),
         name="support",
     ),
-    # path(
-    #    "login/",
-    #    CustomLoginView.as_view(
-    #        template_name="registration/login.html",
-    #        authentication_form=LoginForm,
-    #    ),
-    #    name="login",
-    # ),
-    # path("logout/", CustomLogoutView.as_view(), name="logout"),
-    # path(
-    #    "password-reset/",
-    #    auth_views.PasswordResetView.as_view(
-    #        template_name="registration/password_reset_form.html",
-    #        form_class=CustomPasswordResetForm,
-    #    ),
-    #    name="password_reset",
-    # ),
-    # path(
-    #    "password-reset/done/",
-    #    auth_views.PasswordResetDoneView.as_view(),
-    #    name="password_reset_done",
-    # ),
-    # path(
-    #    "reset/<uidb64>/<token>/",
-    #    auth_views.PasswordResetConfirmView.as_view(
-    #        template_name="registration/password_reset_confirm.html",
-    #        form_class=CustomSetPasswordForm,
-    #    ),
-    #    name="password_reset_confirm",
-    # ),
-    # path(
-    #    "reset/done/",
-    #    auth_views.PasswordResetCompleteView.as_view(),
-    #    name="password_reset_complete",
-    # ),
+    path(
+        "login/",
+        CustomLoginView.as_view(
+            template_name="registration/login.html",
+            authentication_form=LoginForm,
+        ),
+        name="login",
+    ),
+    path("logout/", CustomLogoutView.as_view(), name="logout"),
+    path(
+        "password-reset/",
+        auth_views.PasswordResetView.as_view(
+            template_name="registration/password_reset_form.html",
+            form_class=CustomPasswordResetForm,
+        ),
+        name="password_reset",
+    ),
+    path(
+        "password-reset/done/",
+        auth_views.PasswordResetDoneView.as_view(),
+        name="password_reset_done",
+    ),
+    path(
+        "reset/<uidb64>/<token>/",
+        auth_views.PasswordResetConfirmView.as_view(
+            template_name="registration/password_reset_confirm.html",
+            form_class=CustomSetPasswordForm,
+        ),
+        name="password_reset_confirm",
+    ),
+    path(
+        "reset/done/",
+        auth_views.PasswordResetCompleteView.as_view(),
+        name="password_reset_complete",
+    ),
     path("sitemap.xml", sitemap, {"sitemaps": sitemaps}, name="sitemap"),
     path(
         "robots.txt",

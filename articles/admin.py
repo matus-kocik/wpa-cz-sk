@@ -17,7 +17,12 @@ class CategoryAdmin(admin.ModelAdmin):
 class ContributorAdmin(admin.ModelAdmin):
     list_display = ("name", "role", "member")
     list_filter = ("role",)
-    search_fields = ("name", "member__username", "member__first_name", "member__last_name")
+    search_fields = (
+        "name",
+        "member__username",
+        "member__first_name",
+        "member__last_name",
+    )
     ordering = ("name",)
     autocomplete_fields = ("member",)
     list_select_related = ("member",)
@@ -37,9 +42,21 @@ class ArticleAdmin(admin.ModelAdmin):
 
     contributors_list.short_description = "Přispěvatelé"
 
-    list_display = ("title", "category", "contributors_list", "publication_date", "is_published")
+    list_display = (
+        "title",
+        "category",
+        "contributors_list",
+        "publication_date",
+        "is_published",
+    )
     list_filter = ("is_published", "category", "publication_date", "species")
-    search_fields = ("title", "summary", "pdf_title", "published_in", "contributors__name")
+    search_fields = (
+        "title",
+        "summary",
+        "pdf_title",
+        "published_in",
+        "contributors__name",
+    )
     prepopulated_fields = {"slug": ("title",)}
     readonly_fields = ("slug",)
     autocomplete_fields = ("contributors", "category", "species")
@@ -50,26 +67,23 @@ class ArticleAdmin(admin.ModelAdmin):
     date_hierarchy = "publication_date"
 
     fieldsets = (
-        ("Základní informace", {
-            "fields": ("title", "slug", "category", "publication_date")
-        }),
-        ("Druhy", {
-            "fields": ("species",)
-        }),
-        ("Obsah", {
-            "fields": ("summary", "pdf_title", "pdf_file", "main_image")
-        }),
-        ("Přispěvatelé", {
-            "fields": ("contributors",)
-        }),
-        ("Publikace jinde", {
-            "fields": ("published_in", "published_in_date", "published_in_url")
-        }),
-        ("Stav a poznámky", {
-            "fields": ("note", "is_published")
-        }),
-        ("SEO", {
-            "fields": ("meta_title", "meta_description", "meta_keywords"),
-            "classes": ("collapse",),
-        }),
+        (
+            "Základní informace",
+            {"fields": ("title", "slug", "category", "publication_date")},
+        ),
+        ("Druhy", {"fields": ("species",)}),
+        ("Obsah", {"fields": ("summary", "pdf_title", "pdf_file", "main_image")}),
+        ("Přispěvatelé", {"fields": ("contributors",)}),
+        (
+            "Publikace jinde",
+            {"fields": ("published_in", "published_in_date", "published_in_url")},
+        ),
+        ("Stav a poznámky", {"fields": ("note", "is_published")}),
+        (
+            "SEO",
+            {
+                "fields": ("meta_title", "meta_description", "meta_keywords"),
+                "classes": ("collapse",),
+            },
+        ),
     )

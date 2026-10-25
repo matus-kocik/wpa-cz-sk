@@ -10,6 +10,7 @@ class BreedingReport(SEOModel, TimeStampedModel):
 
     Contains summary data and snapshot of member info at submission time.
     """
+
     STATUS_CHOICES = (
         ("draft", "Rozpracováno"),
         ("submitted", "Odesláno"),
@@ -127,6 +128,7 @@ class BreedingRecord(SEOModel, TimeStampedModel):
 
     Stores counts of animals and offspring.
     """
+
     report = models.ForeignKey(
         BreedingReport,
         on_delete=models.CASCADE,

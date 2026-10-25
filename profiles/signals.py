@@ -9,10 +9,3 @@ from profiles.models import PublicProfile
 def create_public_profile(sender, instance, created, **kwargs):
     if created:
         PublicProfile.objects.get_or_create(member=instance)
-
-
-@receiver(post_save, sender=MemberProfile)
-def update_public_profile(sender, instance, **kwargs):
-    if hasattr(instance, "public_profile"):
-        profile = instance.public_profile
-        profile.save()

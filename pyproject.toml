@@ -1,49 +1,45 @@
 [project]
 name = "wpa-cz-sk"
 version = "0.1.0"
-description = "Wpa CZ-SK"
+description = "Website and membership management for the Czech and Slovak section of the World Pheasant Association."
 readme = "README.md"
 requires-python = ">=3.13"
 authors = [
-    { name = "Matus Kocik", email = "matuskocik@gmail.com" }
+    { name = "Matúš Kočik", email = "matuskocik@gmail.com" }
 ]
 license = "MIT"
+keywords = ["django", "wpa", "pheasants", "conservation", "membership"]
 dependencies = [
     "django>=6.0,<7.0",
     "django-countries>=7.6.1",
     "django-ratelimit>=4.1.0",
     "dnspython>=2.7.0",
     "phonenumbers>=9.0.9",
-    "psycopg2-binary>=2.9.11",
+    "psycopg[binary]>=3.3.5,<4",
     "python-decouple>=3.8",
     "requests>=2.32.4",
     "pillow>=11.3.0",
-
+    "gunicorn>=23.0.0",
 ]
 
 [dependency-groups]
 dev = [
-    "black>=25.1.0",
     "django-extensions>=4.1",
     "djlint>=1.36.4",
-    "isort>=6.0.1",
     "ruff>=0.12.3",
-    "pytest>=9.0.3",
-    "pytest-django>=4.12.0",
-    "pytest-cov>=7.1.0",
+    "pytest>=8.4,<9",
+    "pytest-django>=4.12,<5",
+    "pytest-cov>=7.0,<8",
 ]
 
-[tool.black]
-line-length = 88
-
-[tool.isort]
-profile = "black"
+[tool.uv]
+package = false
 
 [tool.ruff]
+target-version = "py313"
 line-length = 88
-exclude = ["migrations", "static", "media"]
+extend-exclude = ["migrations", "static", "media"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
-fixable = ["I"]
-ignore = ["D", "ANN", "E501"]
+ignore = ["E501"]

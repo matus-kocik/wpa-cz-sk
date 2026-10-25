@@ -1,4 +1,3 @@
-
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -11,6 +10,7 @@ class Project(SEOModel, TimeStampedModel):
 
     Includes members, related species, and lifecycle status.
     """
+
     STATUS_CHOICES = (
         ("planned", "Plánovaný"),
         ("active", "Aktivní"),
@@ -119,6 +119,7 @@ class ProjectMembership(TimeStampedModel):
 
     Includes payment tracking and participation data.
     """
+
     member = models.ForeignKey(
         "members.MemberProfile",
         on_delete=models.CASCADE,

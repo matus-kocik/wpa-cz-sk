@@ -11,12 +11,17 @@ SECRET_KEY = config("SECRET_KEY")
 DEBUG = config("DEBUG", default=False, cast=bool)
 USE_MINIFIED_JS = not DEBUG
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", default="", cast=lambda v: [h.strip() for h in v.split(",") if h])
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", default="", cast=lambda v: [h.strip() for h in v.split(",") if h])
+ALLOWED_HOSTS = config(
+    "ALLOWED_HOSTS", default="", cast=lambda v: [h.strip() for h in v.split(",") if h]
+)
+CSRF_TRUSTED_ORIGINS = config(
+    "CSRF_TRUSTED_ORIGINS",
+    default="",
+    cast=lambda v: [h.strip() for h in v.split(",") if h],
+)
 if DEBUG:
     ALLOWED_HOSTS += ["127.0.0.1", "localhost"]
-ADMIN_URL = config("ADMIN_URL")
-
+ADMIN_URL = config("ADMIN_URL", default="admin/")
 # Application definition
 
 INSTALLED_APPS = [
@@ -87,17 +92,22 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
-if DEBUG:
+DB_ENGINE = config(
+    "DB_ENGINE",
+    default="django.db.backends.sqlite3" if DEBUG else "django.db.backends.postgresql",
+)
+
+if DB_ENGINE == "django.db.backends.sqlite3":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "NAME": BASE_DIR.parent / "db.sqlite3",
         }
     }
 else:
     DATABASES = {
         "default": {
-            "ENGINE": config("DB_ENGINE"),
+            "ENGINE": DB_ENGINE,
             "NAME": config("DB_NAME"),
             "USER": config("DB_USER"),
             "PASSWORD": config("DB_PASSWORD"),
@@ -106,23 +116,35 @@ else:
         }
     }
 
-EMAIL_BACKEND = config(
-    "EMAIL_BACKEND",
-    default="django.core.mail.backends.smtp.EmailBackend"
-)
+email_host_user = config("EMAIL_HOST_USER", default="")
 
-EMAIL_HOST = config("EMAIL_HOST", default="")
-EMAIL_PORT = config("EMAIL_PORT", cast=int, default=587)
-EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)
-EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)
-EMAIL_HOST_USER = config("EMAIL_HOST_USER", default="")
-EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", default="")
-DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", default=EMAIL_HOST_USER)
+MAILERS = {
+    "default": {
+        "BACKEND": config(
+            "EMAIL_BACKEND",
+            default="django.core.mail.backends.smtp.EmailBackend",
+        ),
+        "OPTIONS": {
+            "host": config("EMAIL_HOST", default=""),
+            "port": config("EMAIL_PORT", cast=int, default=587),
+            "username": email_host_user,
+            "password": config("EMAIL_HOST_PASSWORD", default=""),
+            "use_tls": config("EMAIL_USE_TLS", cast=bool, default=True),
+            "use_ssl": config("EMAIL_USE_SSL", cast=bool, default=False),
+        },
+    },
+}
+
+DEFAULT_FROM_EMAIL = config(
+    "DEFAULT_FROM_EMAIL",
+    default=email_host_user,
+)
 
 CONTACT_RECEIVER_EMAIL = config(
     "CONTACT_RECEIVER_EMAIL",
-    default=EMAIL_HOST_USER,
+    default=email_host_user,
 )
+
 APPLICATION_RECEIVER_EMAIL = config(
     "APPLICATION_RECEIVER_EMAIL",
     default=CONTACT_RECEIVER_EMAIL,
@@ -151,7 +173,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "cs"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Europe/Prague"
 
 USE_I18N = True
 
@@ -176,8 +198,14 @@ TURNSTILE_SITE_KEY = config("TURNSTILE_SITE_KEY", default="")
 TURNSTILE_SECRET_KEY = config("TURNSTILE_SECRET_KEY", default="")
 
 # Security headers
+
 SESSION_COOKIE_SECURE = not DEBUG
 CSRF_COOKIE_SECURE = not DEBUG
+SECURE_SSL_REDIRECT = not DEBUG
+
+SECURE_HSTS_SECONDS = 31536000 if not DEBUG else 0
+SECURE_HSTS_INCLUDE_SUBDOMAINS = not DEBUG
+SECURE_HSTS_PRELOAD = False
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 USE_X_FORWARDED_HOST = True
@@ -191,5 +219,6 @@ SESSION_COOKIE_SAMESITE = "Lax"
 CSRF_COOKIE_SAMESITE = "Lax"
 
 # Auth redirects
+
 LOGIN_REDIRECT_URL = "dashboard_home"
 LOGOUT_REDIRECT_URL = "home"

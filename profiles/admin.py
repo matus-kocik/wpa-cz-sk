@@ -13,7 +13,7 @@ class ProfileVideoInline(admin.TabularInline):
 class ProfileGalleryInline(admin.TabularInline):
     model = ProfileGallery
     extra = 1
-    fields = ("image", "caption", "created_at")
+    fields = ("image", "caption", "is_primary", "created_at")
     readonly_fields = ("created_at",)
 
 
@@ -60,49 +60,46 @@ class PublicProfileAdmin(admin.ModelAdmin):
 
     autocomplete_fields = ("member", "species")
 
-    filter_horizontal = ("species",)
-
     readonly_fields = ("slug", "created_at", "updated_at")
 
     fieldsets = (
-        ("Základní informace", {
-            "fields": ("member", "display_name", "slug", "avatar")
-        }),
-        ("Popis", {
-            "fields": ("bio", "additional_info")
-        }),
-        ("Kontakt", {
-            "fields": ("public_email", "phone", "website")
-        }),
-        ("Chov", {
-            "fields": (
-                "species",
-                "other_species",
-            )
-        }),
-        ("Sociální sítě", {
-            "fields": ("facebook_url", "instagram_url", "youtube_url")
-        }),
-        ("Viditelnost", {
-            "fields": (
-                "is_public",
-                "show_avatar",
-                "show_bio",
-                "show_additional_info",
-                "show_species",
-                "show_other_species",
-                "show_email",
-                "show_phone",
-                "show_location",
-                "show_website",
-                "show_social",
-                "show_gallery",
-                "show_videos",
-            )
-        }),
-        ("Systémové informace", {
-            "fields": ("created_at", "updated_at")
-        }),
+        (
+            "Základní informace",
+            {"fields": ("member", "display_name", "slug", "avatar")},
+        ),
+        ("Popis", {"fields": ("bio", "additional_info")}),
+        ("Kontakt", {"fields": ("public_email", "phone", "website")}),
+        (
+            "Chov",
+            {
+                "fields": (
+                    "species",
+                    "other_species",
+                )
+            },
+        ),
+        ("Sociální sítě", {"fields": ("facebook_url", "instagram_url", "youtube_url")}),
+        (
+            "Viditelnost",
+            {
+                "fields": (
+                    "is_public",
+                    "show_avatar",
+                    "show_bio",
+                    "show_additional_info",
+                    "show_species",
+                    "show_other_species",
+                    "show_email",
+                    "show_phone",
+                    "show_location",
+                    "show_website",
+                    "show_social",
+                    "show_gallery",
+                    "show_videos",
+                )
+            },
+        ),
+        ("Systémové informace", {"fields": ("created_at", "updated_at")}),
     )
 
     ordering = ("-updated_at",)

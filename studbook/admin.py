@@ -70,7 +70,14 @@ class BirdRecordAdmin(admin.ModelAdmin):
         "mother",
     )
 
-    list_select_related = ("member", "member__user", "species", "subspecies", "father", "mother")
+    list_select_related = (
+        "member",
+        "member__user",
+        "species",
+        "subspecies",
+        "father",
+        "mother",
+    )
 
     date_hierarchy = "hatch_date"
 
@@ -79,39 +86,44 @@ class BirdRecordAdmin(admin.ModelAdmin):
     readonly_fields = ("created_at", "updated_at")
 
     fieldsets = (
-        ("Základní informace", {
-            "fields": (
-                "member",
-                "species",
-                "subspecies",
-                "name",
-                "ring_number",
-                "sex",
-                "status",
-            )
-        }),
-        ("Původ a rodokmen", {
-            "fields": (
-                "father",
-                "mother",
-                "source",
-                "breeder_name",
-            )
-        }),
-        ("Životní údaje", {
-            "fields": (
-                "hatch_date",
-                "acquisition_date",
-                "death_date",
-                "current_location",
-            )
-        }),
-        ("Poznámky", {
-            "fields": ("notes",)
-        }),
-        ("Metadata", {
-            "fields": ("created_at", "updated_at")
-        }),
+        (
+            "Základní informace",
+            {
+                "fields": (
+                    "member",
+                    "species",
+                    "subspecies",
+                    "name",
+                    "ring_number",
+                    "sex",
+                    "status",
+                )
+            },
+        ),
+        (
+            "Původ a rodokmen",
+            {
+                "fields": (
+                    "father",
+                    "mother",
+                    "source",
+                    "breeder_name",
+                )
+            },
+        ),
+        (
+            "Životní údaje",
+            {
+                "fields": (
+                    "hatch_date",
+                    "acquisition_date",
+                    "death_date",
+                    "current_location",
+                )
+            },
+        ),
+        ("Poznámky", {"fields": ("notes",)}),
+        ("Metadata", {"fields": ("created_at", "updated_at")}),
     )
 
     inlines = [

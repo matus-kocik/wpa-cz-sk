@@ -52,7 +52,6 @@ class PublicProfileForm(forms.ModelForm):
             "instagram_url": "Instagram",
             "youtube_url": "YouTube",
             "additional_info": "Další informace",
-
             # visibility labels
             "is_public": "Profil je veřejný",
             "show_email": "Veřejně zobrazit e-mail",
@@ -76,7 +75,6 @@ class PublicProfileForm(forms.ModelForm):
             "facebook_url": "Odkaz na váš Facebook profil.",
             "instagram_url": "Odkaz na váš Instagram profil.",
             "youtube_url": "Odkaz na YouTube kanál nebo video.",
-
             # visibility explanation
             "is_public": "Pokud vypnete, profil nebude veřejně dostupný.",
             "show_email": "Nezaškrtnuté = viditelné pouze pro přihlášené členy.",
@@ -95,78 +93,48 @@ class PublicProfileForm(forms.ModelForm):
 
         widgets = {
             "display_name": forms.TextInput(
-                attrs={
-                    "class": INPUT_CLASS,
-                    "placeholder": "Zobrazované jméno"
-                }
+                attrs={"class": INPUT_CLASS, "placeholder": "Zobrazované jméno"}
             ),
             "bio": forms.Textarea(
                 attrs={
                     "class": TEXTAREA_CLASS,
                     "rows": 4,
-                    "placeholder": "Informace o chovateli..."
+                    "placeholder": "Informace o chovateli...",
                 }
             ),
-            "avatar": forms.ClearableFileInput(
-                attrs={
-                    "class": INPUT_CLASS
-                }
-            ),
-            "species": forms.SelectMultiple(
-                attrs={
-                    "class": INPUT_CLASS
-                }
-            ),
+            "avatar": forms.ClearableFileInput(attrs={"class": INPUT_CLASS}),
+            "species": forms.SelectMultiple(attrs={"class": INPUT_CLASS}),
             "other_species": forms.TextInput(
                 attrs={
                     "class": INPUT_CLASS,
-                    "placeholder": "Další druhy (např. papoušci, holubi...)"
+                    "placeholder": "Další druhy (např. papoušci, holubi...)",
                 }
             ),
             "public_email": forms.EmailInput(
-                attrs={
-                    "class": INPUT_CLASS,
-                    "placeholder": "Veřejný e-mail"
-                }
+                attrs={"class": INPUT_CLASS, "placeholder": "Veřejný e-mail"}
             ),
             "phone": forms.TextInput(
-                attrs={
-                    "class": INPUT_CLASS,
-                    "placeholder": "+420..."
-                }
+                attrs={"class": INPUT_CLASS, "placeholder": "+420..."}
             ),
             "website": forms.URLInput(
-                attrs={
-                    "class": INPUT_CLASS,
-                    "placeholder": "https://..."
-                }
+                attrs={"class": INPUT_CLASS, "placeholder": "https://..."}
             ),
             "facebook_url": forms.URLInput(
-                attrs={
-                    "class": INPUT_CLASS,
-                    "placeholder": "Facebook profil"
-                }
+                attrs={"class": INPUT_CLASS, "placeholder": "Facebook profil"}
             ),
             "instagram_url": forms.URLInput(
-                attrs={
-                    "class": INPUT_CLASS,
-                    "placeholder": "Instagram profil"
-                }
+                attrs={"class": INPUT_CLASS, "placeholder": "Instagram profil"}
             ),
             "youtube_url": forms.URLInput(
-                attrs={
-                    "class": INPUT_CLASS,
-                    "placeholder": "YouTube kanál nebo video"
-                }
+                attrs={"class": INPUT_CLASS, "placeholder": "YouTube kanál nebo video"}
             ),
             "additional_info": forms.Textarea(
                 attrs={
                     "class": TEXTAREA_CLASS,
                     "rows": 4,
-                    "placeholder": "Další informace o chovu..."
+                    "placeholder": "Další informace o chovu...",
                 }
             ),
-
             # CHECKBOXES
             "is_public": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
             "show_email": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
@@ -180,7 +148,9 @@ class PublicProfileForm(forms.ModelForm):
             "show_avatar": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
             "show_species": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
             "show_other_species": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
-            "show_additional_info": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
+            "show_additional_info": forms.CheckboxInput(
+                attrs={"class": CHECKBOX_CLASS}
+            ),
         }
 
 
@@ -188,16 +158,16 @@ class PublicProfileForm(forms.ModelForm):
 # Custom ModelForms for Gallery and Video with proper widgets
 # =========================
 
+
 class ProfileGalleryForm(forms.ModelForm):
     class Meta:
         model = ProfileGallery
         fields = ["image", "caption"]
         widgets = {
             "image": forms.FileInput(attrs={"class": INPUT_CLASS}),
-            "caption": forms.TextInput(attrs={
-                "class": INPUT_CLASS,
-                "placeholder": "Popis obrázku"
-            }),
+            "caption": forms.TextInput(
+                attrs={"class": INPUT_CLASS, "placeholder": "Popis obrázku"}
+            ),
         }
 
 
@@ -206,14 +176,12 @@ class ProfileVideoForm(forms.ModelForm):
         model = ProfileVideo
         fields = ["url", "title"]
         widgets = {
-            "url": forms.URLInput(attrs={
-                "class": INPUT_CLASS,
-                "placeholder": "https://youtube.com/..."
-            }),
-            "title": forms.TextInput(attrs={
-                "class": INPUT_CLASS,
-                "placeholder": "Název videa"
-            }),
+            "url": forms.URLInput(
+                attrs={"class": INPUT_CLASS, "placeholder": "https://youtube.com/..."}
+            ),
+            "title": forms.TextInput(
+                attrs={"class": INPUT_CLASS, "placeholder": "Název videa"}
+            ),
         }
 
 
@@ -228,7 +196,7 @@ GalleryFormSet = inlineformset_factory(
     extra=6,
     max_num=6,
     can_delete=True,
-    validate_max=True
+    validate_max=True,
 )
 
 VideoFormSet = inlineformset_factory(
@@ -238,5 +206,5 @@ VideoFormSet = inlineformset_factory(
     extra=3,
     max_num=3,
     can_delete=True,
-    validate_max=True
+    validate_max=True,
 )

@@ -20,8 +20,7 @@ class PublicProfileDetailView(DetailView):
 
         if self.request.user.is_authenticated:
             return qs.filter(
-                models.Q(is_public=True) |
-                models.Q(member__user=self.request.user)
+                models.Q(is_public=True) | models.Q(member__user=self.request.user)
             )
 
         return qs.filter(is_public=True)
@@ -31,8 +30,8 @@ class PublicProfileDetailView(DetailView):
 
         context["is_member"] = self.request.user.is_authenticated
         context["is_owner"] = (
-            self.request.user.is_authenticated and
-            self.request.user == self.object.member.user
+            self.request.user.is_authenticated
+            and self.request.user == self.object.member.user
         )
 
         return context
@@ -58,21 +57,17 @@ class PublicProfileUpdateView(LoginRequiredMixin, UpdateView):
                 self.request.POST,
                 self.request.FILES,
                 instance=self.object,
-                prefix="gallery"
+                prefix="gallery",
             )
             context["video_formset"] = VideoFormSet(
-                self.request.POST,
-                instance=self.object,
-                prefix="videos"
+                self.request.POST, instance=self.object, prefix="videos"
             )
         else:
             context["gallery_formset"] = GalleryFormSet(
-                instance=self.object,
-                prefix="gallery"
+                instance=self.object, prefix="gallery"
             )
             context["video_formset"] = VideoFormSet(
-                instance=self.object,
-                prefix="videos"
+                instance=self.object, prefix="videos"
             )
 
         return context
@@ -87,20 +82,6 @@ class PublicProfileUpdateView(LoginRequiredMixin, UpdateView):
         video_formset.instance = self.object
 
         if gallery_formset.is_valid() and video_formset.is_valid():
-            # enforce limits (defense in depth)
-            if gallery_formset.total_form_count() > 6:
-                gallery_formset._non_form_errors = gallery_formset.error_class([
-                    "Maximálně 6 obrázků."
-                ])
-                return self.form_invalid(form)
-
-            if video_formset.total_form_count() > 3:
-                video_formset._non_form_errors = video_formset.error_class([
-                    "Maximálně 3 videa."
-                ])
-                return self.form_invalid(form)
-
-            print("CLEANED AVATAR:", form.cleaned_data.get("avatar"))
             self.object = form.save()
 
             gallery_formset.instance = self.object
@@ -115,7 +96,8 @@ class PublicProfileUpdateView(LoginRequiredMixin, UpdateView):
 
 
 def members_view(request):
-    members = MemberProfile.objects.all()
+    members = MemberProfile.objects.filter(is_active=True)
+
     return render(
         request,
         "members.html",

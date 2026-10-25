@@ -13,19 +13,20 @@ class PublicProfile(TimeStampedModel, SlugModel):
 
     Contains contact info, breeding data, and visibility settings.
     """
+
     member = models.OneToOneField(
         "members.MemberProfile",
         on_delete=models.CASCADE,
         related_name="public_profile",
         verbose_name="Člen",
-        help_text="Vazba na členský profil"
+        help_text="Vazba na členský profil",
     )
     species = models.ManyToManyField(
         "taxonomy.Species",
         blank=True,
         related_name="public_profiles",
         verbose_name="Chované druhy",
-        help_text="Druhy, které člen chová"
+        help_text="Druhy, které člen chová",
     )
 
     other_species = models.CharField(
@@ -34,7 +35,6 @@ class PublicProfile(TimeStampedModel, SlugModel):
         verbose_name="Další druhy",
         help_text="Např. papoušci, holubi apod.",
     )
-
 
     display_name = models.CharField(
         max_length=150,
@@ -213,7 +213,6 @@ class PublicProfile(TimeStampedModel, SlugModel):
         if old_avatar and old_avatar != self.avatar:
             old_avatar.delete(save=False)
 
-
     def delete(self, *args, **kwargs):
         if self.avatar:
             self.avatar.delete(save=False)
@@ -259,7 +258,6 @@ class PublicProfile(TimeStampedModel, SlugModel):
             return f"{city}, {country}"
         return city or country or None
 
-
     def get_absolute_url(self):
         return reverse("public_profile_detail", kwargs={"slug": self.slug})
 
@@ -268,60 +266,41 @@ class PublicProfile(TimeStampedModel, SlugModel):
         return self.display_name or str(self.member)
 
 
-
 class ProfileVideo(models.Model):
     """
     YouTube videos related to a public profile.
     Allows multiple videos per user.
     """
+
     profile = models.ForeignKey(
         PublicProfile,
         on_delete=models.CASCADE,
         related_name="videos",
-        verbose_name="Profil"
+        verbose_name="Profil",
     )
     url = models.URLField(
         verbose_name="YouTube URL",
-        help_text="Odkaz na YouTube video nebo kanál"
+        help_text="Odkaz na YouTube video nebo kanál",
     )
     title = models.CharField(
         max_length=255,
         blank=True,
         verbose_name="Název",
-        help_text="Volitelný název videa"
+        help_text="Volitelný název videa",
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         self.full_clean()
-
-        # store old image before saving
-        old_image = None
-        if self.pk:
-            try:
-                old_image = ProfileGallery.objects.get(pk=self.pk).image
-            except ProfileGallery.DoesNotExist:
-                old_image = None
-
-        super().save(*args, **kwargs)
-
-        # delete old image if replaced
-        if old_image and old_image != self.image:
-            old_image.delete(save=False)
-
-    def delete(self, *args, **kwargs):
-        if self.image:
-            self.image.delete(save=False)
-        super().delete(*args, **kwargs)
+        return super().save(*args, **kwargs)
 
     def clean(self):
         super().clean()
-        # Limit to 3 videos per profile
+
         if self.profile_id and not self.pk:
             if self.profile.videos.count() >= 3:
                 raise ValidationError("Maximálně 3 videa.")
 
-        # Normalize YouTube URLs (basic cleanup)
         if self.url:
             self.url = self.url.strip()
 
@@ -341,32 +320,46 @@ class ProfileGallery(models.Model):
     Gallery items (photos) for a public profile.
     Allows multiple photos per user.
     """
+
     profile = models.ForeignKey(
         PublicProfile,
         on_delete=models.CASCADE,
         related_name="gallery",
-        verbose_name="Profil"
+        verbose_name="Profil",
     )
-    image = models.ImageField(
-        upload_to="profiles/gallery/",
-        verbose_name="Obrázek"
-    )
+    image = models.ImageField(upload_to="profiles/gallery/", verbose_name="Obrázek")
     caption = models.CharField(
         max_length=255,
         blank=True,
         verbose_name="Popis",
-        help_text="Volitelný popis fotografie"
+        help_text="Volitelný popis fotografie",
     )
     is_primary = models.BooleanField(
         default=False,
         verbose_name="Hlavní fotografie",
-        help_text="Označit jako hlavní profilovou fotografii"
+        help_text="Označit jako hlavní profilovou fotografii",
     )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
         self.full_clean()
-        return super().save(*args, **kwargs)
+
+        old_image = None
+        if self.pk:
+            try:
+                old_image = ProfileGallery.objects.get(pk=self.pk).image
+            except ProfileGallery.DoesNotExist:
+                old_image = None
+
+        super().save(*args, **kwargs)
+
+        if old_image and old_image != self.image:
+            old_image.delete(save=False)
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            self.image.delete(save=False)
+        super().delete(*args, **kwargs)
 
     def clean(self):
         super().clean()
@@ -381,7 +374,9 @@ class ProfileGallery(models.Model):
             if self.pk:
                 qs = qs.exclude(pk=self.pk)
             if qs.exists():
-                raise ValidationError("Každý profil může mít pouze jednu hlavní fotografii.")
+                raise ValidationError(
+                    "Každý profil může mít pouze jednu hlavní fotografii."
+                )
 
     class Meta:
         verbose_name = "Fotografie"
@@ -391,7 +386,7 @@ class ProfileGallery(models.Model):
             models.UniqueConstraint(
                 fields=["profile"],
                 condition=models.Q(is_primary=True),
-                name="unique_primary_image_per_profile"
+                name="unique_primary_image_per_profile",
             )
         ]
 

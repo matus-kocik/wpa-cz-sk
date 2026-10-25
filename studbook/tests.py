@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 
 from members.models import MemberProfile
 from studbook.models import BirdRecord
-from taxonomy.models import Family, Genus, Species
+from taxonomy.models import Family, Genus, Species, Subfamily
 from users.models import CustomUser
 
 
@@ -29,8 +29,20 @@ def member_profile(db):
 @pytest.fixture
 def species(db):
     family = Family.objects.create(latin_name="Testidae")
-    genus = Genus.objects.create(latin_name="Testus", family=family)
-    return Species.objects.create(latin_name="Testus birdus", genus=genus)
+    subfamily = Subfamily.objects.create(
+        latin_name="Testinae",
+        family=family,
+    )
+    genus = Genus.objects.create(
+        latin_name="Testus",
+        subfamily=subfamily,
+    )
+
+    return Species.objects.create(
+        latin_name="Testus birdus",
+        czech_name="Testovací druh",
+        genus=genus,
+    )
 
 
 @pytest.mark.django_db

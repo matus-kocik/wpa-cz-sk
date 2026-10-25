@@ -1,4 +1,3 @@
-
 from django.core.exceptions import ValidationError
 from django.db import models
 
@@ -11,6 +10,7 @@ class BirdRecord(TimeStampedModel):
 
     Stores identity, origin, ownership, and lineage data.
     """
+
     SEX_CHOICES = (
         ("male", "Samec"),
         ("female", "Samice"),
@@ -169,10 +169,14 @@ class BirdRecord(TimeStampedModel):
             raise ValidationError({"mother": "Jedinec nemůže být sám sobě matkou."})
 
         if self.father and self.father.sex == "female":
-            raise ValidationError({"father": "Vybraný otec má v evidenci pohlaví samice."})
+            raise ValidationError(
+                {"father": "Vybraný otec má v evidenci pohlaví samice."}
+            )
 
         if self.mother and self.mother.sex == "male":
-            raise ValidationError({"mother": "Vybraná matka má v evidenci pohlaví samec."})
+            raise ValidationError(
+                {"mother": "Vybraná matka má v evidenci pohlaví samec."}
+            )
 
 
 class BirdEvent(TimeStampedModel):
@@ -181,6 +185,7 @@ class BirdEvent(TimeStampedModel):
 
     Used to track lifecycle events such as birth, transfer, or death.
     """
+
     EVENT_TYPE_CHOICES = (
         ("note", "Poznámka"),
         ("birth", "Vylíhnutí / narození"),
@@ -244,6 +249,7 @@ class HealthRecord(TimeStampedModel):
 
     Stores diagnosis, treatment, and veterinary info.
     """
+
     bird = models.ForeignKey(
         BirdRecord,
         on_delete=models.CASCADE,
@@ -298,6 +304,7 @@ class CareRecord(TimeStampedModel):
 
     Includes feeding, treatments, and scheduled care.
     """
+
     CARE_TYPE_CHOICES = (
         ("feeding", "Krmení"),
         ("deworming", "Odčervení"),
@@ -369,6 +376,7 @@ class TransferRecord(TimeStampedModel):
 
     Tracks sales, gifts, exchanges, and relocations.
     """
+
     TRANSFER_TYPE_CHOICES = (
         ("sale", "Prodej"),
         ("gift", "Darování"),
@@ -434,4 +442,6 @@ class TransferRecord(TimeStampedModel):
 
     # Human-readable transfer record
     def __str__(self):
-        return f"{self.bird} – {self.get_transfer_type_display()} ({self.transfer_date})"
+        return (
+            f"{self.bird} – {self.get_transfer_type_display()} ({self.transfer_date})"
+        )

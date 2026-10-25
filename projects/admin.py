@@ -12,9 +12,22 @@ class ProjectMembershipInline(admin.TabularInline):
 
 @admin.register(Project)
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ("name", "status", "coordinator", "start_date", "end_date", "is_public")
+    list_display = (
+        "name",
+        "status",
+        "coordinator",
+        "start_date",
+        "end_date",
+        "is_public",
+    )
     list_filter = ("status", "is_public", "start_date")
-    search_fields = ("name", "description", "coordinator__user__email", "coordinator__user__first_name", "coordinator__user__last_name")
+    search_fields = (
+        "name",
+        "description",
+        "coordinator__user__email",
+        "coordinator__user__first_name",
+        "coordinator__user__last_name",
+    )
     autocomplete_fields = ("coordinator", "species")
     list_select_related = ("coordinator", "coordinator__user")
     filter_horizontal = ("species",)
@@ -24,24 +37,12 @@ class ProjectAdmin(admin.ModelAdmin):
     list_per_page = 25
 
     fieldsets = (
-        ("Základní informace", {
-            "fields": ("name", "slug", "status", "is_public")
-        }),
-        ("Popis", {
-            "fields": ("description",)
-        }),
-        ("Organizace", {
-            "fields": ("coordinator", "species")
-        }),
-        ("Termíny", {
-            "fields": ("start_date", "end_date")
-        }),
-        ("Poznámky", {
-            "fields": ("notes",)
-        }),
-        ("Metadata", {
-            "fields": ("created_at", "updated_at")
-        }),
+        ("Základní informace", {"fields": ("name", "slug", "status", "is_public")}),
+        ("Popis", {"fields": ("description",)}),
+        ("Organizace", {"fields": ("coordinator", "species")}),
+        ("Termíny", {"fields": ("start_date", "end_date")}),
+        ("Poznámky", {"fields": ("notes",)}),
+        ("Metadata", {"fields": ("created_at", "updated_at")}),
     )
 
     inlines = [ProjectMembershipInline]
@@ -63,13 +64,7 @@ class ProjectMembershipAdmin(admin.ModelAdmin):
     list_per_page = 25
 
     fieldsets = (
-        ("Základní informace", {
-            "fields": ("member", "project", "year")
-        }),
-        ("Platba", {
-            "fields": ("annual_fee", "is_paid", "paid_at")
-        }),
-        ("Poznámky", {
-            "fields": ("notes",)
-        }),
+        ("Základní informace", {"fields": ("member", "project", "year")}),
+        ("Platba", {"fields": ("annual_fee", "is_paid", "paid_at")}),
+        ("Poznámky", {"fields": ("notes",)}),
     )
