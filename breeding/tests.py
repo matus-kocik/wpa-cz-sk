@@ -34,6 +34,7 @@ def species(db):
     )
     genus = Genus.objects.create(
         latin_name="Testus",
+        family=family,
         subfamily=subfamily,
     )
 

@@ -8,6 +8,18 @@ class SpeciesLinkInline(admin.TabularInline):
     extra = 1
 
 
+class SubspeciesInline(admin.TabularInline):
+    model = Subspecies
+    extra = 0
+    fields = (
+        "latin_name",
+        "czech_name",
+        "slovak_name",
+        "english_name",
+        "german_name",
+    )
+
+
 @admin.register(Family)
 class FamilyAdmin(admin.ModelAdmin):
     list_display = (
@@ -64,9 +76,10 @@ class GenusAdmin(admin.ModelAdmin):
         "slovak_name",
         "english_name",
         "german_name",
+        "family",
         "subfamily",
     )
-    list_filter = ("subfamily",)
+    list_filter = ("family", "subfamily")
     search_fields = (
         "latin_name",
         "czech_name",
@@ -75,9 +88,9 @@ class GenusAdmin(admin.ModelAdmin):
         "german_name",
     )
     ordering = ("latin_name",)
-    list_select_related = ("subfamily", "subfamily__family")
+    list_select_related = ("family", "subfamily")
     list_per_page = 25
-    autocomplete_fields = ("subfamily",)
+    autocomplete_fields = ("family", "subfamily")
     readonly_fields = ("slug",)
 
 
@@ -94,7 +107,12 @@ class SpeciesAdmin(admin.ModelAdmin):
         "status_in_nature",
         "is_active",
     )
-    list_filter = ("genus", "status_in_nature", "is_active")
+    list_filter = (
+        "genus",
+        "status_in_nature",
+        "is_active",
+        "authority_year",
+    )
     search_fields = (
         "latin_name",
         "czech_name",
@@ -102,14 +120,17 @@ class SpeciesAdmin(admin.ModelAdmin):
         "english_name",
         "german_name",
         "authority",
-        "authority_year",
     )
     ordering = ("latin_name",)
-    list_select_related = ("genus", "genus__subfamily", "genus__subfamily__family")
+    list_select_related = (
+        "genus",
+        "genus__family",
+        "genus__subfamily",
+    )
     list_per_page = 25
     autocomplete_fields = ("genus",)
     readonly_fields = ("slug",)
-    inlines = [SpeciesLinkInline]
+    inlines = [SubspeciesInline, SpeciesLinkInline]
 
     fieldsets = (
         (

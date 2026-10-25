@@ -21,6 +21,7 @@ class Family(SlugModel):
         max_length=100,
         verbose_name="Latinský název",
         help_text="Latinský název čeledi",
+        unique=True,
         db_index=True,
     )
     czech_name = models.CharField(
@@ -74,6 +75,7 @@ class Subfamily(SlugModel):
         max_length=100,
         verbose_name="Latinský název",
         help_text="Latinský název podčeledi",
+        unique=True,
         db_index=True,
     )
     czech_name = models.CharField(
@@ -136,6 +138,7 @@ class Genus(SlugModel):
         max_length=100,
         verbose_name="Latinský název",
         help_text="Latinský název rodu",
+        unique=True,
         db_index=True,
     )
     czech_name = models.CharField(
@@ -167,9 +170,17 @@ class Genus(SlugModel):
         db_index=True,
     )
 
+    family = models.ForeignKey(
+        Family,
+        on_delete=models.PROTECT,
+        related_name="genera",
+        verbose_name="Čeľaď",
+        help_text="Čeľaď, do ktorej rod patrí",
+    )
+
     subfamily = models.ForeignKey(
         Subfamily,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name="genera",
         verbose_name="Podčeľaď",
         help_text="Podčeľaď, do které rod patří",
@@ -186,6 +197,15 @@ class Genus(SlugModel):
             models.Index(fields=["latin_name"]),
             models.Index(fields=["subfamily"]),
         ]
+
+    def clean(self):
+        super().clean()
+
+        if self.family_id and self.subfamily_id:
+            if self.subfamily.family_id != self.family_id:
+                raise ValidationError(
+                    {"subfamily": "Podčeľaď musí patriť do vybranej čeľade."}
+                )
 
     def __str__(self):
         return self.latin_name
@@ -210,6 +230,7 @@ class Species(TimeStampedModel, SlugModel):
         verbose_name="Latinský název",
         help_text="Latinský název druhu",
         db_index=True,
+        unique=True,
     )
     czech_name = models.CharField(
         max_length=150,
@@ -483,7 +504,7 @@ class Species(TimeStampedModel, SlugModel):
             value = getattr(self, field, None)
             if isinstance(value, str):
                 value = value.strip()
-                setattr(self, field, value or None)
+                setattr(self, field, value)
 
         # length validation
         if self.length_male_min is not None and self.length_male_max is not None:
@@ -613,6 +634,7 @@ class Subspecies(models.Model):
         max_length=150,
         verbose_name="Latinský název",
         help_text="Latinský název poddruhu",
+        unique=True,
         db_index=True,
     )
     czech_name = models.CharField(
