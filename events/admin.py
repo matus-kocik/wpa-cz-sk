@@ -31,10 +31,6 @@ class EventAdmin(admin.ModelAdmin):
         "organizer",
     )
 
-    autocomplete_fields = ("species",)
-
-    list_select_related = ("section",)
-
     filter_horizontal = ("species",)
 
     prepopulated_fields = {"slug": ("title",)}

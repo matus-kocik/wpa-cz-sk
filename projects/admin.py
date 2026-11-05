@@ -28,7 +28,7 @@ class ProjectAdmin(admin.ModelAdmin):
         "coordinator__user__first_name",
         "coordinator__user__last_name",
     )
-    autocomplete_fields = ("coordinator", "species")
+    autocomplete_fields = ("coordinator",)
     list_select_related = ("coordinator", "coordinator__user")
     filter_horizontal = ("species",)
     prepopulated_fields = {"slug": ("name",)}

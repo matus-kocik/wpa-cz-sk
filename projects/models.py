@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -98,6 +99,20 @@ class Project(SEOModel, TimeStampedModel):
         help_text="Interní poznámky k projektu.",
     )
 
+    def clean(self):
+        super().clean()
+
+        if self.start_date and self.end_date:
+            if self.end_date < self.start_date:
+                raise ValidationError(
+                    {
+                        "end_date": (
+                            "Datum ukončení projektu nesmí být "
+                            "dříve než datum zahájení."
+                        )
+                    }
+                )
+
     class Meta:
         verbose_name = "Projekt"
         verbose_name_plural = "Projekty"
@@ -169,6 +184,23 @@ class ProjectMembership(TimeStampedModel):
         verbose_name="Poznámky",
         help_text="Interní poznámky k účasti člena v projektu.",
     )
+
+    def clean(self):
+        super().clean()
+
+        errors = {}
+
+        if self.annual_fee is not None and self.annual_fee < 0:
+            errors["annual_fee"] = "Roční poplatek nesmí být záporný."
+
+        if self.is_paid and self.paid_at is None:
+            errors["paid_at"] = "U zaplaceného poplatku musí být uvedeno datum platby."
+
+        if not self.is_paid and self.paid_at is not None:
+            errors["paid_at"] = "Datum platby lze uvést pouze u zaplaceného poplatku."
+
+        if errors:
+            raise ValidationError(errors)
 
     class Meta:
         verbose_name = "Účast v projektu"

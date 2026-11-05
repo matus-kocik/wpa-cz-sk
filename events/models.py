@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from common.models import SEOModel, TimeStampedModel
@@ -122,6 +123,20 @@ class Event(SEOModel, TimeStampedModel):
         help_text="Zvýrazněná událost, například na homepage.",
         db_index=True,
     )
+
+    def clean(self):
+        super().clean()
+
+        if self.start_date and self.end_date:
+            if self.end_date < self.start_date:
+                raise ValidationError(
+                    {
+                        "end_date": (
+                            "Datum ukončení události nesmí být "
+                            "dříve než datum začátku."
+                        )
+                    }
+                )
 
     class Meta:
         verbose_name = "Událost"
