@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Family, Genus, Species, SpeciesLink, Subfamily, Subspecies
+from .models import Family, Genus, Species, SpeciesLink, Subfamily, Subspecies, Tribe
 
 
 class SpeciesLinkInline(admin.TabularInline):
@@ -68,6 +68,13 @@ class SubfamilyAdmin(admin.ModelAdmin):
     readonly_fields = ("slug",)
 
 
+@admin.register(Tribe)
+class TribeAdmin(admin.ModelAdmin):
+    search_fields = ("latin_name", "czech_name")
+    list_display = ("latin_name", "czech_name", "subfamily")
+    autocomplete_fields = ("subfamily",)
+
+
 @admin.register(Genus)
 class GenusAdmin(admin.ModelAdmin):
     list_display = (
@@ -79,7 +86,7 @@ class GenusAdmin(admin.ModelAdmin):
         "family",
         "subfamily",
     )
-    list_filter = ("family", "subfamily")
+    list_filter = ("family", "subfamily", "tribe")
     search_fields = (
         "latin_name",
         "czech_name",
@@ -90,7 +97,7 @@ class GenusAdmin(admin.ModelAdmin):
     ordering = ("latin_name",)
     list_select_related = ("family", "subfamily")
     list_per_page = 25
-    autocomplete_fields = ("family", "subfamily")
+    autocomplete_fields = ("family", "subfamily", "tribe")
     readonly_fields = ("slug",)
 
 
@@ -103,6 +110,8 @@ class SpeciesAdmin(admin.ModelAdmin):
         "english_name",
         "german_name",
         "authority_year",
+                    "profile_name",
+                    "profile_author",
         "genus",
         "status_in_nature",
         "is_active",
@@ -150,7 +159,7 @@ class SpeciesAdmin(admin.ModelAdmin):
                 )
             },
         ),
-        ("Poddruhy", {"fields": ("subspecies_note",)}),
+        ("Poddruhy", {"fields": ("subspecies_note", "subspecies_details")}),
         ("Výskyt", {"fields": ("distribution", "habitat")}),
         ("Stav", {"fields": ("status_in_nature", "status_in_captivity")}),
         (
@@ -158,6 +167,8 @@ class SpeciesAdmin(admin.ModelAdmin):
             {
                 "fields": (
                     "maturity",
+                    "length_details",
+                    "weight_details",
                     "length_male_min",
                     "length_male_max",
                     "length_female_min",

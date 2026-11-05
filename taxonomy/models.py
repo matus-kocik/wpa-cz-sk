@@ -53,6 +53,9 @@ class Family(SlugModel):
         db_index=True,
     )
 
+    authority = models.CharField("Autor", max_length=150, blank=True)
+    authority_year = models.PositiveIntegerField("Rok popisu", null=True, blank=True)
+
     class Meta:
         verbose_name = "Čeľaď"
         verbose_name_plural = "Čeľade"
@@ -116,6 +119,9 @@ class Subfamily(SlugModel):
         db_index=True,
     )
 
+    authority = models.CharField("Autor", max_length=150, blank=True)
+    authority_year = models.PositiveIntegerField("Rok popisu", null=True, blank=True)
+
     class Meta:
         verbose_name = "Podčeľaď"
         verbose_name_plural = "Podčeľade"
@@ -124,6 +130,20 @@ class Subfamily(SlugModel):
             models.Index(fields=["latin_name"]),
             models.Index(fields=["family"]),
         ]
+
+    def __str__(self):
+        return self.latin_name
+
+
+class Tribe(models.Model):
+    latin_name = models.CharField("Latinský název", max_length=100, unique=True)
+    czech_name = models.CharField("Český název", max_length=100, blank=True)
+    subfamily = models.ForeignKey(Subfamily, on_delete=models.PROTECT, related_name="tribes")
+
+    class Meta:
+        verbose_name = "Tribus"
+        verbose_name_plural = "Tribusy"
+        ordering = ["latin_name"]
 
     def __str__(self):
         return self.latin_name
@@ -189,6 +209,13 @@ class Genus(SlugModel):
         blank=True,
     )
 
+    tribe = models.ForeignKey(
+        Tribe, on_delete=models.SET_NULL, related_name="genera", null=True, blank=True
+    )
+
+    authority = models.CharField("Autor", max_length=150, blank=True)
+    authority_year = models.PositiveIntegerField("Rok popisu", null=True, blank=True)
+
     class Meta:
         verbose_name = "Rod"
         verbose_name_plural = "Rody"
@@ -200,6 +227,9 @@ class Genus(SlugModel):
 
     def clean(self):
         super().clean()
+
+        if self.tribe_id and self.tribe.subfamily_id != self.subfamily_id:
+            raise ValidationError({"tribe": "Tribus musí patriť do vybranej podčeľade."})
 
         if self.family_id and self.subfamily_id:
             if self.subfamily.family_id != self.family_id:
@@ -293,6 +323,12 @@ class Species(TimeStampedModel, SlugModel):
         verbose_name="Typ druhu",
         help_text="Zda je druh monotypický nebo polytypický",
     )
+    profile_name = models.CharField("Český název v profilu", max_length=150, blank=True)
+    profile_author = models.CharField("Autor v profilu", max_length=150, blank=True)
+    subspecies_details = models.TextField("Podrobnosti o poddruzích", blank=True)
+    length_details = models.TextField("Podrobnosti o délce", blank=True)
+    weight_details = models.TextField("Podrobnosti o hmotnosti", blank=True)
+
     notes = models.TextField(
         blank=True,
         verbose_name="Poznámky",

@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% load static %}
 
 {% block content %}
 
@@ -8,30 +7,28 @@
 <section class="py-16 bg-gray-50">
   <div class="max-w-6xl mx-auto px-4 space-y-12">
 
-    <!-- IMAGE -->
+    {% if object.main_image %}
     <div class="flex justify-center">
-      {% if object.main_image %}
-        <img src="{{ object.main_image.url }}" class="w-[32rem] h-[32rem] object-cover rounded-xl shadow-sm bg-green-50 p-2" alt="{{ object.czech_name|default:object.latin_name }}">
-      {% else %}
-        <img src="{% static 'images/card_a.webp' %}" class="w-[32rem] h-[32rem] object-cover rounded-xl shadow-sm bg-green-50 p-2" alt="demo">
-      {% endif %}
+      <img src="{{ object.main_image.url }}" class="w-[32rem] h-[32rem] object-cover rounded-xl shadow-sm bg-green-50 p-2" alt="{{ object.czech_name|default:object.latin_name }}">
     </div>
+    {% endif %}
 
     <!-- TAXONOMY -->
     <div class="grid md:grid-cols-2 gap-6">
       <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-        <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Taxonomie</h2>
+        <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Taxonomie</h2>
         <ul class="space-y-1 text-gray-700">
-          <li><strong>Čeleď:</strong> {{ object.genus.subfamily.family.czech_name|default:object.genus.subfamily.family.latin_name|default:"—" }}</li>
-          <li><strong>Podčeleď:</strong> {{ object.genus.subfamily.czech_name|default:object.genus.subfamily.latin_name|default:"—" }}</li>
-          <li><strong>Rod:</strong> {{ object.genus.latin_name|default:"—" }}</li>
+          <li><strong>Čeleď:</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus.family only %}</li>
+          {% if object.genus.subfamily %}<li><strong>Podčeleď:</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus.subfamily only %}</li>{% endif %}
+          {% if object.genus.tribe %}<li><strong>Tribus:</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus.tribe only %}</li>{% endif %}
+          <li><strong>Rod:</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus only %}</li>
           <li><strong>Druh:</strong> {{ object.latin_name|default:"—" }}</li>
-          <li><strong>Poddruhy:</strong> {% if object.subspecies_note %}{{ object.get_subspecies_note_display|default:"—" }}{% else %}—{% endif %}</li>
+          <li><strong>Poddruhy:</strong> {% if object.subspecies_note %}{{ object.get_subspecies_note_display|default:"—" }}{% else %}—{% endif %}{% if object.subspecies_details %}<div class="whitespace-pre-line">{{ object.subspecies_details }}</div>{% endif %}</li>
         </ul>
       </div>
 
       <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-        <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Status</h2>
+        <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Status</h2>
         <ul class="space-y-1 text-gray-700">
           {% if object.status_in_nature %}
           <li><strong>Příroda:</strong> {{ object.get_status_in_nature_display }} ({{ object.status_in_nature }})</li>
@@ -47,7 +44,7 @@
     </div>
     {% if object.links.exists %}
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Odkazy</h2>
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Odkazy</h2>
       <ul class="space-y-2">
         {% for link in object.links.all %}
           <li class="flex items-center gap-2">
@@ -73,7 +70,7 @@
     <!-- DISTRIBUTION -->
     {% if object.distribution %}
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Výskyt</h2>
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Výskyt</h2>
       <p class="text-gray-700 leading-relaxed">{{ object.distribution }}</p>
     </div>
     {% endif %}
@@ -81,21 +78,25 @@
     <!-- HABITAT -->
     {% if object.habitat %}
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Biotop</h2>
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Biotop</h2>
       <p class="text-gray-700 leading-relaxed">{{ object.habitat }}</p>
     </div>
     {% endif %}
 
     <!-- BIOLOGY -->
-    {% if object.maturity or object.male_length_display or object.female_length_display or object.male_weight_display or object.female_weight_display %}
+    {% if object.maturity or object.male_length_display or object.female_length_display or object.male_weight_display or object.female_weight_display or object.length_details or object.weight_details %}
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Biologie</h2>
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Biologie</h2>
       <ul class="grid md:grid-cols-2 gap-2 text-gray-700">
         <li><strong>Dospělost:</strong> {{ object.maturity }}</li>
+        {% if object.length_details %}<li><strong>Délka:</strong> {{ object.length_details }}</li>{% else %}
         {% if object.male_length_display %}<li><strong>Délka samec:</strong> {{ object.male_length_display }}</li>{% endif %}
         {% if object.female_length_display %}<li><strong>Délka samice:</strong> {{ object.female_length_display }}</li>{% endif %}
+        {% endif %}
+        {% if object.weight_details %}<li><strong>Hmotnost:</strong> {{ object.weight_details }}</li>{% else %}
         {% if object.male_weight_display %}<li><strong>Hmotnost samec:</strong> {{ object.male_weight_display }}</li>{% endif %}
         {% if object.female_weight_display %}<li><strong>Hmotnost samice:</strong> {{ object.female_weight_display }}</li>{% endif %}
+        {% endif %}
       </ul>
     </div>
     {% endif %}
@@ -103,7 +104,7 @@
     <!-- BREEDING -->
     {% if object.clutch_display or object.clutch_note or object.incubation_display or object.incubation_note or object.ring_size_display or object.breeding_difficulty %}
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Chov</h2>
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Chov</h2>
       <ul class="grid md:grid-cols-2 gap-2 text-gray-700">
         {% if object.clutch_display %}
           <li>
@@ -128,7 +129,7 @@
     <!-- SUBSPECIES -->
     {% if object.subspecies.exists %}
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Poddruhy</h2>
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Poddruhy</h2>
       <ul class="list-disc pl-5 text-gray-700">
         {% for sub in object.subspecies.all %}
           <li>{{ sub.latin_name }}</li>
@@ -139,16 +140,23 @@
 
     <!-- NAMES -->
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-gray-900">Názvy</h2>
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Názvy</h2>
       <ul class="space-y-1 text-gray-700">
-        <li><strong>Autor:</strong> {{ object.authority }}{% if object.authority_year %} ({{ object.authority_year }}){% endif %}</li>
+        <li><strong>Autor:</strong> {{ object.authority }}{% if object.authority_year %} ({{ object.authority_year }}){% endif %}{% if object.profile_author %}<br>{{ object.profile_author }}{% endif %}</li>
         <li><strong>Latinský:</strong> {{ object.latin_name }}</li>
-        <li><strong>Český:</strong> {{ object.czech_name }}</li>
+        <li><strong>Český:</strong> {{ object.czech_name }}{% if object.profile_name %}<br>{{ object.profile_name }}{% endif %}</li>
         <li><strong>Slovenský:</strong> {{ object.slovak_name }}</li>
         <li><strong>Anglický:</strong> {{ object.english_name }}</li>
         <li><strong>Německý:</strong> {{ object.german_name }}</li>
       </ul>
     </div>
+
+    {% if object.notes %}
+    <details class="p-6 bg-green-50 rounded-xl shadow-sm">
+      <summary class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Poznámky a údaje ze zdroje</summary>
+      <div class="whitespace-pre-wrap break-words text-gray-700 leading-relaxed">{{ object.notes }}</div>
+    </details>
+    {% endif %}
 
   </div>
 </section>
