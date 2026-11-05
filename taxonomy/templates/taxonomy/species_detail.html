@@ -14,7 +14,8 @@
     {% endif %}
 
     <!-- TAXONOMY -->
-    <div class="grid md:grid-cols-2 gap-6">
+    {% firstof object.status_in_nature object.status_in_captivity object.population as status_available %}
+    <div class="grid gap-6{% if status_available %} md:grid-cols-2{% endif %}">
       <div class="p-6 bg-green-50 rounded-xl shadow-sm">
         <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Taxonomie</h2>
         <ul class="space-y-1 text-gray-700">
@@ -27,20 +28,22 @@
         </ul>
       </div>
 
-      <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-        <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Status</h2>
-        <ul class="space-y-1 text-gray-700">
-          {% if object.status_in_nature %}
-          <li><strong>Příroda:</strong> {{ object.get_status_in_nature_display }} ({{ object.status_in_nature }})</li>
-          {% endif %}
-          {% if object.status_in_captivity %}
-          <li><strong>Zajetí:</strong> {{ object.status_in_captivity }}</li>
-          {% endif %}
-          {% if object.population %}
-          <li><strong>Populace:</strong> {{ object.population }}</li>
-          {% endif %}
-        </ul>
-      </div>
+      {% if status_available %}
+        <div class="p-6 bg-green-50 rounded-xl shadow-sm">
+          <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Status</h2>
+          <ul class="space-y-1 text-gray-700">
+            {% if object.status_in_nature %}
+            <li><strong>Příroda:</strong> {{ object.get_status_in_nature_display }} ({{ object.status_in_nature }})</li>
+            {% endif %}
+            {% if object.status_in_captivity %}
+            <li><strong>Zajetí:</strong> {{ object.status_in_captivity }}</li>
+            {% endif %}
+            {% if object.population %}
+            <li><strong>Populace:</strong> {{ object.population }}</li>
+            {% endif %}
+          </ul>
+        </div>
+      {% endif %}
     </div>
     {% if object.links.exists %}
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">

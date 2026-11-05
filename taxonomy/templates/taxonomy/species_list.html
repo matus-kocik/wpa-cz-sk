@@ -3,105 +3,53 @@
 
 {% block content %}
 
+<aside class="bg-red-100 px-4 py-3 text-center text-red-900" aria-label="Oznámení">
+  <strong>Na této stránce pracujeme.</strong> Přehled druhů průběžně doplňujeme a upravujeme.
+</aside>
+
 {% include "partials/page_header.html" with title="Seznam druhů" subtitle="Přehled druhů hrabavých ptáků" image="/static/images/trag-tem-1920-640.webp" %}
 <section class="py-16 bg-white">
   <div class="max-w-6xl mx-auto px-4">
-
-    <div class="space-y-10">
-
-      <!-- TAXONOMY INTRO -->
-      <div class="bg-green-50 rounded-xl shadow-sm p-6">
-        <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-700">
-          Taxonomie řádu hrabaví (Galliformes)
-        </h2>
-
-        <p class="mb-2 text-gray-700">Živočichové (Animalia) → Strunatci (Chordata) → Ptáci (Aves) → Letci (Neognathae) → Hrabaví (Galliformes), Temminck, 1820</p>
-
-        <ul class="space-y-3 text-gray-700">
-
-{% for family in families %}
-  <li>
-    <strong>Čeľaď:</strong> {% include "taxonomy/taxon_name.html" with taxon=family only %}
-
-    <ul class="pl-5 mt-2 space-y-2">
-      {% for subfamily in family.subfamilies.all %}
-        <li>
-          <strong>Podčeľaď:</strong> {% include "taxonomy/taxon_name.html" with taxon=subfamily only %}
-
-          <ul class="pl-5 mt-1 space-y-2">
-            {% for genus in subfamily.genera.all %}
-              <li>
-                <strong>Rod:</strong> {% include "taxonomy/taxon_name.html" with taxon=genus only %}{% if genus.tribe %} · {% include "taxonomy/taxon_name.html" with taxon=genus.tribe only %}{% endif %}
-                <span class="text-sm text-gray-500">({{ genus.species.all|length }} druhů)</span>
-
-                <ul class="pl-5 mt-1 space-y-1">
-                  {% for species in genus.species.all|dictsort:"latin_name" %}
-                    <li class="{% if species.is_active %}text-gray-900{% else %}text-gray-400{% endif %}">
-                      {% if species.slug %}
-                        <a href="{% url 'species_detail' species.slug %}" class="text-green-700 hover:underline">
-                          <span class="font-medium">
-                            Druh: {{ species.czech_name|default:species.latin_name }}
-                          </span>
-                        </a>
-                      {% else %}
-                        <span class="font-medium">
-                          Druh: {{ species.czech_name|default:species.latin_name }}
-                        </span>
-                      {% endif %}
-                      <span class="text-gray-500 italic text-sm">({{ species.latin_name }})</span>
-                    </li>
-                  {% empty %}
-                    <li class="text-gray-400">Žádné druhy</li>
-                  {% endfor %}
-                </ul>
-              </li>
-            {% empty %}
-              <li class="text-gray-400">Žádné rody</li>
-            {% endfor %}
-          </ul>
-        </li>
-      {% endfor %}
-
-      {% for genus in family.genera.all %}
-        {% if not genus.subfamily_id %}
+    <div class="bg-green-50 rounded-xl shadow-sm p-6">
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-700">
+        Taxonomie řádu Galliformes (hrabaví)
+      </h2>
+      <p class="mb-4 text-gray-700"><i>Animalia</i> (Živočichové) → <i>Chordata</i> (Strunatci) → <i>Aves</i> (Ptáci) → <i>Neognathae</i> (Letci) → <i>Galliformes</i> (Hrabaví), Temminck, 1820</p>
+      <ul class="space-y-3 text-gray-700">
+        {% for family in families %}
           <li>
-            <strong>Rod:</strong> {% include "taxonomy/taxon_name.html" with taxon=genus only %}{% if genus.tribe %} · {% include "taxonomy/taxon_name.html" with taxon=genus.tribe only %}{% endif %}
-            <span class="text-sm text-gray-500">
-              ({{ genus.species.all|length }} druhů)
-            </span>
-
-            <ul class="pl-5 mt-1 space-y-1">
-              {% for species in genus.species.all %}
-                <li class="{% if species.is_active %}text-gray-900{% else %}text-gray-400{% endif %}">
-                  {% if species.slug and species.is_active %}
-                    <a href="{% url 'species_detail' species.slug %}" class="text-green-700 hover:underline">
-                      Druh: {{ species.czech_name|default:species.latin_name }}
-                    </a>
-                  {% else %}
-                    Druh: {{ species.czech_name|default:species.latin_name }}
+            <details class="rounded-lg border border-green-300 bg-white p-4">
+              <summary class="cursor-pointer font-semibold text-green-800">
+                Čeľaď: {% include "taxonomy/taxon_name.html" with taxon=family only %}
+              </summary>
+              <ul class="mt-4 space-y-3">
+                {% for subfamily in family.subfamilies.all %}
+                  <li>
+                    <h3 class="font-semibold text-green-900 mb-2">
+                      Podčeľaď: {% include "taxonomy/taxon_name.html" with taxon=subfamily only %}
+                    </h3>
+                    <ul class="pl-3 space-y-2">
+                      {% for genus in subfamily.genera.all %}
+                        {% include "taxonomy/genus_panel.html" with genus=genus only %}
+                      {% empty %}
+                        <li class="text-gray-600">Rody této podčeledi zatím v katalogu nemáme.</li>
+                      {% endfor %}
+                    </ul>
+                  </li>
+                {% endfor %}
+                {% for genus in family.genera.all %}
+                  {% if not genus.subfamily_id %}
+                    {% include "taxonomy/genus_panel.html" with genus=genus only %}
                   {% endif %}
-                  <span class="text-gray-500 italic text-sm">
-                    ({{ species.latin_name }})
-                  </span>
-                </li>
-              {% empty %}
-                <li class="text-gray-400">Žádné druhy</li>
-              {% endfor %}
-            </ul>
+                {% endfor %}
+              </ul>
+            </details>
           </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </li>
-{% empty %}
-  <li class="text-gray-400">Žádné čeľade</li>
-{% endfor %}
-
-</ul>
-      </div>
-
+        {% empty %}
+          <li class="text-gray-600">Čeledi zatím v katalogu nemáme.</li>
+        {% endfor %}
+      </ul>
     </div>
-
   </div>
 </section>
 {% endblock %}

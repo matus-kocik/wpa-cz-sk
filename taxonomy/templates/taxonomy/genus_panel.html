@@ -1,0 +1,33 @@
+<li>
+  <details class="rounded-lg border border-green-200 bg-green-50 px-4 py-3">
+    <summary class="cursor-pointer font-medium text-green-800 hover:text-green-900">
+      Rod: {% include "taxonomy/taxon_name.html" with taxon=genus only %}
+      {% with count=genus.species.all|length %}
+        {% if count %}
+          <span class="text-sm text-gray-600">({{ count }} v katalogu)</span>
+        {% else %}
+          <span class="text-sm text-gray-600">(údaje doplňujeme)</span>
+        {% endif %}
+      {% endwith %}
+    </summary>
+    {% if genus.tribe %}
+      <p class="mt-2 text-sm text-gray-600">Tribus: {% include "taxonomy/taxon_name.html" with taxon=genus.tribe only %}</p>
+    {% endif %}
+    <ul class="mt-3 space-y-2 border-t border-green-200 pt-3">
+      {% for species in genus.species.all %}
+        <li>
+          {% if species.slug and species.is_active %}
+            <a href="{% url 'species_detail' species.slug %}" class="font-medium text-green-700 hover:underline">
+              <i>{{ species.latin_name }}</i>
+            </a>
+          {% else %}
+            <i class="text-gray-500">{{ species.latin_name }}</i>
+          {% endif %}
+          {% if species.czech_name %}<span class="text-sm text-gray-600">({{ species.czech_name }})</span>{% endif %}
+        </li>
+      {% empty %}
+        <li class="text-gray-600">Druhy tohoto rodu zatím v katalogu nemáme.</li>
+      {% endfor %}
+    </ul>
+  </details>
+</li>
