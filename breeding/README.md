@@ -19,14 +19,13 @@ Annual report for a member.
 
 - member – reference to member profile
 - year – reporting year
-- status – draft / submitted / approved / rejected
+- status – draft / submitted / approved
 - submitted_at – submission timestamp
 - approved_at – approval timestamp
 
 **Snapshot fields:**
 
 - full_name – member name at submission time
-- organization – organization name
 - address, city, country – location data
 
 **Notes:**
@@ -49,7 +48,9 @@ Detailed record for one species within a report.
 - number_of_males – adult males
 - number_of_females – adult females
 - pairs_with_chicks – pairs that raised chicks
-- offspring_count – total offspring
+- number_of_male_offspring – male offspring
+- number_of_female_offspring – female offspring
+- number_of_unsexed_offspring – offspring of unknown sex
 
 **Computed:**
 
@@ -65,7 +66,7 @@ Detailed record for one species within a report.
 ## Notes
 
 - Reports are versioned by year
-- Snapshot fields preserve historical data
+- Snapshot fields can preserve historical contact data when populated; they are not automatically copied
 - Records are linked to taxonomy (species)
 
 ---
@@ -75,3 +76,13 @@ Detailed record for one species within a report.
 - Used for member breeding statistics
 - Basis for reports, analytics, and exports
 - Can be extended with more detailed breeding metrics
+
+## Current implementation limits
+
+Models and admin exist; public/member submission screens, Excel import and analysis
+pages are not implemented. Status timestamps are nullable and do not automatically
+follow status changes. Counts default to zero; missing values, subspecies and census
+line identifiers are not represented separately. Do not treat an unsubmitted report
+as a confirmed zero or import section totals as a single member report.
+The original individual reporting template is still unconfirmed. No census/model
+redesign has been performed. `member` and `species` currently use cascading deletion.

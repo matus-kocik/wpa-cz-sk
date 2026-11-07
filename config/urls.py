@@ -6,7 +6,12 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.views.generic import TemplateView
 
-from core.sitemaps import CoreViewSitemap
+from core.sitemaps import (
+    CoreViewSitemap,
+    EventSitemap,
+    PublicProfileSitemap,
+    SpeciesSitemap,
+)
 from core.views import ContactView
 from dashboard.views import DashboardHomeView
 from members.views import MembershipApplicationView
@@ -21,6 +26,9 @@ from users.views import CustomLoginView, CustomLogoutView
 
 sitemaps = {
     "core": CoreViewSitemap,
+    "species": SpeciesSitemap,
+    "events": EventSitemap,
+    "profiles": PublicProfileSitemap,
 }
 
 if settings.DEBUG:

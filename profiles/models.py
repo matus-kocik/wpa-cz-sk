@@ -89,7 +89,7 @@ class PublicProfile(TimeStampedModel, SlugModel):
         help_text="Odkaz na YouTube kanál",
     )
 
-    # visibility
+    # Public visibility settings
     is_public = models.BooleanField(
         default=True,
         db_index=True,
@@ -152,7 +152,6 @@ class PublicProfile(TimeStampedModel, SlugModel):
         help_text="Zobrazit pole 'další druhy'",
     )
 
-    # extra
     notes = models.TextField(
         blank=True,
         verbose_name="Poznámky",
@@ -192,7 +191,7 @@ class PublicProfile(TimeStampedModel, SlugModel):
     def save(self, *args, **kwargs):
         self.clean()
 
-        # store old avatar before saving
+        # Keep the old file reference for cleanup after saving.
         old_avatar = None
         if self.pk:
             try:
@@ -209,7 +208,7 @@ class PublicProfile(TimeStampedModel, SlugModel):
 
         super().save(*args, **kwargs)
 
-        # delete old avatar file if it was replaced or removed
+        # Remove the old avatar only after the new value has been saved.
         if old_avatar and old_avatar != self.avatar:
             old_avatar.delete(save=False)
 

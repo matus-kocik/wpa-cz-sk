@@ -16,3 +16,7 @@ MAILERS = {
         "BACKEND": "django.core.mail.backends.locmem.EmailBackend",
     },
 }
+
+# Django 6.0 uses the legacy backend; tests must never use real SMTP.
+if DJANGO_VERSION < (6, 1):  # noqa: F405
+    EMAIL_BACKEND = "django.core.mail.backends.locmem.EmailBackend"

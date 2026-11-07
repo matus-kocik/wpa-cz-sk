@@ -239,3 +239,12 @@ Tests cover the main membership workflow, including:
 
 `MembershipApplication` is an onboarding record and should not be treated as
 an active membership until it has been paid and successfully approved.
+
+## Application notification outcomes
+
+The application is saved before attempting SMTP. If the primary notification fails
+or the backend accepts zero messages, show a warning that it is saved but the email
+failed. Do not ask the applicant to submit again. If only the applicant confirmation
+fails, say that the application is saved and the organization notification was sent.
+Both failure branches redirect normally; saved application data is retained.
+`APPLICATION_RECEIVER_EMAIL` determines the organization notification recipient.

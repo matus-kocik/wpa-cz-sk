@@ -647,7 +647,6 @@ class Species(TimeStampedModel, SlugModel):
             return f"{self.ring_size} mm"
         return None
 
-    # Human-readable species name
     def __str__(self):
         return self.latin_name
 
@@ -711,7 +710,6 @@ class Subspecies(models.Model):
             models.Index(fields=["species"]),
         ]
 
-    # Human-readable subspecies name
     def __str__(self):
         return self.latin_name
 

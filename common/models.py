@@ -63,7 +63,7 @@ class SlugModel(models.Model):
             elif hasattr(self, "name") and self.name:
                 source = self.name
 
-            # ensure source is not empty or whitespace
+            # Ignore empty or whitespace-only slug sources.
             if source and str(source).strip():
                 base_slug = slugify(source)
                 slug = base_slug

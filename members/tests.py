@@ -42,11 +42,9 @@ def test_approve_creates_user_and_member(application):
 
     app.approve()
 
-    # user created
     user = CustomUser.objects.get(email="jan@example.com")
     assert user.first_name == "Jan"
 
-    # member profile created
     member = MemberProfile.objects.get(user=user)
     assert member.city == "Praha"
 
@@ -70,13 +68,12 @@ def test_approve_unpaid_does_not_create_user(application_data):
 def test_approve_idempotent_does_not_duplicate(application):
     app = application
 
-    # first approve
     app.approve()
 
     assert CustomUser.objects.count() == 1
     assert MemberProfile.objects.count() == 1
 
-    # second approve (should not duplicate)
+    # Repeated approval must not create duplicate accounts or profiles.
     app.approve()
 
     assert CustomUser.objects.count() == 1
@@ -85,7 +82,7 @@ def test_approve_idempotent_does_not_duplicate(application):
 
 @pytest.mark.django_db
 def test_approve_uses_existing_user(application_data):
-    # existujúci user
+    # Reuse an existing account instead of creating a duplicate.
     user = CustomUser.objects.create_user(
         email="jan@example.com",
         password="test123",
@@ -118,13 +115,13 @@ def test_approve_already_approved_does_nothing(application_data):
         status="approved",
     )
 
-    # first call (should create since approved + paid but no user yet)
+    # Create the account for an approved, paid application without a linked user.
     app.approve()
 
     assert CustomUser.objects.count() == 1
     assert MemberProfile.objects.count() == 1
 
-    # second call (should do nothing)
+    # Repeating the operation must leave existing records unchanged.
     app.approve()
 
     assert CustomUser.objects.count() == 1
@@ -147,7 +144,7 @@ def test_member_is_active_when_paid():
         valid_until=date(2025, 3, 31),
     )
 
-    # ensure save logic is applied
+    # Apply the model save logic before checking the result.
     member.refresh_from_db()
 
     assert member.is_active is True
@@ -190,7 +187,7 @@ def test_valid_until_set_when_paid_first_time():
         valid_until=None,
     )
 
-    # change to paid
+    # Record payment.
     member.payment_status = "paid"
     member.save()
 
@@ -217,7 +214,7 @@ def test_valid_until_extends_when_already_valid():
 
     old_valid_until = member.valid_until
 
-    # simulate another payment
+    # Repeat the paid state without starting another membership period.
     member.payment_status = "paid"
     member.save()
 
@@ -244,7 +241,7 @@ def test_valid_until_resets_if_expired():
         valid_until=date(2021, 3, 31),  # expired
     )
 
-    # change to paid
+    # Record payment.
     member.payment_status = "paid"
     member.save()
 
@@ -333,7 +330,19 @@ def test_approve_creates_public_profile(application):
 
 
 @pytest.mark.django_db
-def test_application_remains_saved_when_email_sending_fails(client, settings):
+@pytest.mark.parametrize(
+    "send_results, notice",
+    [
+        ([Exception("SMTP failure")], "e-mailové upozornění se nepodařilo"),
+        ([0], "e-mailové upozornění se nepodařilo"),
+        ([1, Exception("SMTP failure")], "upozornění spolku odesláno"),
+        ([1, 0], "upozornění spolku odesláno"),
+    ],
+)
+def test_application_remains_saved_when_email_sending_fails(
+    client, settings, send_results, notice
+):
+    settings.DEBUG = True
     settings.TURNSTILE_SITE_KEY = ""
     settings.TURNSTILE_SECRET_KEY = ""
 
@@ -364,7 +373,7 @@ def test_application_remains_saved_when_email_sending_fails(client, settings):
 
         with patch(
             "members.views.EmailMultiAlternatives.send",
-            side_effect=Exception("SMTP failure"),
+            side_effect=send_results,
         ):
             response = client.post("/prihlaska/", data=data)
 
@@ -372,6 +381,13 @@ def test_application_remains_saved_when_email_sending_fails(client, settings):
 
     assert response.status_code == 302
     assert response.url == "/prihlaska/"
+
+    notices = list(response.wsgi_request._messages)
+    assert len(notices) == 1
+    assert notices[0].level_tag == "warning"
+    assert "Přihláška byla uložena" in str(notices[0])
+    assert notice in str(notices[0])
+    assert "znovu neposílejte" in str(notices[0])
 
 
 @pytest.mark.django_db
@@ -430,7 +446,7 @@ def test_membership_early_renewal_extends_validity():
 
     original_valid_until = member.valid_until
 
-    # Simulujeme začiatok nového platobného cyklu.
+    # Simulate the start of a new payment cycle.
     member.payment_status = "unpaid"
     member.save()
 
@@ -472,7 +488,10 @@ def test_membership_form_rejects_duplicate_active_email(application_data):
 
 
 @pytest.mark.django_db
-def test_membership_form_allows_email_after_rejected_application(application_data):
+def test_membership_form_allows_email_after_rejected_application(
+    application_data, settings
+):
+    settings.DEBUG = True
     MembershipApplication.objects.create(
         **application_data,
         initial_payment_status="unpaid",

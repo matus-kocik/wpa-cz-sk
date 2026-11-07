@@ -13,7 +13,6 @@ from django.utils.http import urlsafe_base64_encode
 from django_countries.fields import CountryField
 
 
-# New Role model
 class Role(models.Model):
     name = models.CharField(max_length=50, unique=True, verbose_name="Názov")
     slug = models.SlugField(unique=True, verbose_name="Slug")
@@ -221,7 +220,7 @@ class MemberProfile(models.Model):
         if kwargs.pop("clean", True):
             self.full_clean()
 
-        # detect previous payment_status
+        # Read the previous payment status before applying a transition.
         old_payment_status = None
         if self.pk:
             old_payment_status = (
@@ -251,7 +250,7 @@ class MemberProfile(models.Model):
         if self.payment_status == "paid":
             self.is_active = True
 
-            # extend or set validity when transitioning to paid
+            # Extend or initialize validity only when the status changes to paid.
             if old_payment_status != "paid":
                 today = date.today()
 
@@ -294,7 +293,6 @@ class MemberProfile(models.Model):
             models.Index(fields=["is_active"]),
         ]
 
-    # Human-readable member representation
     def __str__(self):
         return f"{self.full_name} ({self.icch_number or 'no ID'})"
 
@@ -336,7 +334,6 @@ class MemberProfile(models.Model):
         return self.projects.exists()
 
 
-# Clean data before saving
 class MembershipApplication(models.Model):
     """
     Application form submitted by a user to become a member.
@@ -344,9 +341,8 @@ class MembershipApplication(models.Model):
     Stores personal data, status, and approval workflow.
     """
 
-    # Clean and normalize input data before saving
     def save(self, *args, **kwargs):
-        # Clean data
+
         if self.first_name:
             self.first_name = self.first_name.strip().title()
         if self.last_name:
@@ -581,7 +577,7 @@ class MembershipApplication(models.Model):
         )
 
         if not created:
-            # update existing profile with latest data
+            # Update the existing member profile from the approved application.
             for field in [
                 "phone_number",
                 "city",

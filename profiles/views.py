@@ -77,7 +77,7 @@ class PublicProfileUpdateView(LoginRequiredMixin, UpdateView):
         gallery_formset = context["gallery_formset"]
         video_formset = context["video_formset"]
 
-        # force correct instance (prevent POST tampering)
+        # Bind formsets to the authenticated owner to prevent POST tampering.
         gallery_formset.instance = self.object
         video_formset.instance = self.object
 

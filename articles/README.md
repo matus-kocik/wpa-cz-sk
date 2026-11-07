@@ -89,3 +89,10 @@ Main content model.
 - Educational content and guides
 - Linking species to content
 - Can be extended with comments or ratings later
+
+## Public site
+
+The article models and admin are available, but the current homepage and educational
+pages are static templates. Publishing an Article does not automatically add a card
+to the homepage. Database-driven article pages are deferred. Sitemap currently lists
+only real public routes, not unpublished or unimplemented article URLs.

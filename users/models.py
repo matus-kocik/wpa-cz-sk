@@ -49,10 +49,9 @@ class CustomUserManager(BaseUserManager):
         user = self.model(email=email, **extra_fields)
 
         if password:
-            # Securely set hash the user's password
             user.set_password(password)
         else:
-            # Set an unusable password (e.g., for OAuth users...)
+            # Accounts without a supplied password cannot authenticate by password.
             user.set_unusable_password()
 
         user.save(using=self._db)
@@ -120,7 +119,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         - email (EmailField): The user's unique email address.
         - first_name (CharField): The user's first name.
         - last_name (CharField): The user's last name.
-        - full_name (GeneratedField): The user's full name (first + last name).
+        - full_name (property): The user's full name (first + last name).
         - is_active (BooleanField): Indicates whether the account is active.
         - is_staff (BooleanField): Determines if the user has admin privileges.
         - date_joined (DateTimeField): Timestamp of when the account was created.
@@ -132,9 +131,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     email = models.EmailField(
         unique=True,
-        db_index=True,  # Optimizes queries involving email searches
-        verbose_name="E-mail",  # Display name in Django Admin and forms
-        # Appears in Django Admin as field description
+        db_index=True,
+        verbose_name="E-mail",
         help_text="Unikátní e-mail uživatele",
     )
     first_name = models.CharField(
@@ -172,7 +170,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["first_name", "last_name"]
 
-    # Returns full name composed from first and last name
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}".strip()
@@ -207,7 +204,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             models.Index(Lower("email"), name="user_email_lower_idx"),
         ]
 
-    # Normalize and validate user data before saving
     def clean(self):
         """
         Custom validation for the user model.
@@ -231,7 +227,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not self.last_name:
             raise ValidationError({"last_name": "The Last Name field is required"})
 
-    # Validate user data before saving
     def save(self, *args, **kwargs):
         """
         Ensures email normalization and full model validation before saving.

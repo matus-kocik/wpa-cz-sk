@@ -632,13 +632,23 @@ def test_frontend_flags_context_processor(settings, rf):
 def test_core_sitemap_items():
     sitemap = CoreViewSitemap()
 
-    assert sitemap.items() == [
+    names = sitemap.items()
+    assert len(names) == len(set(names))
+    assert {
         "home",
         "contact",
-        "membership_application",
-        "gdpr",
-        "membership_terms",
-    ]
+        "species_list",
+        "event_list",
+        "documents",
+        "members",
+    } <= set(names)
+    assert not {
+        "login",
+        "logout",
+        "dashboard_home",
+        "public_profile_edit",
+        "password_reset",
+    } & set(names)
 
 
 @pytest.mark.parametrize(

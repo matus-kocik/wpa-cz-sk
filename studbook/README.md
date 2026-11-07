@@ -22,7 +22,7 @@ Represents a single bird.
 - name – optional name
 - ring_number – identification ring
 - sex – male / female / unknown
-- status – active / sold / dead / etc.
+- status – active / sold / gifted / loaned / deceased / missing / archived
 
 **Lineage:**
 
@@ -45,7 +45,8 @@ Timeline event for a bird.
 - bird – related bird
 - event_type – type of event (birth, death, transfer, etc.)
 - event_date – date of event
-- notes – optional description
+- title – short event title
+- description – event description
 
 **Usage:**
 
@@ -76,7 +77,8 @@ Routine care entry.
 - bird – related bird
 - care_type – feeding, treatment, check, etc.
 - care_date – date of care
-- notes – optional description
+- title – short event title
+- description – event description
 
 ---
 
@@ -89,8 +91,9 @@ Ownership or location transfer.
 - bird – related bird
 - transfer_type – sale / gift / exchange / move
 - transfer_date – date of transfer
-- from_member – previous owner
-- to_member – new owner
+- partner_name – counterpart recorded as text
+- location – transfer location
+- price – optional transfer price
 
 ---
 
@@ -108,3 +111,10 @@ Ownership or location transfer.
 - Tracking ownership and movement
 - Recording health and care history
 - Basis for genealogy and reporting
+
+## Current implementation
+
+Models and Django Admin are available. Dashboard links are placeholders; no member
+studbook screens or Excel import are implemented. Creating a transfer/event record
+does not automatically change the bird's current owner or status.
+Annual aggregate census belongs to `breeding`; this app tracks individual birds.

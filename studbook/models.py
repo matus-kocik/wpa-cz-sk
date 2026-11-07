@@ -238,7 +238,6 @@ class BirdEvent(TimeStampedModel):
             models.Index(fields=["event_date"]),
         ]
 
-    # Human-readable event representation
     def __str__(self):
         return f"{self.bird} – {self.get_event_type_display()} ({self.event_date})"
 
@@ -293,7 +292,6 @@ class HealthRecord(TimeStampedModel):
             models.Index(fields=["record_date"]),
         ]
 
-    # Human-readable health record
     def __str__(self):
         return f"{self.bird} – {self.record_date}"
 
@@ -365,7 +363,6 @@ class CareRecord(TimeStampedModel):
             models.Index(fields=["care_date"]),
         ]
 
-    # Human-readable care record
     def __str__(self):
         return f"{self.bird} – {self.get_care_type_display()} ({self.care_date})"
 
@@ -440,7 +437,6 @@ class TransferRecord(TimeStampedModel):
             models.Index(fields=["transfer_date"]),
         ]
 
-    # Human-readable transfer record
     def __str__(self):
         return (
             f"{self.bird} – {self.get_transfer_type_display()} ({self.transfer_date})"

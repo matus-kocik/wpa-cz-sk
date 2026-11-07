@@ -8,7 +8,7 @@ from members.models import MemberProfile
 from users.models import CustomUser
 
 
-# simple fixture for member_profile (reuse minimal required fields)
+# Minimal member profile required by article relations.
 @pytest.fixture
 def member_profile(db):
     user = CustomUser.objects.create_user(
@@ -38,7 +38,6 @@ def test_contributor_requires_name_or_member():
 def test_contributor_valid_with_name_only():
     contributor = Contributor(name="John Doe", role="author")
 
-    # should not raise
     contributor.full_clean()
 
 
@@ -46,5 +45,4 @@ def test_contributor_valid_with_name_only():
 def test_contributor_valid_with_member(member_profile):
     contributor = Contributor(member=member_profile, role="author")
 
-    # should not raise
     contributor.full_clean()

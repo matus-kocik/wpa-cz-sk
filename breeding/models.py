@@ -117,7 +117,6 @@ class BreedingReport(SEOModel, TimeStampedModel):
             models.Index(fields=["member"]),
         ]
 
-    # Human-readable representation of report
     def __str__(self):
         return f"{self.member} – {self.year}"
 
@@ -196,7 +195,6 @@ class BreedingRecord(SEOModel, TimeStampedModel):
             models.Index(fields=["report"]),
         ]
 
-    # Human-readable representation of record
     def __str__(self):
         return f"{self.report} – {self.species}"
 

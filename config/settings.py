@@ -3,7 +3,6 @@ from pathlib import Path
 from decouple import Config, RepositoryEnv
 from django import VERSION as DJANGO_VERSION
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 config = Config(RepositoryEnv(BASE_DIR.parent / ".env"))
@@ -233,5 +232,6 @@ CSRF_COOKIE_SAMESITE = "Lax"
 
 # Auth redirects
 
+LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "dashboard_home"
 LOGOUT_REDIRECT_URL = "home"

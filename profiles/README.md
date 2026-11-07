@@ -172,3 +172,12 @@ The app contains tests covering core profile behavior, including:
 - `PublicProfile` controls information intended for the public-facing breeder directory.
 - Visibility is controlled independently for individual profile sections.
 - Gallery and video limits are enforced both by forms and model validation.
+
+## Current public directory and sitemap
+
+The current member directory combines manually maintained rows with a database loop.
+Public profile pages are database-driven. Only `is_public=True` profiles with a slug
+are listed in sitemap. Private profiles remain unavailable to anonymous visitors.
+The detail template uses `additional_info` directly; the `additional_info_display`
+property's member-notes fallback is not rendered there. Do not expose internal member
+notes when adding new views. Login is required for editing; only the owner is selected.

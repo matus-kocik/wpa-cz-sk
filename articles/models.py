@@ -210,6 +210,5 @@ class Article(
             models.Index(fields=["category"]),
         ]
 
-    # Human-readable article title
     def __str__(self):
         return self.title

@@ -143,7 +143,7 @@
             </div>
             <hr class="my-6">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-                <!-- V -->
+                <!-- Declaration location -->
                 <div id="declaration-place-group">
                     {{ form.declaration_place.label_tag }} {{ form.declaration_place }}
                     <p id="declaration-place-error" class="text-red-600 text-sm mt-1"></p>
@@ -151,7 +151,7 @@
                         <p class="text-red-600 text-sm mt-1">{{ form.declaration_place.errors.0 }}</p>
                     {% endif %}
                 </div>
-                <!-- Dne -->
+                <!-- Declaration date -->
                 <div id="declaration-date-group">
                     {{ form.declaration_date.label_tag }} {{ form.declaration_date }}
                     <p id="declaration-date-error" class="text-red-600 text-sm mt-1"></p>
@@ -159,7 +159,7 @@
                         <p class="text-red-600 text-sm mt-1">{{ form.declaration_date.errors.0 }}</p>
                     {% endif %}
                 </div>
-                <!-- Podpis -->
+                <!-- Signature -->
                 <div id="declaration-signature-group">
                     {{ form.declaration_signature.label_tag }} {{ form.declaration_signature }}
                     <p id="declaration-signature-error" class="text-red-600 text-sm mt-1"></p>

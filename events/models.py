@@ -158,6 +158,5 @@ class Event(SEOModel, TimeStampedModel):
             models.Index(fields=["is_featured"]),
         ]
 
-    # Human-readable event title
     def __str__(self):
         return self.title

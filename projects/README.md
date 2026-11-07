@@ -29,7 +29,7 @@ Represents a project or initiative.
 
 **Status & visibility:**
 
-- status – planned / active / finished
+- status – planned / active / paused / finished
 - is_public – visible on website
 
 ---
@@ -71,3 +71,9 @@ Represents a member's participation in a project for a specific year.
 - Tracking member participation
 - Monitoring payments
 - Can be extended with roles or permissions later
+
+## Public site
+
+Current project pages use static templates routed in `config/urls.py`. Editing a
+`Project` in admin does not update those pages. Database-driven public project pages
+and member participation screens are not implemented.

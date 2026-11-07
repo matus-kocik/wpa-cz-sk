@@ -123,7 +123,6 @@ class Project(SEOModel, TimeStampedModel):
             models.Index(fields=["is_public"]),
         ]
 
-    # Human-readable project name
     def __str__(self):
         return self.name
 
@@ -217,6 +216,5 @@ class ProjectMembership(TimeStampedModel):
             models.Index(fields=["is_paid"]),
         ]
 
-    # Human-readable membership representation
     def __str__(self):
         return f"{self.member} – {self.project} ({self.year})"

@@ -52,7 +52,7 @@ class PublicProfileForm(forms.ModelForm):
             "instagram_url": "Instagram",
             "youtube_url": "YouTube",
             "additional_info": "Další informace",
-            # visibility labels
+            # Visibility labels
             "is_public": "Profil je veřejný",
             "show_email": "Veřejně zobrazit e-mail",
             "show_phone": "Veřejně zobrazit telefon",
@@ -75,7 +75,7 @@ class PublicProfileForm(forms.ModelForm):
             "facebook_url": "Odkaz na váš Facebook profil.",
             "instagram_url": "Odkaz na váš Instagram profil.",
             "youtube_url": "Odkaz na YouTube kanál nebo video.",
-            # visibility explanation
+            # Visibility help text
             "is_public": "Pokud vypnete, profil nebude veřejně dostupný.",
             "show_email": "Nezaškrtnuté = viditelné pouze pro přihlášené členy.",
             "show_phone": "Nezaškrtnuté = viditelné pouze pro přihlášené členy.",
@@ -135,7 +135,7 @@ class PublicProfileForm(forms.ModelForm):
                     "placeholder": "Další informace o chovu...",
                 }
             ),
-            # CHECKBOXES
+            # Visibility controls
             "is_public": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
             "show_email": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
             "show_phone": forms.CheckboxInput(attrs={"class": CHECKBOX_CLASS}),
@@ -154,9 +154,7 @@ class PublicProfileForm(forms.ModelForm):
         }
 
 
-# =========================
-# Custom ModelForms for Gallery and Video with proper widgets
-# =========================
+# Gallery and video forms
 
 
 class ProfileGalleryForm(forms.ModelForm):
@@ -185,9 +183,8 @@ class ProfileVideoForm(forms.ModelForm):
         }
 
 
-# =========================
 # Inline formsets
-# =========================
+
 
 GalleryFormSet = inlineformset_factory(
     PublicProfile,

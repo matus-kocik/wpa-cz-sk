@@ -82,8 +82,20 @@ class MembershipApplicationView(FormView):
                 reply_to=[data["email"]],
             )
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            if msg.send() != 1:
+                raise RuntimeError(
+                    "Application notification was not accepted by the mail backend"
+                )
+        except Exception:
+            logger.exception("Failed to send membership application notification")
+            messages.warning(
+                self.request,
+                "Přihláška byla uložena, ale e-mailové upozornění se nepodařilo odeslat. "
+                "Přihlášku prosím znovu neposílejte. V případě potřeby nás kontaktujte e-mailem.",
+            )
+            return super().form_valid(form)
 
+        try:
             user_subject = "Potvrzení odeslání přihlášky – WPA CZ-SK"
             user_text = render_to_string(
                 "members/membership_user_email.txt",
@@ -101,13 +113,19 @@ class MembershipApplicationView(FormView):
                 to=[data["email"]],
             )
             user_msg.attach_alternative(user_html, "text/html")
-            user_msg.send()
+            if user_msg.send() != 1:
+                raise RuntimeError(
+                    "Application confirmation was not accepted by the mail backend"
+                )
 
         except Exception:
-            logger.exception(
-                "Failed to send membership application email for %s",
-                data["email"],
+            logger.exception("Failed to send membership application confirmation")
+            messages.warning(
+                self.request,
+                "Přihláška byla uložena a upozornění spolku odesláno, ale potvrzení "
+                "na váš e-mail se nepodařilo odeslat. Přihlášku prosím znovu neposílejte.",
             )
+            return super().form_valid(form)
 
         messages.success(
             self.request,

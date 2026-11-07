@@ -205,3 +205,10 @@ Tests cover:
 `CustomUser` represents authentication identity only.
 
 Membership-specific information belongs in `MemberProfile` in the `members` app.
+
+## Protected views and deployment
+
+`LOGIN_URL = "login"` resolves to `/login/`, including the `next` target for dashboard
+and profile editing. `LOGIN_REDIRECT_URL` is `dashboard_home`. Login buttons remain
+hidden in the global template until the member area is ready; routes still exist.
+Reset-password mail uses the same SMTP configuration as contact/application emails.

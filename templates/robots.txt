@@ -12,4 +12,4 @@ Disallow: /media/
 Allow: /
 
 # Sitemap
-Sitemap: https://www.wpacz-sk.com/sitemap.xml
+Sitemap: {{ request.scheme }}://{{ request.get_host }}{% url 'sitemap' %}

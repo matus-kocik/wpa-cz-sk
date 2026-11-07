@@ -228,10 +228,10 @@ class MembershipApplicationAdmin(admin.ModelAdmin):
     )
 
     def save_model(self, request, obj, form, change):
-        # First save normally
+
         super().save_model(request, obj, form, change)
 
-        # Then handle approval logic safely (only on change)
+        # Run the approval workflow only when editing an existing application.
         if (
             change
             and obj.status == "approved"
