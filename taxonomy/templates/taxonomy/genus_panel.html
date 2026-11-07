@@ -1,7 +1,7 @@
 <li>
   <details class="rounded-lg border border-green-200 bg-green-50 px-4 py-3">
     <summary class="cursor-pointer font-medium text-green-800 hover:text-green-900">
-      Genus (rod): {% include "taxonomy/taxon_name.html" with taxon=genus hide_authority=True only %}
+      Genus (rod): {% include "taxonomy/taxon_name.html" with taxon=genus only %}
       {% with count=genus.species.all|length %}
         {% if count %}
           <span class="text-sm text-gray-600">({{ count }} v katalogu)</span>

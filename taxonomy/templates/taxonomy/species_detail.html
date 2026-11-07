@@ -20,7 +20,7 @@
         <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Taxonomie</h2>
         <ul class="space-y-1 text-gray-700">
           <li><strong>Familia (čeleď):</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus.family only %}</li>
-          <li><strong>Genus (rod):</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus hide_authority=True only %}</li>
+          <li><strong>Genus (rod):</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus only %}</li>
           <li><strong>Species (druh):</strong> {% include "taxonomy/taxon_name.html" with taxon=object only %}</li>
           <li><strong>Subspecies (poddruhy):</strong> {% if object.subspecies_note %}{{ object.get_subspecies_note_display|default:"—" }}{% else %}—{% endif %}{% if object.subspecies_details %}<div class="whitespace-pre-line">{{ object.subspecies_details }}</div>{% endif %}</li>
         </ul>
