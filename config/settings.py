@@ -142,12 +142,12 @@ DEFAULT_FROM_EMAIL = config(
 
 CONTACT_RECEIVER_EMAIL = config(
     "CONTACT_RECEIVER_EMAIL",
-    default=email_host_user,
+    default="matuskocik@gmail.com",
 )
 
 APPLICATION_RECEIVER_EMAIL = config(
     "APPLICATION_RECEIVER_EMAIL",
-    default=CONTACT_RECEIVER_EMAIL,
+    default="matuskocik@gmail.com",
 )
 
 # Site URL for building absolute links (e.g. password reset)
