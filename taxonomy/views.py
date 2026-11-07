@@ -13,14 +13,12 @@ class SpeciesDetailView(DetailView):
 
     def get_queryset(self):
         return Species.objects.filter(is_active=True).select_related(
-            "genus__family", "genus__subfamily", "genus__tribe"
+            "genus__family"
         )
 
 
 def species_list_view(request):
     families = Family.objects.prefetch_related(
-        "subfamilies__genera__tribe",
-        "subfamilies__genera__species",
         "genera__species",
     )
 

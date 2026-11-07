@@ -34,8 +34,8 @@ class Family(SlugModel):
     slovak_name = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name="Slovenský názov",
-        help_text="Slovenský názov čeledi",
+        verbose_name="Slovenský název",
+        help_text="Slovenský název čeledi",
         db_index=True,
     )
     english_name = models.CharField(
@@ -57,8 +57,8 @@ class Family(SlugModel):
     authority_year = models.PositiveIntegerField("Rok popisu", null=True, blank=True)
 
     class Meta:
-        verbose_name = "Čeľaď"
-        verbose_name_plural = "Čeľade"
+        verbose_name = "Čeleď"
+        verbose_name_plural = "Čeledi"
         ordering = ["latin_name"]
         indexes = [
             models.Index(fields=["latin_name"]),
@@ -91,8 +91,8 @@ class Subfamily(SlugModel):
     slovak_name = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name="Slovenský názov",
-        help_text="Slovenský názov podčeledi",
+        verbose_name="Slovenský název",
+        help_text="Slovenský název podčeledi",
         db_index=True,
     )
     english_name = models.CharField(
@@ -114,7 +114,7 @@ class Subfamily(SlugModel):
         Family,
         on_delete=models.CASCADE,
         related_name="subfamilies",
-        verbose_name="Čeľaď",
+        verbose_name="Čeleď",
         help_text="Nadřazená čeľaď",
         db_index=True,
     )
@@ -123,8 +123,8 @@ class Subfamily(SlugModel):
     authority_year = models.PositiveIntegerField("Rok popisu", null=True, blank=True)
 
     class Meta:
-        verbose_name = "Podčeľaď"
-        verbose_name_plural = "Podčeľade"
+        verbose_name = "Podčeleď"
+        verbose_name_plural = "Podčeledi"
         ordering = ["latin_name"]
         indexes = [
             models.Index(fields=["latin_name"]),
@@ -171,8 +171,8 @@ class Genus(SlugModel):
     slovak_name = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name="Slovenský názov",
-        help_text="Slovenský názov rodu",
+        verbose_name="Slovenský název",
+        help_text="Slovenský název rodu",
         db_index=True,
     )
     english_name = models.CharField(
@@ -194,16 +194,16 @@ class Genus(SlugModel):
         Family,
         on_delete=models.PROTECT,
         related_name="genera",
-        verbose_name="Čeľaď",
-        help_text="Čeľaď, do ktorej rod patrí",
+        verbose_name="Čeleď",
+        help_text="Čeleď, do které rod patří",
     )
 
     subfamily = models.ForeignKey(
         Subfamily,
         on_delete=models.SET_NULL,
         related_name="genera",
-        verbose_name="Podčeľaď",
-        help_text="Podčeľaď, do které rod patří",
+        verbose_name="Podčeleď",
+        help_text="Podčeleď, do které rod patří",
         db_index=True,
         null=True,
         blank=True,
@@ -229,12 +229,12 @@ class Genus(SlugModel):
         super().clean()
 
         if self.tribe_id and self.tribe.subfamily_id != self.subfamily_id:
-            raise ValidationError({"tribe": "Tribus musí patriť do vybranej podčeľade."})
+            raise ValidationError({"tribe": "Tribus musí patřit do vybrané podčeledi."})
 
         if self.family_id and self.subfamily_id:
             if self.subfamily.family_id != self.family_id:
                 raise ValidationError(
-                    {"subfamily": "Podčeľaď musí patriť do vybranej čeľade."}
+                    {"subfamily": "Podčeleď musí patřit do vybrané čeledi."}
                 )
 
     def __str__(self):
@@ -271,8 +271,8 @@ class Species(TimeStampedModel, SlugModel):
     slovak_name = models.CharField(
         max_length=150,
         blank=True,
-        verbose_name="Slovenský názov",
-        help_text="Slovenský názov druhu",
+        verbose_name="Slovenský název",
+        help_text="Slovenský název druhu",
         db_index=True,
     )
     english_name = models.CharField(
@@ -347,13 +347,13 @@ class Species(TimeStampedModel, SlugModel):
     )
 
     CONSERVATION_CHOICES = [
-        ("LC", "Málo dotknutý"),
-        ("NT", "Takmer ohrozený"),
-        ("VU", "Zraniteľný"),
-        ("EN", "Ohrozený"),
-        ("CR", "Kriticky ohrozený"),
-        ("EW", "Vyhynutý v prírode"),
-        ("EX", "Vyhynutý"),
+        ("LC", "Málo dotčený"),
+        ("NT", "Téměř ohrožený"),
+        ("VU", "Zranitelný"),
+        ("EN", "Ohrožený"),
+        ("CR", "Kriticky ohrožený"),
+        ("EW", "Vyhynulý v přírodě"),
+        ("EX", "Vyhynulý"),
     ]
 
     status_in_nature = models.CharField(
@@ -683,8 +683,8 @@ class Subspecies(models.Model):
     slovak_name = models.CharField(
         max_length=150,
         blank=True,
-        verbose_name="Slovenský názov",
-        help_text="Slovenský názov poddruhu",
+        verbose_name="Slovenský název",
+        help_text="Slovenský název poddruhu",
         db_index=True,
     )
     english_name = models.CharField(

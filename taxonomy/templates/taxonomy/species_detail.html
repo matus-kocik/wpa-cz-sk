@@ -19,12 +19,10 @@
       <div class="p-6 bg-green-50 rounded-xl shadow-sm">
         <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Taxonomie</h2>
         <ul class="space-y-1 text-gray-700">
-          <li><strong>Čeleď:</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus.family only %}</li>
-          {% if object.genus.subfamily %}<li><strong>Podčeleď:</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus.subfamily only %}</li>{% endif %}
-          {% if object.genus.tribe %}<li><strong>Tribus:</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus.tribe only %}</li>{% endif %}
-          <li><strong>Rod:</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus only %}</li>
-          <li><strong>Druh:</strong> {{ object.latin_name|default:"—" }}</li>
-          <li><strong>Poddruhy:</strong> {% if object.subspecies_note %}{{ object.get_subspecies_note_display|default:"—" }}{% else %}—{% endif %}{% if object.subspecies_details %}<div class="whitespace-pre-line">{{ object.subspecies_details }}</div>{% endif %}</li>
+          <li><strong>Familia (čeleď):</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus.family only %}</li>
+          <li><strong>Genus (rod):</strong> {% include "taxonomy/taxon_name.html" with taxon=object.genus hide_authority=True only %}</li>
+          <li><strong>Species (druh):</strong> {% include "taxonomy/taxon_name.html" with taxon=object only %}</li>
+          <li><strong>Subspecies (poddruhy):</strong> {% if object.subspecies_note %}{{ object.get_subspecies_note_display|default:"—" }}{% else %}—{% endif %}{% if object.subspecies_details %}<div class="whitespace-pre-line">{{ object.subspecies_details }}</div>{% endif %}</li>
         </ul>
       </div>
 
@@ -132,10 +130,10 @@
     <!-- SUBSPECIES -->
     {% if object.subspecies.exists %}
     <div class="p-6 bg-green-50 rounded-xl shadow-sm">
-      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Poddruhy</h2>
+      <h2 class="text-lg font-semibold mb-4 border-b border-green-400 pb-2 text-green-800">Subspecies (poddruhy)</h2>
       <ul class="list-disc pl-5 text-gray-700">
         {% for sub in object.subspecies.all %}
-          <li>{{ sub.latin_name }}</li>
+          <li>{% include "taxonomy/taxon_name.html" with taxon=sub only %}</li>
         {% endfor %}
       </ul>
     </div>
