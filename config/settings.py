@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from decouple import Config, RepositoryEnv
+from django import VERSION as DJANGO_VERSION
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -134,6 +135,18 @@ MAILERS = {
         },
     },
 }
+
+# Django before 6.1 reads EMAIL_* settings instead of MAILERS.
+
+if DJANGO_VERSION < (6, 1):
+    EMAIL_BACKEND = MAILERS["default"]["BACKEND"]
+    EMAIL_HOST = MAILERS["default"]["OPTIONS"]["host"]
+    EMAIL_PORT = MAILERS["default"]["OPTIONS"]["port"]
+    EMAIL_HOST_USER = MAILERS["default"]["OPTIONS"]["username"]
+    EMAIL_HOST_PASSWORD = MAILERS["default"]["OPTIONS"]["password"]
+    EMAIL_USE_TLS = MAILERS["default"]["OPTIONS"]["use_tls"]
+    EMAIL_USE_SSL = MAILERS["default"]["OPTIONS"]["use_ssl"]
+
 
 DEFAULT_FROM_EMAIL = config(
     "DEFAULT_FROM_EMAIL",
