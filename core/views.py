@@ -65,8 +65,18 @@ Zpráva:
                 reply_to=[data["email"]],
             )
             msg.attach_alternative(html_content, "text/html")
-            msg.send()
+            if msg.send() != 1:
+                raise RuntimeError("Contact email was not accepted by the mail backend")
+        except Exception:
+            logger.exception("Failed to send contact form email")
+            form.add_error(
+                None,
+                "Zprávu se nepodařilo odeslat. Vaše údaje zůstaly vyplněné. "
+                "Zkuste to prosím znovu později nebo nás kontaktujte e-mailem.",
+            )
+            return self.render_to_response(self.get_context_data(form=form))
 
+        try:
             user_subject = "Potvrzení – zpráva z kontaktního formuláře"
             user_text = render_to_string("contact_user_email.txt", data)
             user_html = render_to_string("contact_user_email.html", data)
@@ -78,13 +88,19 @@ Zpráva:
                 to=[data["email"]],
             )
             user_msg.attach_alternative(user_html, "text/html")
-            user_msg.send()
+            if user_msg.send() != 1:
+                raise RuntimeError(
+                    "Contact confirmation was not accepted by the mail backend"
+                )
 
         except Exception:
-            logger.exception(
-                "Failed to send contact form email for %s",
-                data["email"],
+            logger.exception("Failed to send contact form confirmation")
+            messages.warning(
+                self.request,
+                "Zpráva nám byla odeslána, ale potvrzení na váš e-mail se nepodařilo "
+                "odeslat. Formulář prosím znovu neodesílejte.",
             )
+            return super().form_valid(form)
 
         messages.success(
             self.request,

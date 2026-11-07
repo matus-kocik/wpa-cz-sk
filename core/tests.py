@@ -541,7 +541,10 @@ def test_contact_view_sends_emails(client, settings):
 
 
 @pytest.mark.django_db
-def test_contact_view_fails_when_email_sending_fails(client, settings):
+@pytest.mark.parametrize("confirmation_result", [Exception("SMTP failure"), 0])
+def test_contact_view_keeps_success_when_confirmation_fails(
+    client, settings, confirmation_result
+):
     settings.DEBUG = True
 
     data = {
@@ -560,12 +563,50 @@ def test_contact_view_fails_when_email_sending_fails(client, settings):
 
         with patch(
             "core.views.EmailMultiAlternatives.send",
-            side_effect=Exception("SMTP failure"),
-        ):
+            side_effect=[1, confirmation_result],
+        ) as send:
             response = client.post(reverse("contact"), data=data)
 
     assert response.status_code == 302
-    assert response.url == reverse("contact")
+    assert send.call_count == 2
+
+    notices = list(response.wsgi_request._messages)
+    assert len(notices) == 1
+    assert notices[0].level_tag == "warning"
+    assert "Formulář prosím znovu neodesílejte" in str(notices[0])
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("send_result", [Exception("SMTP failure"), 0])
+def test_contact_view_fails_when_email_sending_fails(client, settings, send_result):
+    settings.DEBUG = True
+
+    data = {
+        "first_name": "Jan",
+        "last_name": "Novák",
+        "email": "jan@example.com",
+        "subject": "Dotaz",
+        "message_body": "Toto je testovací dotaz.",
+        "agree_gdpr": "on",
+        "website": "",
+        "turnstile": "test",
+    }
+
+    with patch("core.forms.requests.post") as turnstile_post:
+        turnstile_post.return_value.json.return_value = {"success": True}
+
+        with patch(
+            "core.views.EmailMultiAlternatives.send",
+            side_effect=[send_result],
+        ):
+            response = client.post(reverse("contact"), data=data)
+
+    assert response.status_code == 200
+    form = response.context["form"]
+    assert form.is_bound
+    assert form["message_body"].value() == data["message_body"]
+    assert "Zprávu se nepodařilo odeslat" in str(form.non_field_errors())
+    assert not list(response.context["messages"])
 
 
 def test_turnstile_site_key_context_processor(settings, rf):
