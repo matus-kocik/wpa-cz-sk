@@ -53,6 +53,12 @@ class Event(SEOModel, TimeStampedModel):
         help_text="Datum a čas začátku události.",
         db_index=True,
     )
+    dates_only = models.BooleanField(
+        default=False,
+        verbose_name="Pouze datum (bez potvrzeného času)",
+        help_text="Zapněte, pokud zdroj neuvádí spolehlivý čas. Časy se nezobrazí.",
+    )
+
     end_date = models.DateTimeField(
         blank=True,
         null=True,
@@ -124,6 +130,10 @@ class Event(SEOModel, TimeStampedModel):
         db_index=True,
     )
 
+    @property
+    def is_own_event(self):
+        return self.section == "cz_sk" and not self.is_external
+
     def clean(self):
         super().clean()
 
@@ -132,8 +142,7 @@ class Event(SEOModel, TimeStampedModel):
                 raise ValidationError(
                     {
                         "end_date": (
-                            "Datum ukončení události nesmí být "
-                            "dříve než datum začátku."
+                            "Datum ukončení události nesmí být dříve než datum začátku."
                         )
                     }
                 )

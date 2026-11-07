@@ -58,7 +58,7 @@ class EventAdmin(admin.ModelAdmin):
             },
         ),
         ("Popis", {"fields": ("description", "itinerary")}),
-        ("Termíny", {"fields": ("start_date", "end_date")}),
+        ("Termíny", {"fields": ("start_date", "end_date", "dates_only")}),
         ("Místo a organizace", {"fields": ("location", "organizer")}),
         ("Odkazy", {"fields": ("source_url", "external_url")}),
         ("Taxonomie", {"fields": ("species",)}),

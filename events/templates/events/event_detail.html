@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "partials/page_header.html" with title=event.title subtitle=event.get_section_display image="/static/images/trag-tem-1920-640.webp" %}
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <a href="{% url 'event_list' %}" class="text-green-700 hover:underline">← Všechny akce</a>
+    {% if event.is_own_event %}<p class="mt-6 inline-block bg-green-700 text-white rounded-full px-3 py-1 text-sm font-semibold">Akce WPA CZ-SK</p>{% endif %}
+    <div class="grid md:grid-cols-3 gap-8 mt-8">
+      <div class="md:col-span-2 min-w-0 break-words space-y-8">
+        {% if event.description %}<div class="text-gray-700 leading-relaxed">{{ event.description|linebreaks }}</div>{% endif %}
+        {% if event.itinerary %}<div><h2 class="text-xl font-semibold text-green-800 mb-4">Program</h2><div class="text-gray-700 leading-relaxed">{{ event.itinerary|linebreaks }}</div></div>{% endif %}
+        {% if event.is_external %}<p class="text-sm text-gray-600">Akce je převzata od jiné sekce. Aktuální program a podmínky účasti ověřte přímo u pořadatele.</p>{% endif %}
+      </div>
+      <aside class="bg-green-50 rounded-xl shadow-sm p-6 self-start min-w-0 break-words">
+        <h2 class="text-lg font-semibold text-green-800 border-b border-green-400 pb-2 mb-4">Informace o akci</h2>
+        <dl class="text-gray-700 space-y-4">
+          <div><dt class="font-semibold">Kdy</dt><dd><time datetime="{% if event.dates_only %}{{ event.start_date|date:'Y-m-d' }}{% else %}{{ event.start_date|date:'c' }}{% endif %}">{% if event.dates_only %}{{ event.start_date|date:"j. n. Y" }}{% else %}{{ event.start_date|date:"j. n. Y, H:i" }}{% endif %}</time>{% if event.end_date %}<br>– <time datetime="{% if event.dates_only %}{{ event.end_date|date:'Y-m-d' }}{% else %}{{ event.end_date|date:'c' }}{% endif %}">{% if event.dates_only %}{{ event.end_date|date:"j. n. Y" }}{% else %}{{ event.end_date|date:"j. n. Y, H:i" }}{% endif %}</time>{% endif %}</dd></div>
+          {% if event.location %}<div><dt class="font-semibold">Kde</dt><dd>{{ event.location }}</dd></div>{% endif %}
+          {% if event.organizer %}<div><dt class="font-semibold">Pořadatel</dt><dd>{{ event.organizer }}</dd></div>{% endif %}
+          <div><dt class="font-semibold">Sekce</dt><dd>{{ event.get_section_display }}</dd></div>
+        </dl>
+        <div class="flex flex-col gap-3 mt-6">
+          {% if event.source_url %}<a href="{{ event.source_url }}" target="_blank" rel="noopener noreferrer" class="text-green-700 hover:underline font-semibold">Původní stránka akce ↗</a>{% endif %}
+          {% if event.external_url and event.external_url != event.source_url %}<a href="{{ event.external_url }}" target="_blank" rel="noopener noreferrer" class="text-green-700 hover:underline font-semibold">Další informace / přihlášení ↗</a>{% endif %}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

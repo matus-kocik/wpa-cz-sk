@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.contrib.sitemaps.views import sitemap
-from django.urls import path
+from django.urls import include, path
 from django.views.generic import TemplateView
 
 from core.sitemaps import CoreViewSitemap
@@ -31,6 +31,7 @@ else:
 urlpatterns = [
     path(admin_url, admin.site.urls),
     path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    path("akce/", include("events.urls")),
     path("kontakt/", ContactView.as_view(), name="contact"),
     path(
         "prihlaska/",

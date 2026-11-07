@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+{% include "partials/page_header.html" with title="Akce a setkání" subtitle="Přehled akcí WPA CZ-SK i ostatních sekcí" image="/static/images/trag-tem-1920-640.webp" %}
+<section class="py-16 bg-white">
+  <div class="max-w-6xl mx-auto px-4">
+    <nav class="flex flex-wrap gap-4 mb-8" aria-label="Období akcí">
+      <a href="{% url 'event_list' %}" class="text-green-700 hover:underline{% if not archive %} font-semibold underline{% endif %}"{% if not archive %} aria-current="page"{% endif %}>Připravované akce</a>
+      <a href="{% url 'event_list' %}?archive=1" class="text-green-700 hover:underline{% if archive %} font-semibold underline{% endif %}"{% if archive %} aria-current="page"{% endif %}>Proběhlé akce</a>
+    </nav>
+    <div class="space-y-6">
+      {% for event in events %}
+        <article class="{% if event.is_own_event %}bg-green-100 border-2 border-green-600{% else %}bg-green-50{% endif %} rounded-xl shadow-sm p-6 flex flex-col sm:flex-row sm:items-center gap-6">
+          <div class="text-green-800 sm:w-28 shrink-0">
+            <time datetime="{{ event.start_date|date:'c' }}" class="font-semibold">{{ event.start_date|date:"j. n. Y" }}</time>
+            {% if event.end_date %}<span class="block text-sm">– {{ event.end_date|date:"j. n. Y" }}</span>{% endif %}
+          </div>
+          <div class="flex-1 min-w-0 break-words">
+            {% if event.is_own_event %}<p class="inline-block bg-green-700 text-white rounded-full px-3 py-1 text-sm font-semibold mb-2">Akce WPA CZ-SK</p>{% endif %}
+            <p class="text-sm text-green-700">{{ event.get_section_display }}{% if event.is_external %} · Převzatá akce{% endif %}</p>
+            <h2 class="text-xl font-semibold text-green-800 mt-1 mb-2"><a href="{% url 'event_detail' event.slug %}" class="hover:underline">{{ event.title }}</a></h2>
+            {% if event.location %}<p class="text-gray-700 mb-2">{{ event.location }}</p>{% endif %}
+            {% if event.description %}<p class="text-gray-700">{{ event.description|truncatewords:35 }}</p>{% endif %}
+          </div>
+          <a href="{% url 'event_detail' event.slug %}" class="text-green-700 hover:underline font-semibold shrink-0">Detail akce →</a>
+        </article>
+      {% empty %}
+        <p class="bg-green-50 rounded-xl p-6 text-gray-700">{% if archive %}Zatím zde nejsou žádné proběhlé akce.{% else %}Aktuálně nejsou zveřejněny žádné připravované akce. Nové termíny průběžně doplňujeme.{% endif %}</p>
+      {% endfor %}
+    </div>
+    {% if is_paginated %}
+      <nav class="flex flex-wrap items-center justify-center gap-4 mt-8 text-green-700" aria-label="Stránkování akcí">
+        {% if page_obj.has_previous %}<a class="hover:underline" href="?{% if archive %}archive=1&amp;{% endif %}page={{ page_obj.previous_page_number }}">← Předchozí</a>{% endif %}
+        <span>Strana {{ page_obj.number }} z {{ paginator.num_pages }}</span>
+        {% if page_obj.has_next %}<a class="hover:underline" href="?{% if archive %}archive=1&amp;{% endif %}page={{ page_obj.next_page_number }}">Další →</a>{% endif %}
+      </nav>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
