@@ -1,0 +1,43 @@
+[
+  {
+    "slug": "exota-olomouc-2025",
+    "title": "EXOTA Olomouc 2025",
+    "summary": "WPA CZ-SK na Exote Olomouc 2025",
+    "publication_date": "2025-12-20",
+    "category_slug": "cinnost-spolku",
+    "category_name": "Činnost spolku",
+    "pdf": "wpaczsk_na_exote_olomouc_2025.pdf",
+    "image": "wpaczsk_na_exote_olomouc_2025.webp"
+  },
+  {
+    "slug": "vyrocna-clenska-schodza-2025",
+    "title": "Výročná členská schôdza 2025",
+    "summary": "Stretnutie WPA CZ-SK v ZOO Zlín - Lešná",
+    "publication_date": "2025-06-08",
+    "category_slug": "cinnost-spolku",
+    "category_name": "Činnost spolku",
+    "pdf": "Vyrocna-clenska-schodza-WPA-CZ_SK-2025.pdf",
+    "image": "schodza-zlin-2025.webp"
+  },
+  {
+    "slug": "chovatelske-doporuceni-2025",
+    "title": "Chovatelské doporučení 2025",
+    "summary": "Doporučení pro soukromé chovatele studbookových ptáků",
+    "publication_date": "2025-04-02",
+    "category_slug": "chovatelske-clanky",
+    "category_name": "Chovatelské články",
+    "pdf": "Doporuceni-chovu-2025-pro-bazanty-vietnamske-non-EAZA.pdf",
+    "image": "chov-doporucenie-2025.webp"
+  },
+  {
+    "slug": "orebice",
+    "title": "Orebice",
+    "summary": "Článok Orebice uverejnený v Exote",
+    "publication_date": "2024-12-15",
+    "category_slug": "chovatelske-clanky",
+    "category_name": "Chovatelské články",
+    "pdf": "Orebice_Bednar_Exota_7-8_2016.pdf",
+    "image": "orebice.webp",
+    "published_in": "Exota"
+  }
+]

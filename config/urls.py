@@ -6,7 +6,9 @@ from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.views.generic import TemplateView
 
+from articles.views import HomeView
 from core.sitemaps import (
+    ArticleSitemap,
     CoreViewSitemap,
     EventSitemap,
     PublicProfileSitemap,
@@ -26,6 +28,7 @@ from users.views import CustomLoginView, CustomLogoutView
 
 sitemaps = {
     "core": CoreViewSitemap,
+    "articles": ArticleSitemap,
     "species": SpeciesSitemap,
     "events": EventSitemap,
     "profiles": PublicProfileSitemap,
@@ -38,7 +41,8 @@ else:
 
 urlpatterns = [
     path(admin_url, admin.site.urls),
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),
+    path("", HomeView.as_view(), name="home"),
+    path("clanky/", include("articles.urls")),
     path("akce/", include("events.urls")),
     path("kontakt/", ContactView.as_view(), name="contact"),
     path(

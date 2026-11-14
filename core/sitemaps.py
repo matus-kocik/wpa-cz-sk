@@ -1,6 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
+from articles.models import Article
 from events.models import Event
 from profiles.models import PublicProfile
 from taxonomy.models import Species
@@ -36,6 +37,7 @@ class CoreViewSitemap(Sitemap):
             "species_list",
             "support",
             "event_list",
+            "article_list",
         ]
 
     def location(self, item):
@@ -78,6 +80,20 @@ class PublicProfileSitemap(Sitemap):
         return (
             PublicProfile.objects.filter(is_public=True).exclude(slug="").order_by("pk")
         )
+
+    def location(self, item):
+        return item.get_absolute_url()
+
+    def lastmod(self, item):
+        return item.updated_at
+
+
+class ArticleSitemap(Sitemap):
+    protocol = "https"
+    changefreq = "monthly"
+
+    def items(self):
+        return Article.objects.published().order_by("pk")
 
     def location(self, item):
         return item.get_absolute_url()

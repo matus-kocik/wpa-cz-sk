@@ -5,7 +5,10 @@ Provides categories, contributors, and articles with SEO and publishing support.
 """
 
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.db import models
+from django.urls import reverse
+from django.utils import timezone
 
 from common.models import (
     PublishableModel,
@@ -13,6 +16,8 @@ from common.models import (
     SlugModel,
     TimeStampedModel,
 )
+
+from .validators import validate_pdf_content
 
 
 class Category(SlugModel):
@@ -96,6 +101,16 @@ class Contributor(models.Model):
         return f"{self.name} ({self.get_role_display()})"
 
 
+class ArticleQuerySet(models.QuerySet):
+    def published(self):
+        return (
+            self.filter(is_published=True, publication_date__lte=timezone.localdate())
+            .exclude(pdf_file__isnull=True)
+            .exclude(pdf_file="")
+            .exclude(slug="")
+        )
+
+
 class Article(
     TimeStampedModel,
     SlugModel,
@@ -107,6 +122,15 @@ class Article(
 
     Supports SEO, publishing workflow, and relations to species and contributors.
     """
+
+    objects = ArticleQuerySet.as_manager()
+
+    is_published = models.BooleanField(
+        default=False,
+        db_index=True,
+        verbose_name="Publikováno",
+        help_text="Veřejně se zobrazí pouze článek s PDF a dosaženým datem publikace.",
+    )
 
     title = models.CharField(
         max_length=200,
@@ -133,7 +157,8 @@ class Article(
         blank=True,
         null=True,
         verbose_name="PDF soubor",
-        help_text="Volitelný PDF soubor článku",
+        help_text="PDF je povinné pro publikovaný článek.",
+        validators=[FileExtensionValidator(["pdf"]), validate_pdf_content],
     )
 
     pdf_title = models.CharField(
@@ -202,13 +227,27 @@ class Article(
     )
 
     class Meta:
-        ordering = ["-publication_date"]
+        ordering = ["-publication_date", "-pk"]
         verbose_name = "Článek"
         verbose_name_plural = "Články"
         indexes = [
             models.Index(fields=["publication_date"]),
             models.Index(fields=["category"]),
         ]
+
+    def clean(self):
+        super().clean()
+        if self.is_published and not self.pdf_file:
+            raise ValidationError({"pdf_file": "Pro publikování článku nahrajte PDF."})
+
+    def get_absolute_url(self):
+        return reverse("article_pdf", args=[self.slug])
+
+    @property
+    def image_url(self):
+        if self.main_image:
+            return reverse("article_image", args=[self.slug])
+        return ""
 
     def __str__(self):
         return self.title

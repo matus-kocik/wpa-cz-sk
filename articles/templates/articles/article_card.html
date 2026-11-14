@@ -1,0 +1,23 @@
+<article class="bg-green-100 rounded-lg shadow-md overflow-hidden transform transition duration-500 ease-out hover:scale-[1.03] hover:-translate-y-1 hover:shadow-xl cursor-pointer max-w-3xl w-full">
+  <div class="w-full aspect-[950/175] max-w-3xl mx-auto">
+    {% if article.main_image %}
+      <img src="{{ article.image_url }}" alt="{{ article.title }}" loading="lazy" class="w-full h-full object-cover object-center">
+    {% else %}
+      <div class="w-full h-full bg-green-50 flex items-center justify-center text-green-700" aria-label="Článek bez ilustračního obrázku">PDF</div>
+    {% endif %}
+  </div>
+  <div class="p-6 flex flex-col justify-between min-h-[200px]">
+    <div class="min-w-0 break-words">
+      <small class="text-gray-500"><time datetime="{{ article.publication_date|date:'Y-m-d' }}">{{ article.publication_date|date:"j. F Y" }}</time></small>
+      <h3 class="text-2xl font-semibold text-gray-800 mt-2">{{ article.title }}</h3>
+      {% if article.summary %}<p class="text-gray-600 mt-2">{{ article.summary }}</p>{% endif %}
+      {% if show_metadata %}
+        <p class="text-sm text-green-700 mt-3">{{ article.category.name }}{% if article.published_in %} · {{ article.published_in }}{% endif %}</p>
+        {% if article.contributors.all %}<p class="text-sm text-gray-600 mt-2">{% for contributor in article.contributors.all %}{{ contributor.name|default:contributor.member.display_name }} ({{ contributor.get_role_display }}){% if not forloop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+      {% endif %}
+    </div>
+    <div class="mt-4">
+      <a href="{{ article.get_absolute_url }}" target="_blank" rel="noopener noreferrer" aria-label="Číst PDF: {{ article.title }} (otevře se na nové kartě)" class="inline-block px-8 py-3 text-lg bg-green-600 text-white rounded-full hover:bg-green-700 transition shadow-sm">Číst více →</a>
+    </div>
+  </div>
+</article>
